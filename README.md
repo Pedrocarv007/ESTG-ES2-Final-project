@@ -7,51 +7,51 @@
 
 Uma aplicação desenvolvida para a disciplina de **Engenharia de Software II** que revoluciona a forma como estudantes se conectam, colaboram e aprendem juntos, com o poder da Inteligência Artificial.
 
-## 📋 Sobre o Projeto
+## Sobre o Projeto
 
 O **StudyHub AI** é uma plataforma web inovadora que visa facilitar a criação e gestão de grupos de estudo entre estudantes. Com funcionalidades modernas e um assistente de IA integrado, a plataforma oferece um ambiente completo para:
 
-- 👥 **Criação de grupos de estudo** personalizados por matéria/tema
-- 📚 **Partilha de materiais** educativos entre membros
-- 🤖 **Assistente de IA** para esclarecimento de dúvidas
-- 💬 **Sistema de comunicação** em tempo real
-- 📊 **Acompanhamento do progresso** de estudos
+- **Criação de grupos de estudo** personalizados por matéria/tema
+- **Partilha de materiais** educativos entre membros
+- **Assistente de IA** para esclarecimento de dúvidas
+- **Sistema de comunicação** em tempo real
+- **Acompanhamento do progresso** de estudos
 
-## ✨ Funcionalidades
+## Funcionalidades
 
-### 🔐 Autenticação e Perfis
+### Autenticação e Perfis
 - Registo e login de utilizadores
 - Perfis personalizados de estudantes
 - Gestão de preferências de estudo
 
-### 👥 Gestão de Grupos
+### Gestão de Grupos
 - Criação de grupos por disciplina/matéria
 - Sistema de convites e aprovações
 - Definição de objetivos e metas do grupo
 - Calendário de sessões de estudo
 
-### 📁 Partilha de Recursos
+### Partilha de Recursos
 - Upload e organização de materiais de estudo
 - Categorização por tipo de conteúdo
 - Sistema de comentários e avaliações
 - Controlo de versões de documentos
 
-### 🤖 Assistente IA Integrado
+### Assistente IA Integrado
 - Esclarecimento de dúvidas em tempo real
 - Sugestões de estudo personalizadas
 - Geração de resumos automáticos
 - Recomendações de recursos complementares
 
-### 📊 Analytics e Progresso
+### Analytics e Progresso
 - Métricas de participação individual
 - Estatísticas de performance do grupo
 - Relatórios de progresso de aprendizagem
 
-## 🏗️ Arquitetura do Sistema
+## Arquitetura do Sistema
 
 ```
 ESTG-ES2-Final-project/
-├── 📁 app/                    # Aplicação principal
+├── 📁 app/                   # Aplicação principal
 │   ├── 📁 models/            # Modelos de dados (SQLAlchemy)
 │   ├── 📁 modules/           # Módulos funcionais da aplicação
 │   ├── 📁 static/            # Ficheiros estáticos (CSS, JS, imagens)
@@ -64,7 +64,7 @@ ESTG-ES2-Final-project/
 └── 📄 README.md              # Documentação do projeto
 ```
 
-## 🛠️ Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 ### Backend
 - **Python 3.8+** - Linguagem principal
@@ -87,7 +87,7 @@ ESTG-ES2-Final-project/
 - **Ollama** - Assistente inteligente
 - **Natural Language Processing** - Processamento de texto
 
-## 🚀 Instalação e Configuração
+## Instalação e Configuração
 
 ### Pré-requisitos
 - Python 3.8 ou superior
@@ -137,7 +137,7 @@ python run.py
 
 A aplicação estará disponível em `http://localhost:5000`
 
-## 🧪 Testes
+## Testes
 
 Para executar os testes:
 ```bash
@@ -149,7 +149,7 @@ Para cobertura de código:
 python -m pytest test/ --cov=app --cov-report=html
 ```
 
-## 📚 Documentação da API
+## Documentação da API
 
 A documentação completa da API está disponível em:
 - **Desenvolvimento**: `http://localhost:5000/api/docs`
@@ -163,7 +163,7 @@ A documentação completa da API está disponível em:
 - `GET /api/materials` - Listar materiais de estudo
 - `POST /api/ai/ask` - Interagir com assistente IA
 
-## 🤝 Contribuição
+## Contribuição
 
 ### Como Contribuir
 1. Fork o projeto
@@ -178,7 +178,7 @@ A documentação completa da API está disponível em:
 - Escrever testes para novas funcionalidades
 - Manter cobertura de testes acima de 80%
 
-## 📈 Roadmap
+## Roadmap
 
 ### Versão 1.0 (Atual)
 - [x] Sistema de autenticação
@@ -198,7 +198,7 @@ A documentação completa da API está disponível em:
 - [ ] Recomendações personalizadas
 - [ ] API pública
 
-## 👥 Equipa de Desenvolvimento
+## Equipa de Desenvolvimento
 
 | Nome | Papel | GitHub |
 |------|-------|--------|
