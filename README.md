@@ -7,7 +7,6 @@
 
 Uma aplicação desenvolvida para a disciplina de **Engenharia de Software II** que revoluciona a forma como estudantes se conectam, colaboram e aprendem juntos, com o poder da Inteligência Artificial.
 
-
 ## 📋 Sobre o Projeto
 
 O **StudyHub AI** é uma plataforma web inovadora que visa facilitar a criação e gestão de grupos de estudo entre estudantes. Com funcionalidades modernas e um assistente de IA integrado, a plataforma oferece um ambiente completo para:
