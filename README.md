@@ -51,15 +51,72 @@ O **StudyHub AI** é uma plataforma web inovadora que visa facilitar a criação
 
 ```
 ESTG-ES2-Final-project/
-├── 📁 app/                   # Aplicação principal
+├── 📁 app/                    # Aplicação principal Flask
+│   ├── 📁 api/               # API endpoints (blueprints)
+│   │   ├── __init__.py
+│   │   ├── auth.py           # Rotas de autenticação
+│   │   ├── groups.py         # Rotas de grupos de estudo
+│   │   ├── materials.py      # Rotas de materiais
+│   │   └── ai.py             # Rotas do assistente IA
+│   ├── 📁 auth/              # Módulo de autenticação
+│   │   ├── __init__.py
+│   │   ├── routes.py         # Rotas de login/registo
+│   │   └── forms.py          # Formulários WTF
+│   ├── 📁 config/            # Configurações da aplicação
+│   │   ├── __init__.py
+│   │   ├── settings.py       # Configurações gerais
+│   │   └── database.py       # Configuração da BD
+│   ├── 📁 extensions/        # Extensões Flask
+│   │   ├── __init__.py
+│   │   └── database.py       # Inicialização SQLAlchemy
+│   ├── 📁 middleware/        # Middleware customizado
+│   │   ├── __init__.py
+│   │   └── security.py       # Segurança e validações
 │   ├── 📁 models/            # Modelos de dados (SQLAlchemy)
-│   ├── 📁 modules/           # Módulos funcionais da aplicação
-│   ├── 📁 static/            # Ficheiros estáticos (CSS, JS, imagens)
+│   │   ├── __init__.py
+│   │   ├── user.py           # Modelo de utilizador
+│   │   ├── group.py          # Modelo de grupo
+│   │   └── material.py       # Modelo de material
+│   ├── 📁 modules/           # Módulos funcionais (deprecated)
+│   ├── 📁 services/          # Lógica de negócio
+│   │   ├── __init__.py
+│   │   ├── ai_service.py     # Serviço do assistente IA
+│   │   ├── group_service.py  # Lógica de grupos
+│   │   └── user_service.py   # Lógica de utilizadores
+│   ├── 📁 static/            # Ficheiros estáticos
+│   │   ├── css/              # Folhas de estilo
+│   │   ├── js/               # JavaScript
+│   │   └── img/              # Imagens
 │   ├── 📁 templates/         # Templates HTML (Jinja2)
+│   │   ├── base.html         # Template base
+│   │   ├── auth/             # Templates de autenticação
+│   │   ├── groups/           # Templates de grupos
+│   │   └── dashboard/        # Templates do dashboard
 │   ├── 📁 utils/             # Utilitários e funções auxiliares
+│   │   ├── __init__.py
+│   │   ├── helpers.py        # Funções auxiliares
+│   │   └── validators.py     # Validadores customizados
 │   └── 📄 __init__.py        # Inicialização da aplicação Flask
+├── 📁 docs/                  # Documentação adicional
+│   ├── api.md               # Documentação da API
+│   ├── deployment.md        # Guia de deployment
+│   └── database_schema.md   # Esquema da base de dados
 ├── 📁 instance/              # Configurações específicas da instância
+├── 📁 logs/                  # Ficheiros de log da aplicação
+├── 📁 migrations/            # Migrações da base de dados (Flask-Migrate)
+├── 📁 scripts/               # Scripts utilitários
+│   ├── setup.py             # Script de configuração inicial
+│   └── seed_data.py         # Script para dados de teste
 ├── 📁 test/                  # Testes unitários e de integração
+│   ├── test_auth.py         # Testes de autenticação
+│   ├── test_groups.py       # Testes de grupos
+│   └── test_api.py          # Testes da API
+├── 📄 .env.example           # Template de variáveis de ambiente
+├── 📄 .gitignore             # Ficheiros a ignorar no Git
+├── 📄 Dockerfile             # Configuração do container Docker
+├── 📄 docker-compose.yml     # Orquestração de serviços
+├── 📄 pytest.ini             # Configuração de testes
+├── 📄 requirements.txt       # Dependências Python
 ├── 📄 run.py                 # Ponto de entrada da aplicação
 └── 📄 README.md              # Documentação do projeto
 ```
@@ -178,25 +235,6 @@ A documentação completa da API está disponível em:
 - Escrever testes para novas funcionalidades
 - Manter cobertura de testes acima de 80%
 
-## Roadmap
-
-### Versão 1.0 (Atual)
-- [x] Sistema de autenticação
-- [x] Criação de grupos básicos
-- [x] Upload de ficheiros
-- [x] Chat básico
-
-### Versão 1.1 (Próxima)
-- [ ] Assistente IA avançado
-- [ ] Notificações em tempo real
-- [ ] Sistema de gamificação
-- [ ] App mobile (React Native)
-
-### Versão 2.0 (Futuro)
-- [ ] Integração com LMS
-- [ ] Análise de sentimentos
-- [ ] Recomendações personalizadas
-- [ ] API pública
 
 ## Equipa de Desenvolvimento
 
