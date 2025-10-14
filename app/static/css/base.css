@@ -30,7 +30,7 @@ body, html {
         #1a0033 0%, 
         #2d1b69 25%, 
         #4a148c 75%, 
-        #000051 100%
+        #a89b9b 100%
     );
     background-size: 400% 400%;
     animation: gradientShift 15s ease infinite;
@@ -320,10 +320,13 @@ footer, .bg-light {
     color: #ffffff !important;
     transform: none !important;
     animation: none !important;
+    padding: 800px 0;
 }
 
 footer p, footer small, .bg-light p, .bg-light small {
     color: rgba(255, 255, 255, 0.9) !important;
+    font-size: 0.8rem; /* Use valores como 0.75rem ou 12px para um texto ainda menor */
+    margin-bottom: 0; /* Remove margens extras dos parágrafos para compactar mais */
 }
 
 footer .text-muted, .bg-light .text-muted {
@@ -422,21 +425,55 @@ a:hover {
 }
 
 .fade-in-up {
-    animation: fadeInUp 0.6s ease forwards;
+    animation: fadeInUp 0.6s ease forwards;  /* Adiciona a classe aos elementos que deseja animar */
 }
 
+/* =============================================== */
+/* Estilos para a Secção de Cards "Liquid Glass"  */
+/* =============================================== */
+
+/* Container que vai alinhar os cards */
+.features-container {
+    display: flex; /* Ativa o layout flexbox */
+    justify-content: center; /* Centra os cards horizontalmente */
+    align-items: stretch; /* Garante que todos os cards na mesma linha tenham a mesma altura */
+    flex-wrap: wrap; /* Permite que os cards quebrem para a linha de baixo em telas menores */
+    gap: 30px; /* Cria um espaçamento consistente entre os cards */
+}
+
+/* Ajustes específicos para os cards dentro deste container */
+.features-container .card {
+    width: 240px; /* Define uma largura fixa e igual para todos os cards */
+    flex-shrink: 0; /* Impede que os cards encolham */
+    text-align: center; /* Centraliza o texto dentro do card */
+    display: flex; /* Usa flexbox para centralizar o conteúdo verticalmente */
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Ajustes finos no texto dos cards para melhor visualização */
+.features-container .card .card-title {
+    font-size: 1.5rem; /* Tamanho do título */
+    margin-bottom: 15px; /* Espaço abaixo do título */
+    /* A cor já é definida como branco no seu CSS global, então não precisamos mexer */
+}
+
+.features-container .card .card-text {
+    font-size: 1rem; /* Tamanho do texto de apoio */
+    opacity: 0.9; /* Deixa o texto secundário um pouco mais suave */
+}
 /* Responsividade */
 @media (max-width: 768px) {
     body {
-        background-size: 600% 600%;
+        background-size: 600% 600%; /* Ajusta o tamanho do fundo */
     }
     
     .card {
-        margin-bottom: 1rem;
+        margin-bottom: 1rem; /* Espaçamento entre cards */
     }
     
     .hero-section {
-        padding: 2rem 0 !important;
+        padding: 2rem 0 !important; /* Ajusta o padding de forma responsiva */
     }
 }
       
