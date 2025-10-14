@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}StudyHub AI{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Container de estrelas animadas -->
+    <div class="stars-container" id="stars-container"></div>
+    
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="/">
+            <strong>StudyHub AI</strong> 🎓
+        </a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                {% if current_user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('main.dashboard') }}">Dashboard</a>
+                </li>
+                {% endif %}
+            </ul>
+            
+            <ul class="navbar-nav">
+                {% if current_user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                        {{ current_user.name }}
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ url_for('auth.profile') }}">Perfil</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Sair</a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('auth.login') }}">Entrar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('auth.register') }}">Registar</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="container mt-3">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <main class="container mt-4 fade-in-up">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-light mt-5 py-4">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2025 StudyHub AI - Desenvolvido com ❤️ para a comunidade estudantil</p>
+            <small class="text-muted">Projeto de Engenharia de Software II</small>
+        </div>
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    
+    <!-- Script para gerar estrelas animadas -->
+    <script>
+        // Criar estrelas imediatamente
+        (function() {
+            function createStars() {
+                const starsContainer = document.getElementById('stars-container');
+                if (!starsContainer) {
+                    console.log('Container de estrelas não encontrado');
+                    return;
+                }
+                
+                // Limpar estrelas existentes
+                starsContainer.innerHTML = '';
+                
+                const numStars = 200; // Mais estrelas para melhor efeito
+                console.log('Criando ' + numStars + ' estrelas...');
+                
+                for (let i = 0; i < numStars; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    
+                    // Tamanhos aleatórios
+                    const sizes = ['small', 'medium', 'large'];
+                    const weights = [0.7, 0.25, 0.05]; // 70% pequenas, 25% médias, 5% grandes
+                    let randomSize = 'small';
+                    
+                    const rand = Math.random();
+                    if (rand < weights[2]) randomSize = 'large';
+                    else if (rand < weights[1] + weights[2]) randomSize = 'medium';
+                    
+                    star.classList.add(randomSize);
+                    
+                    // Posição aleatória
+                    star.style.left = Math.random() * 100 + '%';
+                    star.style.top = Math.random() * 100 + '%';
+                    
+                    // Delay aleatório na animação
+                    star.style.animationDelay = Math.random() * 3 + 's';
+                    
+                    // Adicionar estrela ao container
+                    starsContainer.appendChild(star);
+                }
+                
+                console.log('Estrelas criadas com sucesso!');
+                
+                // Criar estrelas cadentes
+                createShootingStars();
+            }
+            
+            function createShootingStars() {
+                const starsContainer = document.getElementById('stars-container');
+                if (!starsContainer) return;
+                
+                const numShootingStars = 3;
+                
+                for (let i = 0; i < numShootingStars; i++) {
+                    const shootingStar = document.createElement('div');
+                    shootingStar.className = 'shooting-star';
+                    
+                    // Posição inicial aleatória na parte superior
+                    shootingStar.style.left = Math.random() * 100 + '%';
+                    shootingStar.style.top = Math.random() * 30 + '%';
+                    
+                    // Delay aleatório muito longo
+                    shootingStar.style.animationDelay = (Math.random() * 20 + 10) + 's';
+                    
+                    starsContainer.appendChild(shootingStar);
+                }
+            }
+            
+            // Criar estrelas quando DOM estiver pronto
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', createStars);
+            } else {
+                createStars();
+            }
+            
+            // Recriar estrelas cadentes periodicamente
+            setInterval(() => {
+                const starsContainer = document.getElementById('stars-container');
+                if (starsContainer) {
+                    const shootingStars = starsContainer.querySelectorAll('.shooting-star');
+                    shootingStars.forEach(star => star.remove());
+                    createShootingStars();
+                }
+            }, 30000); // A cada 30 segundos
+            
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,479 @@
+/* StudyHub AI - Estilo Base com Fundo Animado */
+@import url("config.css");
+/* Reset e configurações globais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+/* Exceção: permitir animações específicas dos botões e cards */
+.btn, .card {
+    animation: none !important;
+}
+
+.btn:hover, .card:hover {
+    animation: none !important;
+}
+
+/* Fundo animado com estrelas */
+body, html {
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #ffffff;
+    overflow-x: hidden;
+    position: relative;
+    background: linear-gradient(135deg, 
+        #1a0033 0%, 
+        #2d1b69 25%, 
+        #4a148c 75%, 
+        #a89b9b 100%
+    );
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    min-height: 100vh;
+}
+
+/* Layer separado para estrelas CSS de fundo */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: 
+        radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(2px 2px at 160px 30px, #fff, transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: starsMove 120s linear infinite;
+    opacity: 0.3;
+}
+
+/* Animação do gradiente de fundo */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Animação das estrelas CSS */
+@keyframes starsMove {
+    from { transform: translateY(0); }
+    to { transform: translateY(-2000px); }
+}
+
+/* Container de estrelas */
+.stars-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* Estrelas animadas */
+.star {
+    position: absolute;
+    background: #ffffff;
+    border-radius: 50%;
+    animation: twinkle 3s infinite ease-in-out;
+    opacity: 0.7;
+}
+
+.star.small {
+    width: 2px;
+    height: 2px;
+    animation-duration: 2s;
+}
+
+.star.medium {
+    width: 3px;
+    height: 3px;
+    animation-duration: 3s;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+}
+
+.star.large {
+    width: 4px;
+    height: 4px;
+    animation-duration: 4s;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.9);
+}
+
+/* Animação de piscar das estrelas */
+@keyframes twinkle {
+    0%, 100% { 
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% { 
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+/* Estrelas cadentes ocasionais */
+.shooting-star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: linear-gradient(45deg, transparent, white, transparent);
+    border-radius: 50%;
+    animation: shoot 3s linear infinite;
+    opacity: 0;
+}
+
+@keyframes shoot {
+    0% {
+        opacity: 1;
+        transform: translateX(-100px) translateY(-100px);
+    }
+    70% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(200px) translateY(200px);
+    }
+}
+
+/* Sobreposição para melhor legibilidade */
+.content-overlay {
+    position: relative;
+    z-index: 5;
+    background: transparent;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transform: none !important;
+    animation: none !important;
+}
+
+.content-overlay main {
+    flex: 1;
+    transform: none !important;
+    animation: none !important;
+}
+
+/* Navbar estilizada */
+.navbar {
+    background: rgba(26, 0, 51, 0.95) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 100;
+    min-height: 60px;
+    width: 55%;
+    margin-left: auto;
+    margin-right: var(--space-10);
+    margin-top:  var(--space-10);
+    border-radius: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    justify-items: space-evenly;
+}
+
+.navbar-brand {
+    color: #ffffff !important;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    font-size: 1.5rem;
+}
+
+.navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.9) !important;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #ffffff !important;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+.navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='m4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+/* Dropdown menu styling */
+.dropdown-menu {
+    background: rgba(26, 0, 51, 0.95) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(10px);
+}
+
+.dropdown-item {
+    color: rgba(255, 255, 255, 0.9) !important;
+    transition: all 0.3s ease;
+}
+
+.dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+}
+
+/* Cards com efeito glass */
+.card {
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.card-header {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+}
+
+.card-body {
+    color: #ffffff !important;
+}
+
+/* Botões estilizados */
+.btn-primary {
+    background: linear-gradient(45deg, #663399, #4a148c) !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(102, 51, 153, 0.4);
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(45deg, #7b4397, #5a1a9c) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 51, 153, 0.6);
+}
+
+.btn-outline-light {
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    color: #ffffff !important;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-light:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: #ffffff !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+}
+
+/* Hero section */
+.hero-section {
+    background: rgba(0, 0, 0, 0.2) !important;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Formulários */
+.form-control {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: #ffffff !important;
+    backdrop-filter: blur(5px);
+}
+
+.form-control:focus {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border-color: #663399 !important;
+    box-shadow: 0 0 0 0.2rem rgba(102, 51, 153, 0.25) !important;
+    color: #ffffff !important;
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.form-label {
+    color: #ffffff !important;
+    font-weight: 500;
+}
+
+/* Footer */
+footer, .bg-light {
+    background: rgba(26, 0, 51, 0.95) !important;
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    z-index: 50;
+    color: #ffffff !important;
+    transform: none !important;
+    animation: none !important;
+    padding: 800px 0;
+}
+
+footer p, footer small, .bg-light p, .bg-light small {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-size: 0.8rem; /* Use valores como 0.75rem ou 12px para um texto ainda menor */
+    margin-bottom: 0; /* Remove margens extras dos parágrafos para compactar mais */
+}
+
+footer .text-muted, .bg-light .text-muted {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Alertas */
+.alert {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    backdrop-filter: blur(10px);
+    color: #ffffff !important;
+}
+
+.alert-success {
+    border-color: rgba(40, 167, 69, 0.5) !important;
+    background: rgba(40, 167, 69, 0.2) !important;
+}
+
+.alert-danger {
+    border-color: rgba(220, 53, 69, 0.5) !important;
+    background: rgba(220, 53, 69, 0.2) !important;
+}
+
+.alert-info {
+    border-color: rgba(23, 162, 184, 0.5) !important;
+    background: rgba(23, 162, 184, 0.2) !important;
+}
+
+/* Texto */
+h1, h2, h3, h4, h5, h6 {
+    color: #ffffff !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+p, span, div, li {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Força a visibilidade dos elementos da navbar */
+.navbar *, .navbar-brand *, .navbar-nav *, .nav-link * {
+    color: #ffffff !important;
+}
+
+/* Força a visibilidade dos elementos do footer */
+footer *, .bg-light * {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Links */
+a {
+    color: #bb86fc !important;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: #ffffff !important;
+    text-shadow: 0 0 8px rgba(187, 134, 252, 0.8);
+    text-decoration: none !important;
+}
+
+/* Efeitos de hover para elementos interativos */
+.clickable:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s ease;
+}
+
+/* Scrollbar customizada */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* Animações de entrada */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease forwards;  /* Adiciona a classe aos elementos que deseja animar */
+}
+
+/* =============================================== */
+/* Estilos para a Secção de Cards "Liquid Glass"  */
+/* =============================================== */
+
+/* Container que vai alinhar os cards */
+.features-container {
+    display: flex; /* Ativa o layout flexbox */
+    justify-content: center; /* Centra os cards horizontalmente */
+    align-items: stretch; /* Garante que todos os cards na mesma linha tenham a mesma altura */
+    flex-wrap: wrap; /* Permite que os cards quebrem para a linha de baixo em telas menores */
+    gap: 30px; /* Cria um espaçamento consistente entre os cards */
+}
+
+/* Ajustes específicos para os cards dentro deste container */
+.features-container .card {
+    width: 240px; /* Define uma largura fixa e igual para todos os cards */
+    flex-shrink: 0; /* Impede que os cards encolham */
+    text-align: center; /* Centraliza o texto dentro do card */
+    display: flex; /* Usa flexbox para centralizar o conteúdo verticalmente */
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Ajustes finos no texto dos cards para melhor visualização */
+.features-container .card .card-title {
+    font-size: 1.5rem; /* Tamanho do título */
+    margin-bottom: 15px; /* Espaço abaixo do título */
+    /* A cor já é definida como branco no seu CSS global, então não precisamos mexer */
+}
+
+.features-container .card .card-text {
+    font-size: 1rem; /* Tamanho do texto de apoio */
+    opacity: 0.9; /* Deixa o texto secundário um pouco mais suave */
+}
+/* Responsividade */
+@media (max-width: 768px) {
+    body {
+        background-size: 600% 600%; /* Ajusta o tamanho do fundo */
+    }
+    
+    .card {
+        margin-bottom: 1rem; /* Espaçamento entre cards */
+    }
+    
+    .hero-section {
+        padding: 2rem 0 !important; /* Ajusta o padding de forma responsiva */
+    }
+}
+      
