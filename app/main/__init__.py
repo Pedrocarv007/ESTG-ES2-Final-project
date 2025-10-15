@@ -1,0 +1,8 @@
+"""
+Main routes blueprint
+"""
+from flask import Blueprint
+
+bp = Blueprint('main', __name__)
+
+from . import routes
