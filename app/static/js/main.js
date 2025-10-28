@@ -1,201 +1,119 @@
-// StudyHub AI JavaScript functionality
+/* Espera o conteúdo da página carregar */
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // Inicia a função da barra de scroll
+    initializeCustomScrollbar();
+    
+    // Inicia a função das estrelas
+    createStars();
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize tooltips
-    initializeTooltips();
-    
-    // Initialize alerts auto-hide
-    initializeAlerts();
-    
-    // Initialize file upload functionality
-    initializeFileUpload();
-    
-    // Initialize form validation
-    initializeFormValidation();
-    
-    console.log('📚 StudyHub AI initialized successfully!');
+    console.log('✨ StudyHub AI (Novo Design) Inicializado!');
 });
 
-function initializeTooltips() {
-    // Initialize Bootstrap tooltips
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
-    });
-}
 
-function initializeAlerts() {
-    // Auto-hide alerts after 5 seconds
-    const alerts = document.querySelectorAll('.alert:not(.alert-permanent)');
-    alerts.forEach(alert => {
-        setTimeout(() => {
-            if (alert.parentElement) {
-                alert.style.transition = 'opacity 0.5s ease';
-                alert.style.opacity = '0';
-                setTimeout(() => {
-                    alert.remove();
-                }, 500);
-            }
-        }, 5000);
-    });
-}
+/**
+ * Função 1: Animação das Estrelas
+ * (Este é o código que estava no seu base.html)
+ */
+function createStars() {
+    const starsContainer = document.getElementById('stars-container');
+    if (!starsContainer) return;
 
-function initializeFileUpload() {
-    const fileUploadAreas = document.querySelectorAll('.file-upload-area');
-    
-    fileUploadAreas.forEach(area => {
-        const fileInput = area.querySelector('input[type="file"]');
+    starsContainer.innerHTML = ''; // Limpa estrelas antigas
+    const numStars = 200;
+
+    for (let i = 0; i < numStars; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
         
-        if (fileInput) {
-            // Drag and drop functionality
-            area.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                area.classList.add('dragover');
-            });
-            
-            area.addEventListener('dragleave', () => {
-                area.classList.remove('dragover');
-            });
-            
-            area.addEventListener('drop', (e) => {
-                e.preventDefault();
-                area.classList.remove('dragover');
-                
-                const files = e.dataTransfer.files;
-                if (files.length > 0) {
-                    fileInput.files = files;
-                    handleFileSelection(fileInput);
-                }
-            });
-            
-            // Click to upload
-            area.addEventListener('click', () => {
-                fileInput.click();
-            });
-            
-            // File input change
-            fileInput.addEventListener('change', () => {
-                handleFileSelection(fileInput);
-            });
-        }
-    });
+        // Tamanhos aleatórios
+        const sizes = ['small', 'medium', 'large'];
+        const weights = [0.7, 0.25, 0.05];
+        let randomSize = 'small';
+        const rand = Math.random();
+        
+        if (rand < weights[2]) randomSize = 'large';
+        else if (rand < weights[1] + weights[2]) randomSize = 'medium';
+        
+        star.classList.add(randomSize);
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.animationDelay = Math.random() * 3 + 's';
+        starsContainer.appendChild(star);
+    }
+    
+    createShootingStars(starsContainer);
+
+    // Recria estrelas cadentes periodicamente
+    setInterval(() => {
+        const shootingStars = starsContainer.querySelectorAll('.shooting-star');
+        shootingStars.forEach(star => star.remove());
+        createShootingStars(starsContainer);
+    }, 30000); // A cada 30 segundos
 }
 
-function handleFileSelection(fileInput) {
-    const files = fileInput.files;
-    const fileList = document.getElementById('selected-files');
+function createShootingStars(starsContainer) {
+    if (!starsContainer) return;
+    const numShootingStars = 3;
     
-    if (fileList) {
-        fileList.innerHTML = '';
-        
-        Array.from(files).forEach(file => {
-            const fileItem = document.createElement('div');
-            fileItem.className = 'selected-file-item d-flex justify-content-between align-items-center mb-2 p-2 border rounded';
-            fileItem.innerHTML = `
-                <span>
-                    <i class="fas fa-file me-2"></i>
-                    ${file.name} (${formatFileSize(file.size)})
-                </span>
-                <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeFile(this)">
-                    <i class="fas fa-times"></i>
-                </button>
-            `;
-            fileList.appendChild(fileItem);
-        });
+    for (let i = 0; i < numShootingStars; i++) {
+        const shootingStar = document.createElement('div');
+        shootingStar.className = 'shooting-star';
+        shootingStar.style.left = Math.random() * 100 + '%';
+        shootingStar.style.top = Math.random() * 30 + '%';
+        shootingStar.style.animationDelay = (Math.random() * 20 + 10) + 's';
+        starsContainer.appendChild(shootingStar);
     }
 }
 
-function removeFile(button) {
-    button.closest('.selected-file-item').remove();
-}
 
-function formatFileSize(bytes) {
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-    if (bytes === 0) return '0 Bytes';
-    const i = Math.floor(Math.log(bytes) / Math.log(1024));
-    return Math.round(bytes / Math.pow(1024, i) * 100) / 100 + ' ' + sizes[i];
-}
+/**
+ * Função 2: Barra de Scroll Laranja Customizada
+ * (Esta função liga a scrollbar falsa à scrollbar real)
+ */
+function initializeCustomScrollbar() {
+    const mainContent = document.querySelector('main'); 
+    const scrollThumb = document.querySelector('.custom-scrollbar-thumb');
+    const scrollTrack = document.querySelector('.custom-scrollbar-track');
 
-function initializeFormValidation() {
-    // Custom form validation
-    const forms = document.querySelectorAll('.needs-validation');
-    
-    forms.forEach(form => {
-        form.addEventListener('submit', (e) => {
-            if (!form.checkValidity()) {
-                e.preventDefault();
-                e.stopPropagation();
-            }
-            form.classList.add('was-validated');
-        });
-    });
-}
-
-// Utility functions
-function showToast(message, type = 'info') {
-    const toast = document.createElement('div');
-    toast.className = `toast align-items-center text-white bg-${type} border-0 position-fixed`;
-    toast.style.cssText = 'top: 20px; right: 20px; z-index: 9999;';
-    toast.setAttribute('role', 'alert');
-    toast.innerHTML = `
-        <div class="d-flex">
-            <div class="toast-body">
-                ${message}
-            </div>
-            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-        </div>
-    `;
-    
-    document.body.appendChild(toast);
-    const bsToast = new bootstrap.Toast(toast);
-    bsToast.show();
-    
-    toast.addEventListener('hidden.bs.toast', () => {
-        toast.remove();
-    });
-}
-
-function showLoading(button) {
-    const originalText = button.innerHTML;
-    button.innerHTML = '<span class="spinner me-2"></span>Carregando...';
-    button.disabled = true;
-    
-    return function hideLoading() {
-        button.innerHTML = originalText;
-        button.disabled = false;
-    };
-}
-
-// API utilities
-async function apiRequest(url, options = {}) {
-    const defaultOptions = {
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    };
-    
-    const mergedOptions = { ...defaultOptions, ...options };
-    
-    try {
-        const response = await fetch(url, mergedOptions);
-        const data = await response.json();
-        
-        if (!response.ok) {
-            throw new Error(data.message || 'Request failed');
-        }
-        
-        return data;
-    } catch (error) {
-        console.error('API Request failed:', error);
-        showToast(error.message, 'danger');
-        throw error;
+    if (!mainContent || !scrollThumb || !scrollTrack) {
+        return; // Não executa se os elementos não existirem
     }
-}
 
-// Export functions for global use
-window.StudyHubAI = {
-    showToast,
-    showLoading,
-    apiRequest,
-    formatFileSize
-};
+    function updateScrollbar() {
+        const totalHeight = mainContent.scrollHeight;
+        const visibleHeight = mainContent.clientHeight;
+
+        // Esconde a barra se não houver scroll
+        if (totalHeight <= visibleHeight) {
+            scrollTrack.style.display = 'none';
+            return;
+        } else {
+            scrollTrack.style.display = 'block';
+        }
+
+        // 1. Atualiza o tamanho do polegar
+        const trackHeight = scrollTrack.clientHeight;
+        const thumbHeight = (visibleHeight / totalHeight) * trackHeight;
+        scrollThumb.style.height = `${Math.max(thumbHeight, 20)}px`; // Mínimo de 20px
+
+        // 2. Atualiza a posição do polegar
+        const scrollPosition = mainContent.scrollTop;
+        const maxScroll = totalHeight - visibleHeight;
+        const scrollPercentage = scrollPosition / maxScroll;
+        const maxThumbPosition = trackHeight - scrollThumb.clientHeight;
+        const thumbPosition = scrollPercentage * maxThumbPosition;
+
+        scrollThumb.style.top = `${thumbPosition}px`;
+    }
+
+    // Ouve o evento de 'scroll' no <main>
+    mainContent.addEventListener('scroll', updateScrollbar);
+    
+    // Ouve mudanças no tamanho (ex: se o browser mudar de tamanho)
+    const resizeObserver = new ResizeObserver(updateScrollbar);
+    resizeObserver.observe(mainContent);
+
+    // Chama a função uma vez no início para acertar a posição
+    updateScrollbar();
+}
