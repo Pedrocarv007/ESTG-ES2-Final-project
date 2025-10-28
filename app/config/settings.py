@@ -10,6 +10,10 @@ class Config:
     # Flask configuration
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'dev-secret-key-change-in-production'
     
+    # Proxy reverse configuration
+    APPLICATION_ROOT = os.environ.get('APPLICATION_ROOT', '/studyhubai')
+    USE_PROXY = os.environ.get('USE_PROXY', 'true').lower() in ['true', 'on', '1']
+    
     # Database configuration
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///studyhub.db'
     SQLALCHEMY_TRACK_MODIFICATIONS = False

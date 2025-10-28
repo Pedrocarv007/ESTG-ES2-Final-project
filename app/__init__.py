@@ -17,6 +17,12 @@ def create_app(config_name=None):
     from app.config import config
     app.config.from_object(config[config_name])
     
+    # Configure for proxy reverse
+    if app.config.get('USE_PROXY', True):
+        app.static_url_path = "/studyhubai/static"
+        from werkzeug.middleware.proxy_fix import ProxyFix
+        app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
+    
     # Initialize extensions
     from app.extensions import init_extensions
     init_extensions(app)
@@ -28,6 +34,9 @@ def create_app(config_name=None):
     # Register blueprints
     register_blueprints(app)
     
+    # Register template helpers
+    register_template_helpers(app)
+    
     # Setup logging
     setup_logging(app)
     
@@ -36,7 +45,7 @@ def create_app(config_name=None):
     
     # Health check endpoint
     @app.route('/health')
-    def health_check():
+    def health_check_root():
         return {'status': 'healthy', 'service': 'StudyHub AI'}, 200
     
     return app
@@ -45,17 +54,38 @@ def create_app(config_name=None):
 def register_blueprints(app):
     """Register application blueprints."""
     
+    # Get prefix from config
+    use_proxy = app.config.get('USE_PROXY', True)
+    prefix = '/studyhubai' if use_proxy else ''
+    
     # Main routes
     from app.main import bp as main_bp
-    app.register_blueprint(main_bp)
+    app.register_blueprint(main_bp, url_prefix=prefix)
     
     # Authentication routes
     from app.auth import bp as auth_bp
-    app.register_blueprint(auth_bp, url_prefix='/auth')
+    app.register_blueprint(auth_bp, url_prefix=f'{prefix}/auth')
     
     # API routes
     from app.api import api_bp
-    app.register_blueprint(api_bp, url_prefix='/api')
+    app.register_blueprint(api_bp, url_prefix=f'{prefix}/api')
+    
+    # Health check endpoint with prefix
+    @app.route(f'{prefix}/health')
+    def health_check():
+        return {'status': 'healthy', 'service': 'StudyHub AI'}, 200
+
+
+def register_template_helpers(app):
+    """Register template helper functions."""
+    
+    from app.utils.helpers import get_url_prefix
+    
+    @app.context_processor
+    def inject_helpers():
+        return {
+            'get_url_prefix': get_url_prefix
+        }
 
 
 def register_error_handlers(app):
