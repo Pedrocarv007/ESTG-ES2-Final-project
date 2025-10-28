@@ -1,638 +1,1125 @@
 /* =======================
-   1. VARIÁVEIS E RESET
-   ======================== */
+   1. VARIÁVEIS E RESET
+   ======================== */
 :root {
-    --color-dark-purple: #2D1B69;
-    --color-main-purple: #55268E;
-    --color-light-purple: #E1BEE7;
-    --color-light-pink: #F8BBD0;
-    --color-bright-pink: #FC5077;
-    --color-orange-1: #FF7101;
-    --color-orange-2: #FAA672;
-
-    --color-text-primary: #FFFFFF;
-    --color-text-secondary: #E1BEE7;
-    
-    /* Nossas novas fontes */
-    --font-pixel: 'Pixelify Sans', sans-serif;
-    --font-body: 'Nunito Sans', sans-serif;
+  --color-dark-purple: #2d1b69;
+  --color-main-purple: #55268e;
+  --color-light-purple: #e1bee7;
+  --color-light-pink: #f8bbd0;
+  --color-bright-pink: #fc5077;
+  --color-orange-1: #ff7101;
+  --color-orange-2: #faa672;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #e1bee7;
+  --font-pixel: "Pixelify Sans", sans-serif;
+  --font-body: "Nunito Sans", sans-serif;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 /* =======================
-   2. BODY E FUNDO DE ESTRELAS
-   ======================== */
+   2. BODY 
+   ======================== */
 body {
-    font-family: var(--font-body);
-    color: var(--color-text-primary);
-    
-    /* Fundo escuro por trás das estrelas */
-    background-color: #1a1444; 
-    
-    /* Centraliza o .main-container */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 2rem;
+  font-family: var(--font-body);
+  color: var(--color-text-primary);
+  background-color: #1a1444;
+  min-height: 100vh;
+  overflow-x: hidden; 
+  display: flex;
+  justify-content: center;
 }
 
-/* Container das estrelas animadas */
+/* =======================
+   2.5 FUNDO DE ESTRELAS
+   ======================== */
 .stars-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0; /* Atrás de tudo */
-    overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
+.star {
+  position: absolute;
+  background-color: #fff;
+  border-radius: 50%;
+  animation: twinkle 6s infinite ease-in-out;
+  will-change: transform, opacity;
 }
 
-.star {
-    position: absolute;
-    background-color: #fff;
-    border-radius: 50%;
-    animation: twinkle 3s infinite ease-in-out;
+.star.small {
+  width: 1px;
+  height: 1px;
+  opacity: 0.7;
 }
-.star.small { width: 1px; height: 1px; opacity: 0.7; }
-.star.medium { width: 2px; height: 2px; opacity: 0.9; }
-.star.large { 
-    width: 3px; 
-    height: 3px; 
-    opacity: 1;
-    box-shadow: 0 0 4px var(--color-light-purple);
+.star.medium {
+  width: 2px;
+  height: 2px;
+  opacity: 0.9;
+}
+.star.large {
+  width: 3px;
+  height: 3px;
+  opacity: 1;
+  filter: brightness(1.5);
+
 }
 
 @keyframes twinkle {
-    0%, 100% { opacity: 0.3; transform: scale(0.8); }
-    50% { opacity: 1; transform: scale(1.1); }
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
 }
-
 .shooting-star {
-    position: absolute;
-    width: 2px;
-    height: 100px;
-    background: linear-gradient(to top, rgba(255, 255, 255, 0), var(--color-light-pink));
-    opacity: 0.8;
-    transform: translateX(100vw) rotate(-45deg);
-    animation: shooting 10s linear infinite;
+  position: absolute;
+  width: 2px;
+  height: 100px;
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0),
+    var(--color-light-pink)
+  );
+  opacity: 0.8;
+  transform: translateX(100vw) rotate(-45deg);
+  animation: shooting 10s linear infinite;
 }
-
 @keyframes shooting {
-    0% { transform: translateX(100vw) translateY(-100vh) rotate(-45deg); opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { transform: translateX(-100vw) translateY(100vh) rotate(-45deg); opacity: 0; }
+  0% {
+    transform: translateX(100vw) translateY(-100vh) rotate(-45deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100vw) translateY(100vh) rotate(-45deg);
+    opacity: 0;
+  }
 }
 
 /* =======================
-   3. CONTENTOR PRINCIPAL
-   ======================== */
+   3. CONTENTOR PRINCIPAL 
+   ======================== */
 .main-container {
+  width: 100%;
+  max-width: 1400px;
+  min-height: 100vh; 
+  background-color: var(--color-main-purple);
+  border-radius: 20px;
+  border: 2px solid rgba(225, 190, 231, 0.3);
+  box-shadow: 0 0 20px rgba(45, 27, 105, 0.5);
+  position: relative;
+  z-index: 1;
+  overflow: visible; 
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content-wrapper {
+  position: relative;
+  overflow-x: hidden;
+  z-index: 1;
+  flex: 1;
+  height: auto;
+  overflow-y: auto;
+}
+
+main {
+  padding: 2rem;
+  flex: 1;
+  width: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* =======================
+   4. CABEÇALHO (HEADER)
+   ======================== */
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2.5rem;
+  flex-shrink: 0;
+}
+.logo-container {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+}
+.logo-container .logo-brain {
+  height: 80px;
+  width: auto;
+}
+
+/* =======================
+   5. NAVEGAÇÃO PRINCIPAL
+   ======================== */
+.main-nav {
+  flex-shrink: 0;
+  background-color: var(--color-dark-purple);
+  border-radius: 80px;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+.main-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+.main-nav a {
+  text-decoration: none;
+  color: var(--color-text-secondary);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  position: relative;
+  transition: color 0.3s ease;
+  display: block;
+}
+.main-nav a:hover:not(.active) {
+  color: var(--color-text-primary);
+}
+.main-nav a.active {
+  color: var(--color-text-primary);
+}
+.main-nav a.active::after {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 3px;
+  background-color: var(--color-orange-1);
+  border-radius: 2px;
+}
+
+/* =======================
+   6. ÁREA DO UTILIZADOR (Login)
+   ======================== */
+.user-area {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+.user-area .btn-login {
+  text-decoration: none;
+  background-color: var(--color-light-purple);
+  color: var(--color-dark-purple);
+  padding: 0.75rem 1.75rem;
+  border-radius: 25px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  border: 2px solid var(--color-light-purple);
+}
+.user-area .btn-login:hover {
+  background-color: var(--color-text-primary);
+  border-color: var(--color-text-primary);
+  box-shadow: 0 0 10px var(--color-light-purple);
+}
+.user-area .user-dropdown {
+  color: var(--color-text-secondary);
+  font-weight: 700;
+}
+.user-area .user-dropdown span {
+  margin-right: 1rem;
+}
+.user-area .user-dropdown .btn-logout {
+  text-decoration: none;
+  color: var(--color-text-secondary);
+  font-weight: 700;
+  padding: 0.5rem;
+}
+.user-area .user-dropdown .btn-logout:hover {
+  color: var(--color-orange-1);
+}
+
+/* =======================
+   7. SECÇÃO HERO (Homepage)
+   ======================== */
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+.hero-section .hero-logo {
+  height: 80px;
+  width: auto;
+  margin-bottom: 2rem;
+}
+.hero-section h1 {
+  font-family: var(--font-pixel);
+  font-size: 2.5rem;
+  color: var(--color-text-primary);
+  margin-bottom: 1rem;
+}
+.hero-section p {
+  font-size: 1.2rem;
+  color: var(--color-text-secondary);
+  max-width: 600px;
+  margin-bottom: 2.5rem;
+  line-height: 1.5;
+}
+
+/* =======================
+   8. BARRA DE PESQUISA (Homepage)
+   ======================== */
+.search-bar {
+  width: 100%;
+  max-width: 600px;
+}
+.search-bar .search-input {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: 25px;
+  background-color: var(--color-light-purple);
+  color: var(--color-dark-purple);
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: var(--font-body);
+}
+.search-bar .search-input::placeholder {
+  color: var(--color-main-purple);
+  opacity: 0.9;
+}
+.search-bar .search-input:focus {
+  outline: 3px solid var(--color-orange-1);
+  box-shadow: 0 0 10px var(--color-light-purple);
+}
+
+/* =======================
+   9. FLASH MESSAGES
+   ======================== */
+.flash-messages-container {
+  padding: 0 2.5rem;
+  margin-top: -1rem;
+  position: relative;
+  z-index: 10;
+}
+.flash-message {
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  color: var(--color-text-primary);
+  font-weight: 700;
+}
+.flash-message.flash-error {
+  background-color: var(--color-bright-pink);
+  border: 1px solid var(--color-light-pink);
+}
+.flash-message.flash-success {
+  background-color: #4caf50;
+  border: 1px solid #81c784;
+}
+.flash-message.flash-info {
+  background-color: var(--color-main-purple);
+  border: 1px solid var(--color-light-purple);
+}
+
+/* =======================
+   10. SCROLLBAR CUSTOMIZADA
+   ======================== */
+.custom-scrollbar-track {
+  position: absolute;
+  right: 8px;
+  top: 0;
+  bottom: 0;
+  width: 10px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  z-index: 99;
+}
+.custom-scrollbar-thumb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--color-orange-1);
+  border-radius: 5px;
+  cursor: grab;
+}
+main::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+/* =======================
+   11. SECÇÃO CARROSSEL DE GRUPOS
+   ======================== */
+.group-carousel-section {
+  padding: 3rem 0;
+  text-align: center;
+  background: linear-gradient(
+    180deg,
+    var(--color-main-purple) 0%,
+    #461f77 100%
+  );
+  overflow: hidden;
+}
+.section-title {
+  font-family: var(--font-pixel);
+  font-size: 2.2rem;
+  color: var(--color-text-primary);
+  margin-bottom: 2rem;
+}
+.section-subtitle {
+  font-family: var(--font-pixel);
+  font-size: 1.2rem;
+  color: var(--color-text-secondary);
+  margin-top: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+.carousel-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.carousel-arrow {
+  background: transparent;
+  border: none;
+  color: var(--color-text-secondary);
+  font-size: 3rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 20;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.carousel-arrow:hover {
+  color: var(--color-text-primary);
+  transform: translateY(-50%) scale(1.2);
+}
+.left-arrow {
+  left: 10%;
+}
+.right-arrow {
+  right: 10%;
+}
+.carousel-track {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+.group-card {
+  background-color: var(--color-dark-purple);
+  border-radius: 20px;
+  overflow: hidden;
+  width: 290px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border: 3px solid transparent;
+}
+.group-card .card-image-container {
+  width: 100%;
+  background-color: var(--color-dark-purple);
+}
+.group-card .card-image-container img {
+  width: 100%;
+  display: block;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+.group-card .card-content {
+  padding: 1.5rem;
+  text-align: left;
+}
+.group-card h3 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+}
+.group-card p {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
+}
+.card-members {
+  display: flex;
+  align-items: center;
+}
+.card-members .member-icon {
+  display: block;
+  width: 28px;
+  height: 28px;
+  background-color: var(--color-light-purple);
+  border-radius: 50%;
+  border: 2px solid var(--color-main-purple);
+  margin-left: -8px;
+}
+.card-members .member-icon:first-child {
+  margin-left: 0;
+}
+.card-members .member-icon::before {
+  content: "👤";
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-dark-purple);
+  padding-top: 2px;
+}
+.card-members .member-more {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-light-purple);
+  margin-left: 0.75rem;
+}
+.side-card {
+  opacity: 0.4;
+  transform: scale(0.9);
+  z-index: 1;
+}
+.active-card {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 10;
+  border: 3px solid var(--color-light-purple);
+  box-shadow: 0 0 25px rgba(225, 190, 231, 0.4);
+}
+
+/* =======================
+   12. SECÇÃO "O QUE FAZEMOS?"
+   ======================== */
+.what-we-do-section {
+  padding: 4rem 2rem;
+  text-align: center;
+}
+.section-title-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+.section-title-glass {
+  background-color: rgba(225, 190, 231, 0.15);
+  border: 2px solid rgba(225, 190, 231, 0.4);
+  border-radius: 50px;
+  padding: 1rem 3rem;
+  color: var(--color-text-primary);
+  font-family: var(--font-pixel);
+  font-size: 2rem;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+.section-description {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  max-width: 650px;
+  margin: 0 auto 3.5rem auto;
+  line-height: 1.6;
+}
+.steps-title {
+  font-family: var(--font-pixel);
+  font-size: 1.8rem;
+  color: var(--color-text-primary);
+  margin-bottom: 2rem;
+}
+.steps-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 600px;
+  margin: 0 auto;
+  gap: 1.5rem;
+}
+.step-item {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  text-align: left;
+}
+.step-item .step-number {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 35px;
+  height: 35px;
+  background-color: var(--color-bright-pink);
+  border-radius: 50%;
+  color: var(--color-text-primary);
+  font-weight: 700;
+  font-size: 1.1rem;
+  box-shadow: 0 0 10px var(--color-bright-pink);
+}
+.step-item p {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+/* =======================
+   13. RODAPÉ (FOOTER)
+   ======================== */
+.main-footer {
+  background-color: var(--color-dark-purple);
+  flex-shrink: 0;
+  border-top: 2px solid rgba(225, 190, 231, 0.3);
+}
+.features-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background-color: rgba(225, 190, 231, 0.8);
+  border-bottom: 2px solid var(--color-dark-purple);
+}
+.tab-item {
+  background-color: var(--color-light-purple);
+  color: var(--color-dark-purple);
+  font-weight: 700;
+  padding: 0.75rem 1.5rem;
+  border-radius: 20px;
+  font-size: 1rem;
+  font-family: var(--font-body);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 3rem 2.5rem;
+  gap: 2rem;
+}
+.footer-col {
+  flex-basis: 300px;
+}
+#footer-col-logo {
+  flex-grow: 1;
+}
+.footer-logo {
+  height: 60px;
+  width: auto;
+  margin-bottom: 1.5rem;
+}
+.footer-social-icons {
+  display: flex;
+  gap: 1rem;
+}
+.footer-social-icons .social-icon {
+  display: block;
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-light-purple);
+  border-radius: 50%;
+}
+#footer-col-newsletter {
+  flex-grow: 2;
+  max-width: 450px;
+}
+.footer-col h4 {
+  font-family: var(--font-pixel);
+  font-size: 1.5rem;
+  color: var(--color-text-primary);
+  margin-bottom: 0.75rem;
+}
+.footer-col p {
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+.newsletter-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.newsletter-form .form-group {
+  flex-grow: 1;
+}
+.newsletter-form input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  border: none;
+  background-color: var(--color-light-purple);
+  color: var(--color-dark-purple);
+  font-family: var(--font-body);
+}
+.newsletter-form input::placeholder {
+  color: var(--color-main-purple);
+}
+.btn-subscribe {
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--color-main-purple);
+  color: var(--color-text-primary);
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.btn-subscribe:hover {
+  background-color: var(--color-orange-1);
+}
+.recaptcha-text {
+  font-size: 0.75rem;
+  color: var(--color-main-purple);
+}
+.footer-separator {
+  height: 1px;
+  border: none;
+  background-color: var(--color-main-purple);
+  margin: 1.5rem 2.5rem;
+}
+.footer-links-container {
+  display: flex;
+  gap: 3rem;
+  padding: 0 2.5rem 2.5rem 2.5rem;
+}
+.footer-links h4 {
+  font-size: 1.2rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 1rem;
+}
+.footer-links ul {
+  list-style: none;
+}
+.footer-links li {
+  margin-bottom: 0.5rem;
+}
+.footer-links a {
+  text-decoration: none;
+  color: var(--color-text-secondary);
+}
+.footer-links a:hover {
+  color: var(--color-orange-1);
+  text-decoration: underline;
+}
+.footer-bottom-bar {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  padding: 1rem 2.5rem;
+  border-top: 1px solid var(--color-main-purple);
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
+.footer-bottom-bar nav {
+  display: none;
+  gap: 0.5rem;
+}
+.footer-bottom-bar a {
+  text-decoration: none;
+  color: var(--color-text-secondary);
+}
+.footer-bottom-bar a:hover {
+  color: var(--color-text-primary);
+}
+
+/* =======================
+   14. PÁGINAS DE AUTENTICAÇÃO (Login/Registo)
+   ======================== */
+
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    max-width: 1400px;
-    height: 90vh; /* Altura principal da viewport */
-    background-color: var(--color-main-purple);
+    padding: 2rem 0; /* Espaço vertical se necessário */
+}
+
+.auth-box {
+    display: flex;
+    width: 100%;
+    max-width: 900px; /* Largura máxima da caixa */
+    min-height: 600px; /* Altura mínima */
+    background-color: var(--color-text-primary); /* Fundo branco para a coluna do formulário */
     border-radius: 20px;
-    border: 2px solid rgba(225, 190, 231, 0.3);
-    box-shadow: 0 0 20px rgba(45, 27, 105, 0.5);
-    
-    /* Posição relativa para a scrollbar e estrelas */
-    position: relative;
-    z-index: 1;
-    
-    /* Para o conteúdo não vazar */
-    overflow: hidden; 
-    
-    /* Layout interno */
+    overflow: hidden; /* Garante que as colunas ficam dentro das bordas */
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+}
+
+/* Coluna Esquerda: Formulário */
+.auth-form-column {
+    flex: 1; /* Ocupa metade do espaço */
+    padding: 3rem 2.5rem;
     display: flex;
     flex-direction: column;
+    justify-content: center; /* Centraliza o conteúdo verticalmente */
+    color: var(--color-dark-purple); /* Cor do texto no fundo branco */
 }
 
-/* A tag <main> conterá o conteúdo da página */
-main {
-    flex-grow: 1; /* Ocupa todo o espaço disponível */
-    overflow-y: auto; /* Apenas o conteúdo principal tem scroll */
-    padding: 2rem;
+/* Coluna Direita: Boas-vindas */
+.auth-welcome-column {
+    flex: 1; /* Ocupa a outra metade */
+    background-color: var(--color-main-purple); /* Fundo roxo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* Para os círculos */
+    overflow: hidden; /* Esconde partes dos círculos */
 }
 
-/* =======================
-   4. CABEÇALHO (HEADER)
-   ======================== */
-.main-header {
+/* Título */
+.auth-title {
+    font-family: var(--font-body); /* Fonte normal para o título */
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-dark-purple);
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+/* Ícones Sociais */
+.social-login {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+.social-icon {
+    display: block;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ccc; /* Cor da borda do Figma */
+    border-radius: 50%;
+    background-size: 60%;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: background-color 0.3s ease;
+}
+.social-icon:hover {
+    background-color: #eee;
+}
+/* (Adicione background-image para cada ícone - Google, FB, etc.) */
+/* Exemplo: */
+.social-icon.google { background-image: url("{{ url_for('static', filename='img/icons/google.svg') }}"); }
+.social-icon.facebook { background-image: url("{{ url_for('static', filename='img/icons/facebook.svg') }}"); }
+/* ... etc ... */
+
+
+/* Separador */
+.auth-separator {
+    text-align: center;
+    color: #aaa;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Campos do Formulário */
+.form-group {
+    margin-bottom: 1.25rem;
+}
+.auth-input {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border: none;
+    background-color: #eee; /* Fundo cinza claro do Figma */
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--color-dark-purple);
+}
+.auth-input::placeholder {
+    color: #aaa;
+}
+.auth-input:focus {
+    outline: 2px solid var(--color-main-purple);
+    background-color: #fff;
+}
+
+/* Checkbox Termos */
+.terms-check {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+}
+.auth-checkbox {
+    margin-right: 0.5rem;
+    accent-color: var(--color-main-purple); /* Cor do check */
+    width: 16px;
+    height: 16px;
+}
+.auth-checkbox-label {
+    color: #555;
+}
+.terms-check a {
+    color: var(--color-main-purple);
+    text-decoration: none;
+    font-weight: 600;
+}
+.terms-check a:hover {
+    text-decoration: underline;
+}
+
+/* Mensagens de Erro WTForms */
+.auth-error {
+    color: var(--color-bright-pink);
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+}
+.auth-error span {
+    display: block; /* Um erro por linha */
+}
+/* Destaca o input com erro */
+input.auth-input:invalid, /* HTML5 validation */
+input.auth-input.is-invalid /* Classe que o Flask-WTF pode adicionar */
+{
+    outline: 2px solid var(--color-bright-pink) !important;
+}
+
+
+/* Botões */
+.auth-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+.btn-auth {
+    flex: 1; /* Ocupam espaço igual */
+    padding: 0.9rem;
+    border: none;
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center; /* Para o link parecer botão */
+}
+.btn-primary {
+    background-color: var(--color-main-purple);
+    color: var(--color-text-primary);
+}
+.btn-primary:hover {
+    background-color: var(--color-dark-purple);
+}
+.btn-secondary {
+    background-color: transparent;
+    color: var(--color-orange-1);
+    border: 2px solid var(--color-orange-1);
+    text-decoration: none; /* Para o link parecer botão */
+}
+.btn-secondary:hover {
+    background-color: var(--color-orange-1);
+    color: var(--color-text-primary);
+}
+
+/* Conteúdo da Coluna de Boas-vindas */
+.welcome-content {
+    text-align: center;
+    color: var(--color-text-primary);
+}
+.welcome-content h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin: 0;
+    position: relative; /* Para ficar acima dos círculos */
+    z-index: 2;
+}
+
+/* Círculos Decorativos */
+.circle {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1); /* Branco semi-transparente */
+    z-index: 1;
+}
+.circle-1 {
+    width: 250px;
+    height: 250px;
+    top: -50px;
+    right: -80px;
+}
+.circle-2 {
+    width: 350px;
+    height: 350px;
+    bottom: -100px;
+    left: -120px;
+}
+
+/* Ajustes para telas menores (Exemplo) */
+@media (max-width: 768px) {
+    .auth-box {
+        flex-direction: column; /* Empilha as colunas */
+        min-height: auto;
+    }
+    .auth-welcome-column {
+        display: none; /* Esconde a coluna de boas-vindas */
+    }
+    .auth-form-column {
+        padding: 2rem 1.5rem;
+    }
+}
+
+/* ================================
+   14.5 ESTILOS ESPECÍFICOS DO LOGIN
+   ================================ */
+
+/* Inverte a ordem das colunas no design do Login */
+.login-box {
+    flex-direction: row-reverse; /* Coluna laranja fica à esquerda */
+}
+
+/* Coluna de Boas-vindas (Laranja) */
+.login-welcome {
+    background-color: var(--color-orange-1); /* Fundo Laranja */
+}
+/* Círculos no fundo laranja */
+.login-welcome .circle {
+    background-color: rgba(255, 255, 255, 0.2); /* Branco mais visível */
+}
+/* Posição dos círculos no Login */
+.login-welcome .circle-1 {
+    width: 300px;
+    height: 300px;
+    top: -80px;
+    left: -100px;
+    background-color: rgba(255, 255, 255, 0.4); /* Círculo branco mais opaco */
+    border: 30px solid rgba(255, 255, 255, 0.2); /* Borda semi-transparente */
+}
+.login-welcome .circle-2 {
+    width: 200px;
+    height: 200px;
+    bottom: -50px;
+    right: -70px;
+    border: 20px solid rgba(255, 255, 255, 0.2);
+}
+.login-welcome h1 {
+    font-size: 4rem; /* Maior no Login */
+    line-height: 1.1;
+}
+
+
+/* Coluna do Formulário (Branco) */
+.login-form {
+    background-color: var(--color-text-primary);
+    color: var(--color-dark-purple);
+}
+.login-title {
+    color: var(--color-orange-1); /* Título "Sign In" laranja */
+    font-size: 2.2rem;
+    font-family: var(--font-body); /* Não pixelado */
+    margin-bottom: 0.5rem;
+}
+.login-subtitle {
+    text-align: center;
+    color: #aaa;
+    margin-bottom: 2.5rem;
+}
+
+/* Inputs no Login */
+.login-input {
+    background-color: transparent;
+    border: 1.5px solid #ccc; /* Borda visível */
+    color: var(--color-dark-purple);
+}
+.login-input:focus {
+    border-color: var(--color-orange-1);
+    outline-color: var(--color-orange-1);
+    background-color: #fff;
+}
+
+/* Opções abaixo dos inputs (Remember Me + Forgot) */
+.login-options {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2.5rem;
-    flex-shrink: 0; /* Não encolhe */
+    margin-bottom: 1.5rem;
 }
-
-.logo-container {
-    flex: 1;
+.remember-check {
     display: flex;
-    justify-content: flex-start;
-}
-.logo-container .logo-brain {
-    height: 80px;
-    width: auto;
-}
-
-/* =======================
-   5. NAVEGAÇÃO PRINCIPAL
-   ======================== */
-.main-nav {
-    flex-shrink: 0;
-    background-color: var(--color-dark-purple);
-    border-radius: 80px; 
-    padding: 0.5rem 1rem; 
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2); 
-}
-
-.main-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 1.5rem; /* Espaço entre os links */
-}
-
-.main-nav a {
-    text-decoration: none;
-    color: var(--color-text-secondary);
-    font-weight: 700;
-    font-size: 1rem;
-    padding: 0.5rem 1rem; /* Aumentar a área de clique */
-    position: relative;
-    transition: color 0.3s ease;
-    display: block; /* Garante que o padding funciona bem */
-}
-
-.main-nav a:hover:not(.active) {
-    color: var(--color-text-primary);
-  
-}
-
-/* AQUI ESTÁ A BARRA LARANJA:
-  Aplica-se ao link que tem a classe 'active'
-*/
-.main-nav a.active {
-    color: var(--color-text-primary);
-}
-
-/* Este é o pseudo-elemento ::after que cria a barra */
-.main-nav a.active::after {
-    content: '';
-    position: absolute;
-    bottom: 2px; /* Posição da linha (ajuste conforme necessário) */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60%; /* Largura da linha */
-    height: 3px;
-    background-color: var(--color-orange-1); /* A sua cor laranja */
-    border-radius: 2px;
-}
-
-/* =======================
-   6. ÁREA DO UTILIZADOR (Login)
-   ======================== */
-.user-area {
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
-   
-}
-
-.user-area .btn-login {
-    text-decoration: none;
-    background-color: var(--color-light-purple);
-    color: var(--color-dark-purple);
-    padding: 0.75rem 1.75rem;
-    border-radius: 25px;
-    font-weight: 700;
-    transition: all 0.3s ease;
-    border:  2px solid var(--color-light-purple);
-}
-
-.user-area .btn-login:hover {
-    background-color: var(--color-text-primary);
-    border-color: var(--color-text-primary);
-    box-shadow: 0 0 10px var(--color-light-purple);
-}
-
-/* Estilo para quando o utilizador está logado */
-.user-area .user-dropdown {
-    color: var(--color-text-secondary);
-    font-weight: 700;
-}
-
-.user-area .user-dropdown span {
-    margin-right: 1rem;
-}
-
-.user-area .user-dropdown .btn-logout {
-    text-decoration: none;
-    color: var(--color-text-secondary);
-    font-weight: 700;
-    padding: 0.5rem;
-}
-.user-area .user-dropdown .btn-logout:hover {
-    color: var(--color-orange-1);
-}
-
-
-/* =======================
-   7. SECÇÃO HERO (Homepage)
-   ======================== */
-.hero-section {
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    padding: 4rem 2rem;
-    text-align: center;
+    margin-bottom: 0; /* Remove margem do form-group */
+    font-size: 0.9rem;
 }
-
-.hero-section .hero-logo {
-    height: 80px;
-    width: auto;
-    margin-bottom: 2rem;
-}
-
-.hero-section h1 {
-    font-family: var(--font-pixel); /* Fonte pixelada! */
-    font-size: 2.5rem;
-    color: var(--color-text-primary);
-    margin-bottom: 1rem;
-}
-
-.hero-section p {
-    font-size: 1.2rem;
-    color: var(--color-text-secondary);
-    max-width: 600px;
-    margin-bottom: 2.5rem;
-    line-height: 1.5;
-}
-
-/* =======================
-   8. BARRA DE PESQUISA (Homepage)
-   ======================== */
-.search-bar {
-    width: 100%;
-    max-width: 600px;
-}
-
-.search-bar .search-input {
-    width: 100%;
-    padding: 1rem 1.5rem;
-    border: none;
-    border-radius: 25px; /* Totalmente arredondado */
-    background-color: var(--color-light-purple);
-    color: var(--color-dark-purple);
-    font-size: 1rem;
-    font-weight: 500;
-    font-family: var(--font-body); /* Garante a fonte correta */
-}
-
-.search-bar .search-input::placeholder {
+.forgot-password {
+    font-size: 0.9rem;
     color: var(--color-main-purple);
-    opacity: 0.9;
+    text-decoration: none;
+}
+.forgot-password:hover {
+    text-decoration: underline;
 }
 
-.search-bar .search-input:focus {
-    outline: 3px solid var(--color-orange-1);
-    box-shadow: 0 0 10px var(--color-light-purple);
-}
-
-
-/* =======================
-   9. FLASH MESSAGES
-   ======================== */
-.flash-messages-container {
-    padding: 0 2.5rem; /* Alinha com o padding do header */
-    margin-top: -1rem; /* Puxa para cima */
-    position: relative;
-    z-index: 10;
-}
-.flash-message {
-    padding: 0.75rem 1.25rem;
-    margin-bottom: 1rem;
-    border-radius: 8px;
-    color: var(--color-text-primary);
-    font-weight: 700;
-}
-/* 'error' é a categoria que você usou no seu HTML */
-.flash-message.flash-error {
-    background-color: var(--color-bright-pink);
-    border: 1px solid var(--color-light-pink);
-}
-.flash-message.flash-success {
-    background-color: #4CAF50; /* Verde */
-    border: 1px solid #81C784;
-}
-.flash-message.flash-info {
-    background-color: var(--color-main-purple);
-    border: 1px solid var(--color-light-purple);
-}
-
-
-/* =======================
-   10. SCROLLBAR CUSTOMIZADA 
-   ======================== */
-.custom-scrollbar-track {
-    position: absolute;
-    right: 8px;
-    top: 100px; /* Abaixo do header */
-    bottom: 20px;
-    width: 10px;
-    background-color: rgba(0,0,0,0.2);
-    border-radius: 5px;
-    z-index: 99;
-}
-.custom-scrollbar-thumb {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100px; /* O JS controlaria isto, mas por agora é fixo */
-    background-color: var(--color-orange-1);
-    border-radius: 5px;
-    cursor: grab;
-}
-
-/* Esconder a scrollbar padrão do <main> */
-main::-webkit-scrollbar {
-    width: 0;
-    background: transparent;
-}
-main {
-    -ms-overflow-style: none; /* IE e Edge */
-    scrollbar-width: none; /* Firefox */
-}
-
-/* =======================
-   11. SECÇÃO CARROSSEL DE GRUPOS
-   ======================== */
-.group-carousel-section {
-    padding: 3rem 0; /* Espaçamento vertical */
-    text-align: center;
-    /* Um gradiente subtil no fundo desta secção */
-    background: linear-gradient(180deg, var(--color-main-purple) 0%, #461f77 100%);
-    overflow: hidden; /* Garante que nada vaza */
-}
-
-/* Título e Subtítulo da Secção (Pixelados) */
-.section-title {
-    font-family: var(--font-pixel);
-    font-size: 2.2rem;
-    color: var(--color-text-primary);
-    margin-bottom: 2rem;
-}
-
-.section-subtitle {
-    font-family: var(--font-pixel);
-    font-size: 1.2rem;
-    color: var(--color-text-secondary);
-    margin-top: 2rem;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.6;
-}
-
-/* Contentor do Carrossel */
-.carousel-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Centraliza o trilho */
-}
-
-/* Setas de Navegação */
-.carousel-arrow {
-    background: transparent;
+/* Separador "Or" */
+.login-separator {
     border: none;
-    color: var(--color-text-secondary);
-    font-size: 3rem; /* Tamanho do '<' e '>' */
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    z-index: 20;
-    
-    /* Posicionamento absoluto para não afetar os cards */
+    height: 1px;
+    background-color: #eee;
+    margin: 2rem 0;
+    position: relative;
+}
+.login-separator-text {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
-}
-.carousel-arrow:hover {
-    color: var(--color-text-primary);
-    transform: translateY(-50%) scale(1.2);
-}
-
-.left-arrow {
-    left: 10%; /* Ajuste conforme gostar */
-}
-.right-arrow {
-    right: 10%; /* Ajuste conforme gostar */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--color-text-primary); /* Fundo branco para cobrir a linha */
+    padding: 0 1rem;
+    color: #aaa;
+    font-size: 0.9rem;
 }
 
-/* O trilho que segura os cards */
-.carousel-track {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem; /* Espaço entre os cards */
-}
-
-/* Estilo Base do Card */
-.group-card {
-    background-color: var(--color-dark-purple);
-    border-radius: 20px;
-    overflow: hidden;
-    width: 290px; /* Largura fixa */
-    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    border: 3px solid transparent; /* Borda transparente para manter o tamanho */
-}
-
-.group-card .card-image-container {
-    width: 100%;
-    /* Cor de fundo caso a imagem falhe */
-    background-color: var(--color-dark-purple); 
-}
-.group-card .card-image-container img {
-    width: 100%;
-    display: block;
-    aspect-ratio: 16 / 10; /* Proporção da imagem */
-    object-fit: cover;
-}
-
-.group-card .card-content {
-    padding: 1.5rem;
-    text-align: left;
-}
-
-.group-card h3 {
-    font-family: var(--font-body);
-    font-weight: 700;
-    font-size: 1.4rem;
-    color: var(--color-text-primary);
-    margin-bottom: 0.5rem;
-}
-
-.group-card p {
-    font-size: 0.95rem;
-    color: var(--color-text-secondary);
-    margin-bottom: 1.5rem;
-    line-height: 1.4;
-}
-
-/* Estilo dos Membros (no card ativo) */
-.card-members {
-    display: flex;
-    align-items: center;
-}
-.card-members .member-icon {
-    display: block;
-    width: 28px;
-    height: 28px;
-    background-color: var(--color-light-purple);
-    border-radius: 50%;
-    border: 2px solid var(--color-main-purple);
-    
-    /* Efeito de sobreposição */
-    margin-left: -8px; 
-}
-.card-members .member-icon:first-child {
-    margin-left: 0;
-}
-.card-members .member-icon::before {
-    /* Simula o ícone de pessoa (pode trocar por um <img> ou SVG) */
-    content: '👤';
-    font-size: 14px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--color-dark-purple);
-    padding-top: 2px;
-}
-
-
-.card-members .member-more {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: var(--color-light-purple);
-    margin-left: 0.75rem;
-}
-
-/* =================================
-   Estados Ativo vs. Esbatido (Side)
-   ================================= */
-
-.side-card {
-    opacity: 0.4;
-    transform: scale(0.9); /* Fica mais pequeno */
-    z-index: 1;
-}
-
-.active-card {
-    opacity: 1;
-    transform: scale(1.0); /* Tamanho normal */
-    z-index: 10;
-    
-    /* Borda de destaque do design */
-    border: 3px solid var(--color-light-purple); 
-    box-shadow: 0 0 25px rgba(225, 190, 231, 0.4);
-}
-
-/* =======================
-   12. SECÇÃO "O QUE FAZEMOS?"
-   ======================== */
-.what-we-do-section {
-    padding: 4rem 2rem;
-    text-align: center;
-}
-
-/* Título com efeito "Glass" */
-.section-title-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 2.5rem;
-}
-.section-title-glass {
-    /* Usando a cor light-purple da sua paleta com transparência */
-    background-color: rgba(225, 190, 231, 0.15); 
-    border: 2px solid rgba(225, 190, 231, 0.4);
-    
-    border-radius: 50px; /* Super arredondado */
-    padding: 1rem 3rem;
-    color: var(--color-text-primary);
-    font-family: var(--font-pixel); /* Fonte pixelada */
-    font-size: 2rem;
-    
-    /* Efeito de "vidro" */
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-}
-
-/* Parágrafo de descrição */
-.section-description {
-    font-size: 1.1rem;
-    color: var(--color-text-secondary);
-    max-width: 650px;
-    margin: 0 auto 3.5rem auto; /* centro, com espaço em baixo */
-    line-height: 1.6;
-}
-
-/* Título dos passos (Pixelado) */
-.steps-title {
-    font-family: var(--font-pixel);
-    font-size: 1.8rem;
-    color: var(--color-text-primary);
+/* Ícones sociais no Login */
+.login-social {
+    margin-top: 2rem;
     margin-bottom: 2rem;
 }
 
-/* Lista de Passos */
-.steps-list {
-    display: flex;
-    flex-direction: column; /* Um item por linha */
-    align-items: flex-start; /* Alinha à esquerda */
-    
-    /* Centraliza o bloco da lista */
-    max-width: 600px;
-    margin: 0 auto;
-    gap: 1.5rem; /* Espaço entre os itens */
+/* Botão de Login (Laranja) */
+.login-submit.btn-secondary { /* Target mais específico */
+    width: 100%; /* Ocupa a largura toda */
+    flex: none; /* Remove o flex: 1 */
 }
 
-.step-item {
-    display: flex;
-    align-items: center;
-    gap: 1.25rem; /* Espaço entre o número e o texto */
-    text-align: left;
+/* Link para Registar */
+.register-link {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+}
+.register-link p {
+    color: #555;
+}
+.register-link a {
+    color: var(--color-orange-1);
+    font-weight: 600;
+    text-decoration: none;
+}
+.register-link a:hover {
+    text-decoration: underline;
 }
 
-/* Os números em círculos */
-.step-item .step-number {
-    flex-shrink: 0; /* Impede que o círculo encolha */
-    display: grid;
-    place-items: center; /* Centraliza o número perfeitamente */
-    width: 35px;
-    height: 35px;
-    
-    /* Cor de destaque da sua paleta */
-    background-color: var(--color-bright-pink); 
-    
-    border-radius: 50%;
-    color: var(--color-text-primary);
-    font-weight: 700;
-    font-size: 1.1rem;
-    box-shadow: 0 0 10px var(--color-bright-pink);
-}
-
-.step-item p {
-    font-size: 1.1rem;
-    color: var(--color-text-secondary);
-    font-weight: 500;
+/* Ajuste do Media Query para Login */
+@media (max-width: 768px) {
+    .login-box {
+        flex-direction: column; /* Volta a empilhar */
+    }
+    .login-welcome {
+        display: none; /* Esconde coluna laranja em telas pequenas */
+    }
 }
 
