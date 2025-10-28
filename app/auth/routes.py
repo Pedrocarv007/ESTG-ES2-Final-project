@@ -23,7 +23,7 @@ def login():
             flash('Login realizado com sucesso!', 'success')
             
             next_page = request.args.get('next')
-            return redirect(next_page) if next_page else redirect(url_for('main.dashboard'))
+            return redirect(next_page) if next_page else redirect(url_for('main.index'))
         else:
             flash('Email ou palavra-passe inválidos.', 'danger')
     

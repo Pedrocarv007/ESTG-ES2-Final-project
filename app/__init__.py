@@ -5,6 +5,7 @@ import os
 import logging
 from logging.handlers import RotatingFileHandler
 from flask import Flask
+from app.config.database import db
 
 def create_app(config_name=None):
     """Create and configure Flask application."""
@@ -30,7 +31,11 @@ def create_app(config_name=None):
     # Initialize database
     from app.config.database import init_db
     init_db(app)
-    
+
+    # Create database tables
+    with app.app_context():
+        db.create_all()
+
     # Register blueprints
     register_blueprints(app)
     
