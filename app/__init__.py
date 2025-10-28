@@ -10,7 +10,7 @@ def create_app(config_name=None):
     """Create and configure Flask application."""
     
     # Create Flask app
-    app = Flask(__name__)
+    app = Flask(__name__, static_url_path="/studyhubai/static", static_folder="static")
     
     # Load configuration
     config_name = config_name or os.environ.get('FLASK_ENV', 'development')
