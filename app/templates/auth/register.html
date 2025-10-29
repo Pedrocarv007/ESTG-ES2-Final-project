@@ -1,76 +1,90 @@
 {% extends "base.html" %}
 
-{% block title %}Registar - StudyHub AI{% endblock %}
+{% block title %}Registo - StudyHub AI{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6 col-lg-4">
-        <div class="card">
-            <div class="card-header text-center">
-                <h3>Criar Conta</h3>
+<div class="auth-container">
+    <div class="auth-box register-box">
+
+        <div class="auth-form-column">
+            <h2 class="auth-title">Create Account</h2>
+
+            <div class="social-login">
+                <a href="#" class="social-icon google" aria-label="Registar com Google"></a>
+                <a href="#" class="social-icon facebook" aria-label="Registar com Facebook"></a>
+                <a href="#" class="social-icon microsoft" aria-label="Registar com Microsoft"></a>
+                <a href="#" class="social-icon x" aria-label="Registar com X"></a>
             </div>
-            <div class="card-body">
-                <form method="POST">
-                    {{ form.hidden_tag() }}
-                    
-                    <div class="mb-3">
-                        {{ form.name.label(class="form-label") }}
-                        {{ form.name(class="form-control") }}
-                        {% if form.name.errors %}
-                            <div class="text-danger small">
-                                {% for error in form.name.errors %}
-                                    <div>{{ error }}</div>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    </div>
-                    
-                    <div class="mb-3">
-                        {{ form.email.label(class="form-label") }}
-                        {{ form.email(class="form-control") }}
-                        {% if form.email.errors %}
-                            <div class="text-danger small">
-                                {% for error in form.email.errors %}
-                                    <div>{{ error }}</div>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    </div>
-                    
-                    <div class="mb-3">
-                        {{ form.password.label(class="form-label") }}
-                        {{ form.password(class="form-control") }}
-                        {% if form.password.errors %}
-                            <div class="text-danger small">
-                                {% for error in form.password.errors %}
-                                    <div>{{ error }}</div>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    </div>
-                    
-                    <div class="mb-3">
-                        {{ form.password2.label(class="form-label") }}
-                        {{ form.password2(class="form-control") }}
-                        {% if form.password2.errors %}
-                            <div class="text-danger small">
-                                {% for error in form.password2.errors %}
-                                    <div>{{ error }}</div>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    </div>
-                    
-                    <div class="d-grid">
-                        {{ form.submit(class="btn btn-primary") }}
-                    </div>
-                </form>
-                
-                <div class="text-center mt-3">
-                    <p>Já tem conta? <a href="{{ url_for('auth.login') }}">Entrar aqui</a></p>
+
+            <p class="auth-separator">or use your email for registration.</p>
+
+            <form method="POST" action="{{ url_for('auth.register') }}" novalidate>
+                {{ form.hidden_tag() }}
+
+                <div class="form-group">
+                    {{ form.name(class="auth-input", placeholder="Name") }}
+                    {% if form.name.errors %}
+                        <div class="auth-error">
+                            {% for error in form.name.errors %}<span>{{ error }}</span>{% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
+
+                <div class="form-group">
+                    {{ form.email(class="auth-input", placeholder="Email") }}
+                    {% if form.email.errors %}
+                        <div class="auth-error">
+                            {% for error in form.email.errors %}<span>{{ error }}</span>{% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.password(class="auth-input", placeholder="Palavra-Passe") }}
+                    {% if form.password.errors %}
+                        <div class="auth-error">
+                            {% for error in form.password.errors %}<span>{{ error }}</span>{% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+              <div class="form-group">
+                     {{ form.password2(class="auth-input", placeholder="Confirmar Palavra-Passe") }}
+                     {% if form.password2.errors %}
+                         <div class="auth-error">
+                             {% for error in form.password2.errors %}<span>{{ error }}</span>{% endfor %}
+                         </div>
+                     {% endif %}
+                 </div>
+
+                <div class="form-group terms-check">
+                    {{ form.agree_terms(class="auth-checkbox") }}
+                    <label class="auth-checkbox-label" for="{{ form.agree_terms.id }}"> 
+                        <span>I agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a></span>
+                    </label>
+                    {% if form.agree_terms.errors %}
+                        <div class="auth-error">
+                            {% for error in form.agree_terms.errors %}<span>{{ error }}</span>{% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="auth-buttons">
+                    {{ form.submit(class="btn btn-auth btn-primary", value="Sign Up") }}
+                    <a href="{{ url_for('auth.login') }}" class="btn btn-auth btn-secondary">Sign In</a>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="auth-welcome-column">
+            <div class="welcome-content">
+                <h1>Welcome!</h1>
+                <div class="circle circle-1"></div>
+                <div class="circle circle-2"></div>
             </div>
         </div>
+
     </div>
 </div>
 {% endblock %}

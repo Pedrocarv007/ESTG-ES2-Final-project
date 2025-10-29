@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}About - StudyHub AI{% endblock %} 
+
+{% block content %}
+
+<section class= "hero-section">
+  <img
+    src="{{ url_for('static', filename='img/logo.png') }}"
+    alt="StudyHubAi"
+    class="hero-logo"
+  />
+
+
+<section class="hero-section"></section>
+
+<section class="what-we-do-section">
+  <div class="section-title-container">
+    <h2 class="section-title-glass">O que Fazemos?</h2>
+  </div>
+
+  <p class="section-description">
+    "Uma plataforma inteligente que conecta estudantes com os mesmos objetivos.
+    Organiza grupos, partilha materiais e aprende com um assistente de IA
+    preparado para te ajudar em qualquer disciplina."
+  </p>
+
+  <h3 class="steps-title">Vê só como é fácil:</h3>
+
+  <div class="steps-list">
+    <div class="step-item">
+      <span class="step-number">1</span>
+      <p>Regista-te na plataforma</p>
+    </div>
+    <div class="step-item">
+      <span class="step-number">2</span>
+      <p>Cria ou junta-te a um grupo</p>
+    </div>
+    <div class="step-item">
+      <span class="step-number">3</span>
+      <p>Partilha materiais e interage com o assistente IA</p>
+    </div>
+    <div class="step-item">
+      <span class="step-number">4</span>
+      <p>Acompanha o progresso e evolui em conjunto</p>
+    </div>
+  </div>
+</section>
+
+
+
+{% endblock %}

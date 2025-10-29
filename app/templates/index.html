@@ -1,119 +1,136 @@
 {% extends "base.html" %}
 
-{% block title %}Home - StudyHub AI{% endblock %}
+{% block title %}Home - StudyHub AI{% endblock %} 
 
 {% block content %}
 
-<section class="hero-section">
+<section class= "hero-section">
+  <img
+    src="{{ url_for('static', filename='img/logo.png') }}"
+    alt="StudyHubAi"
+    class="hero-logo"
+  />
 
-    <img src="{{ url_for('static', filename='img/logo-removebg-preview.png') }}" alt="StudyHubAi" class="hero-logo">
+  <h1>Conhecimento é melhor quando partilhado</h1>
+  <p>
+    Crie grupos, conversas em tempo real e deixa a Mimi ajudar-te a chegar mais
+    longe.
+  </p>
 
-    <h1>Conhecimento é melhor quando partilhado</h1>
-    <p>Crie grupos, conversas em tempo real e deixa a Mimi ajudar-te a chegar mais longe.</p>
-
-    <div class="search-bar">
-        <input type="text" class="search-input" placeholder="Procure por matérias, pessoas, salas de estudo...">
-    </div>
+  <div class="search-bar">
+    <input
+      type="text"
+      class="search-input"
+      placeholder="Procure por matérias, pessoas, salas de estudo..."
+    />
+  </div>
 </section>
 
-<section class="hero-section">
-        </section>
+<section class="hero-section"></section>
 
-    <section class="group-carousel-section">
-        
-        <h2 class="section-title">Descubra mais</h2>
+<section class="group-carousel-section">
+  <h2 class="section-title">Descubra mais</h2>
 
-        <div class="carousel-container">
+  <div class="carousel-container">
+    <button class="carousel-arrow left-arrow" aria-label="Grupo anterior">
+      &lt;
+    </button>
 
-            <button class="carousel-arrow left-arrow" aria-label="Grupo anterior">
-                &lt;
-            </button>
-
-            <div class="carousel-track">
-
-                <div class="group-card side-card">
-                    <div class="card-image-container">
-                        <img src="{{ url_for('static', filename='img/gato.jpg') }}" alt="Grupo Preview">
-                    </div>
-                    <div class="card-content">
-                        <h3>Name Group</h3>
-                        <p>A little description about the study group.</p>
-                        <div class="card-members">
-                            </div>
-                    </div>
-                </div>
-
-                <div class="group-card active-card">
-                    <div class="card-image-container">
-                        <img src="{{ url_for('static', filename='img/pombo.jpg') }}" alt="Grupo Preview">
-                    </div>
-                    <div class="card-content">
-                        <h3>Name Group</h3>
-                        <p>A little description about the study group.</p>
-                        <div class="card-members">
-                            <span class="member-icon"></span>
-                            <span class="member-icon"></span>
-                            <span class="member-icon"></span>
-                            <span class="member-more">+</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group-card side-card">
-                    <div class="card-image-container">
-                        <img src="{{ url_for('static', filename='img/gatinho.jpg') }}" alt="Grupo Preview">
-                    </div>
-                    <div class="card-content">
-                        <h3>Name Group</h3>
-                        <p>A little description about the study group.</p>
-                        <div class="card-members">
-                            </div>
-                    </div>
-                </div>
-
-            </div> <button class="carousel-arrow right-arrow" aria-label="Próximo grupo">
-                &gt;
-            </button>
-
-        </div> <p class="section-subtitle">
-            Encontra o teu grupo ideal e aprende com quem partilha o mesmo objetivo.
-        </p>
-
-    </section>
-
-    <section class="what-we-do-section">
-        
-        <div class="section-title-container">
-            <h2 class="section-title-glass">O que Fazemos?</h2>
+    <div class="carousel-track">
+      <div class="group-card side-card">
+        <div class="card-image-container">
+          <img
+            src="{{ url_for('static', filename='img/gato.jpg') }}"
+            alt="Grupo Preview"
+          />
         </div>
-
-        <p class="section-description">
-            "Uma plataforma inteligente que conecta estudantes com os mesmos objetivos. Organiza grupos, partilha materiais e aprende com um assistente de IA preparado para te ajudar em qualquer disciplina."
-        </p>
-
-        <h3 class="steps-title">Vê só como é fácil:</h3>
-
-        <div class="steps-list">
-            <div class="step-item">
-                <span class="step-number">1</span>
-                <p>Regista-te na plataforma</p>
-            </div>
-            <div class="step-item">
-                <span class="step-number">2</span>
-                <p>Cria ou junta-te a um grupo</p>
-            </div>
-            <div class="step-item">
-                <span class="step-number">3</span>
-                <p>Partilha materiais e interage com o assistente IA</p>
-            </div>
-            <div class="step-item">
-                <span class="step-number">4</span>
-                <p>Acompanha o progresso e evolui em conjunto</p>
-            </div>
+        <div class="card-content">
+          <h3>Name Group</h3>
+          <p>A little description about the study group.</p>
+          <div class="card-members"></div>
         </div>
+      </div>
 
-    </section>
+      <div class="group-card active-card">
+        <div class="card-image-container">
+          <img
+            src="{{ url_for('static', filename='img/pombo.jpg') }}"
+            alt="Grupo Preview"
+          />
+        </div>
+        <div class="card-content">
+          <h3>Name Group</h3>
+          <p>A little description about the study group.</p>
+          <div class="card-members">
+            <span class="member-icon"></span>
+            <span class="member-icon"></span>
+            <span class="member-icon"></span>
+            <span class="member-more">+</span>
+          </div>
+        </div>
+      </div>
 
+      <div class="group-card side-card">
+        <div class="card-image-container">
+          <img
+            src="{{ url_for('static', filename='img/gatinho.jpg') }}"
+            alt="Grupo Preview"
+          />
+        </div>
+        <div class="card-content">
+          <h3>Name Group</h3>
+          <p>A little description about the study group.</p>
+          <div class="card-members"></div>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-arrow right-arrow" aria-label="Próximo grupo">
+      &gt;
+    </button>
+  </div>
+  <p class="section-subtitle">
+    Encontra o teu grupo ideal e aprende com quem partilha o mesmo objetivo.
+  </p>
+</section>
 
+<section class="what-we-do-section">
+  <div class="section-title-container">
+    <h2 class="section-title-glass">O que Fazemos?</h2>
+  </div>
+
+  <p class="section-description">
+    "Uma plataforma inteligente que conecta estudantes com os mesmos objetivos.
+    Organiza grupos, partilha materiais e aprende com um assistente de IA
+    preparado para te ajudar em qualquer disciplina."
+  </p>
+
+  <h3 class="steps-title">Vê só como é fácil:</h3>
+
+  <div class="steps-list">
+    <div class="step-item">
+      <span class="step-number">1</span>
+      <p>Regista-te na plataforma</p>
+    </div>
+    <div class="step-item">
+      <span class="step-number">2</span>
+      <p>Cria ou junta-te a um grupo</p>
+    </div>
+    <div class="step-item">
+      <span class="step-number">3</span>
+      <p>Partilha materiais e interage com o assistente IA</p>
+    </div>
+    <div class="step-item">
+      <span class="step-number">4</span>
+      <p>Acompanha o progresso e evolui em conjunto</p>
+    </div>
+  </div>
+</section>
+
+<div class="features-tabs">
+  <div class="tab-item">Criação de grupos</div>
+  <div class="tab-item">Partilha de Recursos</div>
+  <div class="tab-item">Estatísticas e Progresso</div>
+  <div class="tab-item">Assistente de IA</div>
+</div>
 
 {% endblock %}

@@ -1,70 +1,136 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}StudyHub AI{% endblock %}</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&family=Pixelify+Sans:wght@400;700&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
-</head>
-<body>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&family=Pixelify+Sans:wght@400;700&display=swap" rel="stylesheet"/>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}"/>
+</head>
+
+<body>
     <div class="stars-container" id="stars-container"></div>
 
     <div class="main-container">
-
         <header class="main-header">
-            <a href="{{ url_for('main.index') }}" class="logo-container">
-                <img src="{{ url_for('static', filename='img/mimi.png') }}" alt="StudyHubAi Logo" class="logo-brain">
+            <a href="/" class="logo-container">
+                <img src="{{ url_for('static', filename='img/mimi.png') }}" alt="StudyHubAi Logo" class="logo-brain"/>
             </a>
 
             <nav class="main-nav">
                 <ul>
-                    <li><a href="{{ url_for('main.index') }}" class="{{ 'active' if active_page == 'index' else '' }}">Home</a></li>
-                    <li><a href="{{ url_for('main.study') }}" class="{{ 'active' if active_page == 'study' else '' }}">Study Groups</a></li>
-                    <li><a href="{{ url_for('main.about') }}" class="{{ 'active' if active_page == 'about' else '' }}">About</a></li>
-                    <li><a href="{{ url_for('main.contacts') }}" class="{{ 'active' if active_page == 'contacts' else '' }}">Contacts</a></li>
+                    <li>
+                        <a href="{{ url_for('main.index') }}" class="{{ 'active' if active_page == 'index' else '' }}">Home</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('main.study') }}" class="{{ 'active' if active_page == 'study' else '' }}">Study Groups</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('main.about') }}" class="{{ 'active' if active_page == 'about' else '' }}">About</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('main.contacts') }}" class="{{ 'active' if active_page == 'contacts' else '' }}">Contacts</a>
+                    </li>
                 </ul>
             </nav>
 
             <div class="user-area">
                 {% if current_user.is_authenticated %}
-                    <div class="user-dropdown">
-                        <span>Olá, {{ current_user.name.split()[0] }}</span>
-                        <a href="{{ url_for('auth.logout') }}" class="btn-logout">Sair</a>
-                    </div>
+                <div class="user-dropdown">
+                    <span>Olá, {{ current_user.name.split()[0] }}</span>
+                    <a href="{{ url_for('auth.logout') }}" class="btn-logout">Sair</a>
+                </div>
                 {% else %}
-                    <a href="{{ url_for('auth.login') }}" class="btn-login">Login</a>
+                <a href="{{ url_for('auth.login') }}" class="btn-login">Login</a>
                 {% endif %}
             </div>
         </header>
 
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="flash-messages-container">
-                    {% for category, message in messages %}
-                        <div class="flash-message flash-{{ category }}">
-                            <span>{{ message }}</span>
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
-
-        <main>
-            {% block content %}{% endblock %}
-        </main>
-        
-        <div class="custom-scrollbar-track">
-            <div class="custom-scrollbar-thumb"></div>
+        {% with messages = get_flashed_messages(with_categories=true) %} 
+        {% if messages %}
+        <div class="flash-messages-container">
+            {% for category, message in messages %}
+            <div class="flash-message flash-{{ category }}">
+                <span>{{ message }}</span>
+            </div>
+            {% endfor %}
         </div>
+        {% endif %} 
+        {% endwith %}
+        
+        <div class="main-content-wrapper">
+            <main>
+                {% block content %}{% endblock %}
+            </main>
 
-    </div> 
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+            <div class="custom-scrollbar-track">
+                <div class="custom-scrollbar-thumb"></div>
+            </div>
+        </div>
+        <footer class="main-footer">
+            <div class="footer-content">
+                <div class="footer-col" id="footer-col-logo">
+                    <img src="{{ url_for('static', filename='img/logoo.png') }}" alt="StudyHubAi Logo" class="footer-logo"/>
+                    <div class="footer-social-icons">
+                        <a href="#" class="social-icon"><img src="{{ url_for('static', filename='img/o-email.png') }}" alt="Email" class="social-icon" /></a>
+                        <a href="#" class="social-icon"><img src="{{ url_for('static', filename='img/github.png') }}" alt="GitHub" class="social-icon" /></a>
+                        <a href="#" class="social-icon"><img src="{{ url_for('static', filename='img/spotify.png') }}" alt="Spotify" class="social-icon" /></a>
+                    </div>
+                </div>
+
+                <div class="footer-col" id="footer-col-newsletter">
+                    <h4>Join the Hub Family</h4>
+                    <p>Subscribe to our newsletter...</p>
+                    <form class="newsletter-form">
+                        <div class="form-group">
+                            <input type="text" placeholder="Name" />
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Email" />
+                        </div>
+                        <button type="submit" class="btn-subscribe">SUBSCRIBE</button>
+                    </form>
+                    <small class="recaptcha-text">This site is protected by reCAPTCHA...</small>
+                </div>
+            </div>
+            
+            <hr class="footer-separator" />
+
+            <div class="footer-links-container">
+                <div class="footer-links">
+                    <h4>Social</h4>
+                    <ul>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">Twitter/X</a></li>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Instagram</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Contacts</h4>
+                    <ul>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">About Us</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom-bar">
+                <p>&copy; 2025 - all rights reserved</p>
+                <nav>
+                    <a href="#">Privacy Policy</a>
+                    <span>|</span>
+                    <a href="#">Terms of Use</a>
+                </nav>
+            </div>
+        </footer>
+    </div>
     
+<script src="{{ url_for('static', filename='js/main.js') }}"></script> 
 </body>
 </html>

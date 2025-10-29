@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicia a função das estrelas
     createStars();
 
+    // Inicia a função do carrossel
+    initializeCarousel();
+
     console.log('✨ StudyHub AI (Novo Design) Inicializado!');
 });
 
@@ -20,7 +23,7 @@ function createStars() {
     if (!starsContainer) return;
 
     starsContainer.innerHTML = ''; // Limpa estrelas antigas
-    const numStars = 200;
+    const numStars = 40;
 
     for (let i = 0; i < numStars; i++) {
         const star = document.createElement('div');
@@ -81,6 +84,7 @@ function initializeCustomScrollbar() {
     }
 
     function updateScrollbar() {
+      mainContent.style.overflowY = "auto";
         const totalHeight = mainContent.scrollHeight;
         const visibleHeight = mainContent.clientHeight;
 
@@ -116,4 +120,68 @@ function initializeCustomScrollbar() {
 
     // Chama a função uma vez no início para acertar a posição
     updateScrollbar();
+}
+/**
+ * Função 3: Carrossel de Grupos
+ * (Esta função controla as setas e as classes 'active-card')
+ */
+function initializeCarousel() {
+  const track = document.querySelector(".carousel-track");
+  const leftArrow = document.querySelector(".left-arrow");
+  const rightArrow = document.querySelector(".right-arrow");
+
+  // Verifica se estamos na página que tem o carrossel
+  if (!track || !leftArrow || !rightArrow) {
+    return;
+  }
+
+  // Obter todos os cartões como uma lista
+  const cards = Array.from(track.children);
+  
+  // Encontrar o índice do cartão que está ativo
+  let currentIndex = cards.findIndex(card => 
+    card.classList.contains("active-card")
+  );
+
+  // Função para atualizar as classes
+  function updateCarousel(newIndex) {
+    // Limita o índice para não sair dos limites da lista
+    if (newIndex < 0) {
+        newIndex = 0; // Ou newIndex = cards.length - 1; para dar a volta
+    } else if (newIndex >= cards.length) {
+        newIndex = cards.length - 1; // Ou newIndex = 0; para dar a volta
+    }
+
+    // Remove as classes de todos
+    cards.forEach(card => {
+      card.classList.remove("active-card");
+      card.classList.remove("side-card");
+    });
+
+    // Adiciona a classe ativa ao cartão do centro
+    cards[newIndex].classList.add("active-card");
+
+    // Adiciona a classe lateral aos vizinhos (se existirem)
+    if (cards[newIndex - 1]) {
+      cards[newIndex - 1].classList.add("side-card");
+    }
+    if (cards[newIndex + 1]) {
+      cards[newIndex + 1].classList.add("side-card");
+    }
+    
+    // Atualiza o índice atual
+    currentIndex = newIndex;
+  }
+
+  // Ouve os cliques nas setas
+  leftArrow.addEventListener("click", () => {
+    updateCarousel(currentIndex - 1);
+  });
+
+  rightArrow.addEventListener("click", () => {
+    updateCarousel(currentIndex + 1);
+  });
+  
+  // Inicia o carrossel na posição correta (caso o HTML não esteja certo)
+  updateCarousel(currentIndex);
 }

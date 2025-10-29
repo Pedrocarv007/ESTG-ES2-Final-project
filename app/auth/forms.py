@@ -37,6 +37,10 @@ class RegistrationForm(FlaskForm):
         DataRequired(message='Confirmação de palavra-passe é obrigatória.'),
         EqualTo('password', message='Palavras-passe não coincidem.')
     ])
+    agree_terms = BooleanField('I agree to the Terms and Privacy Policy', validators=[
+        DataRequired(message='Precisa de aceitar os termos.')])
+    
+    
     submit = SubmitField('Registar')
 
     def validate_email(self, email):
