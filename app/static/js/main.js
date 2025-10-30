@@ -20,8 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 function createStars() {
     const starsContainer = document.getElementById('stars-container');
-    if (!starsContainer) return;
+    if (!starsContainer) {
+        console.error('❌ Container de estrelas não encontrado!');
+        return;
+    }
 
+    console.log('🌟 Iniciando criação das estrelas...');
     starsContainer.innerHTML = ''; // Limpa estrelas antigas
     const numStars = 40;
 
@@ -45,27 +49,98 @@ function createStars() {
         starsContainer.appendChild(star);
     }
     
+    // Cria as estrelas cadentes iniciais
     createShootingStars(starsContainer);
+    
+    console.log('✨ Estrelas normais criadas:', starsContainer.querySelectorAll('.star').length);
+    console.log('🌠 Estrelas cadentes criadas:', starsContainer.querySelectorAll('.shooting-star').length);
 
     // Recria estrelas cadentes periodicamente
     setInterval(() => {
         const shootingStars = starsContainer.querySelectorAll('.shooting-star');
         shootingStars.forEach(star => star.remove());
         createShootingStars(starsContainer);
-    }, 30000); // A cada 30 segundos
+        console.log('🔄 Estrelas cadentes recriadas');
+    }, 15000); // A cada 15 segundos (mais frequente)
 }
 
+
+
 function createShootingStars(starsContainer) {
-    if (!starsContainer) return;
+    if (!starsContainer) {
+        console.error('❌ Container não fornecido para estrelas cadentes!');
+        return;
+    }
+    
+    console.log('🌠 Criando estrelas cadentes...');
     const numShootingStars = 3;
     
     for (let i = 0; i < numShootingStars; i++) {
         const shootingStar = document.createElement('div');
         shootingStar.className = 'shooting-star';
-        shootingStar.style.left = Math.random() * 100 + '%';
-        shootingStar.style.top = Math.random() * 30 + '%';
-        shootingStar.style.animationDelay = (Math.random() * 20 + 10) + 's';
+        
+        // Posição aleatória na parte superior da tela
+        const leftPos = Math.random() * 100;
+        const topPos = Math.random() * 30;
+        
+        shootingStar.style.left = leftPos + '%';
+        shootingStar.style.top = topPos + '%';
+        
+        // Delay aleatório para que não apareçam todas ao mesmo tempo
+        const randomDelay = Math.random() * 5; // Reduzindo o delay para debug
+        shootingStar.style.animationDelay = randomDelay + 's';
+        
+        // Duração aleatória da animação
+        const randomDuration = (Math.random() * 3 + 6); // Entre 6-9 segundos
+        shootingStar.style.animationDuration = randomDuration + 's';
+        
+        // Adiciona atributos de debug
+        shootingStar.setAttribute('data-debug', `star-${i}`);
+        shootingStar.style.setProperty('--debug-left', leftPos + '%');
+        shootingStar.style.setProperty('--debug-top', topPos + '%');
+        
         starsContainer.appendChild(shootingStar);
+        
+        console.log(`🌠 Estrela cadente ${i + 1}:`, {
+            left: leftPos + '%',
+            top: topPos + '%',
+            delay: randomDelay + 's',
+            duration: randomDuration + 's'
+        });
+    }
+    
+    // Verificar se as estrelas foram realmente adicionadas
+    const addedStars = starsContainer.querySelectorAll('.shooting-star');
+    console.log(`✅ Total de estrelas cadentes no DOM: ${addedStars.length}`);
+}
+
+// Função para testar estrelas cadentes manualmente (use no console do navegador)
+function testShootingStars() {
+    const starsContainer = document.getElementById('stars-container');
+    if (starsContainer) {
+        // Remove estrelas cadentes existentes
+        const existing = starsContainer.querySelectorAll('.shooting-star');
+        existing.forEach(star => star.remove());
+        
+        // Cria novas com delay mínimo para teste
+        createTestShootingStars(starsContainer);
+        console.log('🧪 Teste de estrelas cadentes executado!');
+    }
+}
+
+// Função para criar estrelas cadentes de teste (sem delay)
+function createTestShootingStars(starsContainer) {
+    for (let i = 0; i < 2; i++) {
+        const shootingStar = document.createElement('div');
+        shootingStar.className = 'shooting-star';
+        
+        shootingStar.style.left = (20 + i * 30) + '%';
+        shootingStar.style.top = '10%';
+        shootingStar.style.animationDelay = '0s'; // Sem delay
+        shootingStar.style.animationDuration = '5s';
+        
+        starsContainer.appendChild(shootingStar);
+        console.log(`🧪 Estrela de teste ${i + 1} criada`);
     }
 }
 

@@ -93,12 +93,12 @@ body {
     var(--color-light-pink)
   );
   opacity: 0.8;
-  transform: translateX(100vw) rotate(-45deg);
+  transform: translateX(-100vw) rotate(120deg);
   animation: shooting 10s linear infinite;
 }
 @keyframes shooting {
   0% {
-    transform: translateX(100vw) translateY(-100vh) rotate(-45deg);
+    transform: translateX(-100vw) translateY(-100vh) rotate(120deg);
     opacity: 0;
   }
   10% {
@@ -108,7 +108,7 @@ body {
     opacity: 1;
   }
   100% {
-    transform: translateX(-100vw) translateY(100vh) rotate(-45deg);
+    transform: translateX(100vw) translateY(100vh) rotate(120deg);
     opacity: 0;
   }
 }
@@ -120,9 +120,8 @@ body {
   width: 100%;
   max-width: 1400px;
   min-height: 100vh; 
-  background-color: var(--color-main-purple);
+  margin-top: 20px;
   border-radius: 20px;
-  border: 2px solid rgba(225, 190, 231, 0.3);
   box-shadow: 0 0 20px rgba(45, 27, 105, 0.5);
   position: relative;
   z-index: 1;
@@ -370,11 +369,7 @@ main::-webkit-scrollbar {
 .group-carousel-section {
   padding: 3rem 0;
   text-align: center;
-  background: linear-gradient(
-    180deg,
-    var(--color-main-purple) 0%,
-    #461f77 100%
-  );
+
   overflow: hidden;
 }
 .section-title {
