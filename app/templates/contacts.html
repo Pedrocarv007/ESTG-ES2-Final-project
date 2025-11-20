@@ -1,21 +1,69 @@
 {% extends "base.html" %}
 
-{% block title %}Contacts - StudyHub AI{% endblock %} 
+{% block title %}Contacts - StudyHub AI{% endblock %}
 
 {% block content %}
 
-<section class= "hero-section">
-  <img
-     src="{{ url_for('static', filename='img/logo-removebg-preview.png') }}"
-    alt="StudyHubAi"
-    class="hero-logo"
-  />     
-     
-    <h1>Contacte-nos</h1>
+<div class="contact-page-container">
+    
+    <div class="contact-header">
+        <h1 class="page-title">Contacta-nos</h1>
+        <p>Tens dúvidas ou sugestões? Estamos aqui para ouvir.</p>
+    </div>
 
-    <p>Estamos aqui para ajudar! Em breve mais informações.</p>
-
-           
+    <div class="contact-box-wrapper">
+        
+        <div class="contact-info-side">
+            <h3>Vamos conversar!</h3>
+            <p>Preenche o formulário e a nossa equipa (ou a Mimi) responderá o mais breve possível.</p>
             
-  
+            <div class="info-items">
+                <div class="info-item">
+                    <span class="icon">📧</span>
+                    <span>support@studyhub.ai</span>
+                </div>
+                <div class="info-item">
+                    <span class="icon">📍</span>
+                    <span>Lisboa, Portugal</span>
+                </div>
+                <div class="info-item">
+                    <span class="icon">🎓</span>
+                    <span>Universidade Europeia</span>
+                </div>
+            </div>
+
+            <div class="contact-socials">
+                <a href="#" class="social-link">LinkedIn</a>
+                <a href="#" class="social-link">Twitter</a>
+                <a href="#" class="social-link">Instagram</a>
+            </div>
+        </div>
+
+        <div class="contact-form-side">
+            <form class="contact-form">
+                <div class="form-group">
+                    <label>Nome</label>
+                    <input type="text" class="auth-input" placeholder="O teu nome">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="auth-input" placeholder="O teu email">
+                </div>
+                <div class="form-group">
+                    <label>Assunto</label>
+                    <input type="text" class="auth-input" placeholder="Sobre o que queres falar?">
+                </div>
+                <div class="form-group">
+                    <label>Mensagem</label>
+                    <textarea class="auth-input" rows="5" placeholder="Escreve a tua mensagem..."></textarea>
+                </div>
+                
+                <button type="button" class="btn btn-auth btn-primary">Enviar Mensagem</button>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
 {% endblock %}

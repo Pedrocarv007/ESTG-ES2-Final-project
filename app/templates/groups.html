@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}Study Groups - StudyHub AI{% endblock %}
+
+{% block content %}
+
+<div class="groups-page-container">
+    
+    <div class="groups-header">
+        <h1 class="page-title">Study Groups</h1>
+    </div>
+
+    <div class="groups-toolbar">
+        
+        <div class="toolbar-tabs">
+            <a href="#" class="tab-link active">All Groups <span class="counter">31</span></a>
+            <a href="#" class="tab-link">My Groups <span class="counter">10</span></a>
+            <a href="#" class="tab-link">Public Groups <span class="counter">23</span></a>
+            <a href="#" class="tab-link">Private Groups <span class="counter">8</span></a>
+        </div>
+
+        <div class="toolbar-actions">
+            <div class="search-mini">
+                <input type="text" placeholder="Search groups...">
+            </div>
+            <div class="sort-dropdown">
+                <span>Most Members</span>
+                <span class="dropdown-arrow">▼</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="groups-grid-layout">
+
+        <div class="grid-card">
+            <div class="card-top-row">
+                <span class="badge badge-public">PUBLIC GROUP</span>
+                <button class="card-menu-btn">⋮</button>
+            </div>
+            
+            <h3 class="grid-card-title">Graphic Design</h3>
+            <p class="grid-card-meta">Active 7 days ago • 293 Members</p>
+            
+            <div class="grid-card-image">
+                <img src="{{ url_for('static', filename='img/gato.jpg') }}" alt="Group Image">
+            </div>
+        </div>
+
+        <div class="grid-card">
+            <div class="card-top-row">
+                <span class="badge badge-private">PRIVATE GROUP</span>
+                <button class="card-menu-btn">⋮</button>
+            </div>
+            
+            <h3 class="grid-card-title">Art Group</h3>
+            <p class="grid-card-meta">Active 2 days ago • 120 Members</p>
+            
+            <div class="grid-card-image">
+                <img src="{{ url_for('static', filename='img/gatinho.jpg') }}" alt="Group Image">
+            </div>
+        </div>
+
+        <div class="grid-card">
+            <div class="card-top-row">
+                <span class="badge badge-public">PUBLIC GROUP</span>
+                <button class="card-menu-btn">⋮</button>
+            </div>
+            
+            <h3 class="grid-card-title">UX/UI Design</h3>
+            <p class="grid-card-meta">Active 1 hour ago • 500 Members</p>
+            
+            <div class="grid-card-image">
+                <img src="{{ url_for('static', filename='img/pombo.jpg') }}" alt="Group Image">
+            </div>
+        </div>
+
+        <div class="grid-card">
+            <div class="card-top-row">
+                <span class="badge badge-public">PUBLIC GROUP</span>
+                <button class="card-menu-btn">⋮</button>
+            </div>
+            
+            <h3 class="grid-card-title">Typography</h3>
+            <p class="grid-card-meta">Active 5 mins ago • 89 Members</p>
+            
+            <div class="grid-card-image placeholder-image">
+                <span>Aa</span>
+            </div>
+        </div>
+
+         <div class="grid-card">
+            <div class="card-top-row">
+                <span class="badge badge-public">PUBLIC GROUP</span>
+                <button class="card-menu-btn">⋮</button>
+            </div>
+            
+            <h3 class="grid-card-title">Python Devs</h3>
+            <p class="grid-card-meta">Active today • 1.2k Members</p>
+            
+            <div class="grid-card-image placeholder-image">
+                <span>🐍</span>
+            </div>
+        </div>
+
+         <div class="grid-card">
+            <div class="card-top-row">
+                <span class="badge badge-private">PRIVATE GROUP</span>
+                <button class="card-menu-btn">⋮</button>
+            </div>
+            
+            <h3 class="grid-card-title">Calculus II</h3>
+            <p class="grid-card-meta">Active 3 days ago • 45 Members</p>
+            
+            <div class="grid-card-image placeholder-image">
+                <span>∫</span>
+            </div>
+        </div>
+
+    </div> <div class="groups-pagination">
+        <button class="page-btn">&lt;</button>
+        <button class="page-btn active">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn">...</button>
+        <button class="page-btn">10</button>
+        <button class="page-btn">&gt;</button>
+    </div>
+
+</div>
+{% endblock %}

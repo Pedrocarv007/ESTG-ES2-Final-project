@@ -8,15 +8,15 @@
 
         <div class="auth-welcome-column login-welcome">
             <div class="welcome-content">
-                <h1>Welcome<br>Back!</h1>
+                <h1>Bem Vindo<br>De volta!</h1>
                 <div class="circle circle-1"></div>
                 <div class="circle circle-2"></div>
             </div>
         </div>
 
         <div class="auth-form-column login-form">
-            <h2 class="auth-title login-title">Sign In</h2>
-            <p class="login-subtitle">Please login to your account.</p>
+            <h2 class="auth-title login-title">Entrar</h2>
+            <p class="login-subtitle">Por favor, entre com sua conta!.</p>
 
             <form method="POST" action="{{ url_for('auth.login') }}" novalidate>
                 {{ form.hidden_tag() }}
@@ -44,10 +44,10 @@
                         {{ form.remember_me(class="auth-checkbox") }}
                         {{ form.remember_me.label(class="auth-checkbox-label") }}
                     </div>
-                    <a href="#" class="forgot-password">Forgot Password?</a> </div>
+                    <a href="#" class="forgot-password">Esqueceu a Palavra-passe?</a> </div>
 
                 <hr class="login-separator">
-                <p class="login-separator-text">Or</p>
+                <p class="login-separator-text">Ou</p>
 
                 <div class="social-login login-social">
                     <a href="#" class="social-icon google" aria-label="Login com Google"></a>
