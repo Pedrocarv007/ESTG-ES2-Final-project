@@ -16,13 +16,13 @@
                 <a href="#" class="social-icon x" aria-label="Registar com X"></a>
             </div>
 
-            <p class="auth-separator">or use your email for registration.</p>
+            <p class="auth-separator">ou use seu email para registar.</p>
 
             <form method="POST" action="{{ url_for('auth.register') }}" novalidate>
                 {{ form.hidden_tag() }}
 
                 <div class="form-group">
-                    {{ form.name(class="auth-input", placeholder="Name") }}
+                    {{ form.name(class="auth-input", placeholder="Nome") }}
                     {% if form.name.errors %}
                         <div class="auth-error">
                             {% for error in form.name.errors %}<span>{{ error }}</span>{% endfor %}
@@ -60,7 +60,7 @@
                 <div class="form-group terms-check">
                     {{ form.agree_terms(class="auth-checkbox") }}
                     <label class="auth-checkbox-label" for="{{ form.agree_terms.id }}"> 
-                        <span>I agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a></span>
+                        <span>I agree to the <a href="#">Termos</a> e <a href="#">Políticas de Privacidade</a></span>
                     </label>
                     {% if form.agree_terms.errors %}
                         <div class="auth-error">
@@ -71,7 +71,7 @@
 
                 <div class="auth-buttons">
                     {{ form.submit(class="btn btn-auth btn-primary", value="Sign Up") }}
-                    <a href="{{ url_for('auth.login') }}" class="btn btn-auth btn-secondary">Sign In</a>
+                    <a href="{{ url_for('auth.login') }}" class="btn btn-auth btn-secondary">Entrar</a>
                 </div>
 
             </form>
@@ -79,7 +79,7 @@
 
         <div class="auth-welcome-column">
             <div class="welcome-content">
-                <h1>Welcome!</h1>
+                <h1>Bem Vindo!</h1>
                 <div class="circle circle-1"></div>
                 <div class="circle circle-2"></div>
             </div>

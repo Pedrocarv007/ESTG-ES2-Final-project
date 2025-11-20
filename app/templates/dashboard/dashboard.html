@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - StudyHub AI{% endblock %}
+
+{% block content %}
+
+<style>
+    .main-header, .main-footer, .footer-separator, .custom-scrollbar-track {
+        display: none !important;
+    }
+    /* Ajuste para o container ocupar 100% sem padding excessivo */
+    .main-container {
+        padding: 0 !important;
+        overflow: hidden;
+    }
+    main {
+        padding: 0 !important;
+        height: 100%;
+        overflow: hidden; /* O scroll será interno */
+    }
+</style>
+
+<div class="dashboard-wrapper">
+
+    <aside class="dash-sidebar">
+        <div class="sidebar-header">
+            <h2>Olá, {{ current_user.name.split()[0] }}!</h2>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active">
+                <span class="icon">🎛️</span> Dashboard
+            </a>
+            <a href="{{ url_for('main.study') }}" class="nav-item">
+                <span class="icon">👥</span> Grupos
+            </a>
+            <a href="#" class="nav-item">
+                <span class="icon">📂</span> Materiais
+            </a>
+            <a href="#" class="nav-item">
+                <span class="icon">💡</span> MIMI AI
+            </a>
+            <a href="#" class="nav-item">
+                <span class="icon">📊</span> Progressos
+            </a>
+            <a href="#" class="nav-item">
+                <span class="icon">⚙️</span> Definições
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a href="{{ url_for('auth.logout') }}" class="nav-item logout">
+                <span class="icon">↪️</span> Sair
+            </a>
+        </div>
+    </aside>
+
+    <div class="dash-main-area">
+        
+        <header class="dash-topbar">
+            <h1 class="dash-title">Dashboard</h1>
+            
+            <div class="dash-actions">
+                <div class="search-mini white-bg">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" placeholder="Search for materials, grupos...">
+                </div>
+                <div class="user-profile-pic">
+                    <div class="avatar-circle">👤</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dash-scroll-content">
+            
+            <div class="stats-grid">
+                <div class="stat-card purple-card">
+                    <h3>Grupos Ativos</h3>
+                    <p class="big-number">5</p>
+                </div>
+                <div class="stat-card orange-card">
+                    <h3>Novas Mensagens</h3>
+                    <p class="big-number">13</p>
+                </div>
+                <div class="stat-card pink-card">
+                    <h3>Próxima Sessão</h3>
+                    <p class="big-text">Hoje 18h</p>
+                </div>
+                <div class="stat-card light-card add-btn">
+                    <span class="plus-sign">+</span>
+                </div>
+            </div>
+
+            <div class="main-grid">
+                
+                <div class="dash-widget widget-groups">
+                    <div class="widget-header">
+                        <h3>Meus Grupos</h3>
+                        <button class="btn-mini">Criar +</button>
+                    </div>
+                    
+                    <div class="widget-filters">
+                        <span class="filter-pill active">All</span>
+                        <span class="filter-pill orange">Gestor</span>
+                        <span class="filter-pill purple">Partici</span>
+                        <span class="filter-pill dark">Add +</span>
+                    </div>
+
+                    <div class="group-list-vertical">
+                        <div class="group-list-item">
+                            <div class="group-icon"></div>
+                            <div class="group-info">
+                                <span>Nome do Grupo</span>
+                                <div class="progress-bar"><div class="fill" style="width: 20%"></div></div>
+                            </div>
+                            <span class="badge-mini">Partici</span>
+                        </div>
+                        <div class="group-list-item">
+                            <div class="group-icon"></div>
+                            <div class="group-info">
+                                <span>Nome do Grupo</span>
+                                <div class="progress-bar"><div class="fill orange" style="width: 50%"></div></div>
+                            </div>
+                        </div>
+                        <div class="group-list-item">
+                            <div class="group-icon"></div>
+                            <div class="group-info">
+                                <span>Nome do Grupo</span>
+                                <div class="progress-bar"><div class="fill purple" style="width: 80%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dash-widget widget-activity">
+                    <h3>Atividade</h3>
+                    <div class="chart-container">
+                        <div class="chart-bars">
+                            <div class="bar" style="height: 40%"></div>
+                            <div class="bar pink" style="height: 70%"></div>
+                            <div class="bar orange" style="height: 50%"></div>
+                            <div class="bar purple" style="height: 90%"></div>
+                            <div class="bar" style="height: 60%"></div>
+                            <div class="bar orange" style="height: 80%"></div>
+                        </div>
+                        <div class="chart-labels">
+                            <span>10h</span><span>13h</span><span>17h</span><span>23h</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dash-widget widget-files">
+                    <h3>Seus ficheiros</h3>
+                    <div class="files-list">
+                        <div class="file-item">
+                            <span class="folder-icon purple">📁</span>
+                            <span>Estudos</span>
+                        </div>
+                        <div class="file-item">
+                            <span class="folder-icon orange">📁</span>
+                            <span>Anotações</span>
+                        </div>
+                        <div class="file-item">
+                            <span class="folder-icon pink">📁</span>
+                            <span>PDFs</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dash-widget widget-mimi">
+                    <h3>Fale com MIMI</h3>
+                    <div class="mimi-chat-area">
+                        <img src="{{ url_for('static', filename='img/mimi.png') }}" alt="Mimi" class="mimi-avatar">
+                    </div>
+                    <div class="mimi-input-wrapper">
+                        <input type="text" placeholder="Pergunte algo">
+                        <button class="send-btn">➤</button>
+                    </div>
+                </div>
+
+                <div class="dash-widget widget-recent">
+                    <h3>Atividades Recentes</h3>
+                    <div class="notification-center">
+                        <div class="bell-icon">
+                            🔔
+                            <span class="notif-badge">1</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div> </div> </div>
+</div>
+
+{% endblock %}

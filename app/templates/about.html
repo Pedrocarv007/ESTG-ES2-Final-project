@@ -1,52 +1,62 @@
 {% extends "base.html" %}
 
-{% block title %}About - StudyHub AI{% endblock %} 
+{% block title %}About - StudyHub AI{% endblock %}
 
 {% block content %}
 
-<section class= "hero-section">
-  <img
-    src="{{ url_for('static', filename='img/logo.png') }}"
-    alt="StudyHubAi"
-    class="hero-logo"
-  />
+<div class="about-page-container">
 
+    <section class="about-hero">
+        <h1 class="page-title">Quem Somos?</h1>
+        <p class="about-subtitle">A revolucionar a forma como estudas, um pixel de cada vez.</p>
+    </section>
 
-<section class="hero-section"></section>
+    <div class="about-content-wrapper">
+        
+        <div class="about-card glass-effect">
+            <div class="about-text">
+                <h2>🚀 A Nossa Missão</h2>
+                <p>
+                    O <strong>StudyHub AI</strong> nasceu da necessidade de conectar estudantes num mundo cada vez mais digital. 
+                    Acreditamos que o conhecimento não deve ser solitário. A nossa plataforma combina a colaboração humana 
+                    com a potência da Inteligência Artificial para criar um ambiente onde ninguém fica para trás.
+                </p>
+            </div>
+            <div class="about-image">
+                <img src="{{ url_for('static', filename='img/mimi.png') }}" alt="Mimi AI">
+            </div>
+        </div>
 
-<section class="what-we-do-section">
-  <div class="section-title-container">
-    <h2 class="section-title-glass">O que Fazemos?</h2>
-  </div>
+        <div class="about-card glass-effect reverse">
+            <div class="about-text">
+                <h2>🤖 Conhece a Mimi</h2>
+                <p>
+                    A Mimi não é apenas um chatbot. É a tua parceira de estudo incansável. 
+                    Treinada para resumir matérias complexas, gerar quizzes e organizar o teu plano de estudos, 
+                    a Mimi está aqui para garantir que focas no que realmente importa: aprender.
+                </p>
+            </div>
+            <div class="about-visual">
+                <div class="pixel-art-brain">🧠</div>
+            </div>
+        </div>
 
-  <p class="section-description">
-    "Uma plataforma inteligente que conecta estudantes com os mesmos objetivos.
-    Organiza grupos, partilha materiais e aprende com um assistente de IA
-    preparado para te ajudar em qualquer disciplina."
-  </p>
+        <div class="stats-row">
+            <div class="stat-item">
+                <span class="stat-number">50+</span>
+                <span class="stat-label">Grupos de Estudo</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">1k+</span>
+                <span class="stat-label">Estudantes</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">24/7</span>
+                <span class="stat-label">Apoio da IA</span>
+            </div>
+        </div>
 
-  <h3 class="steps-title">Vê só como é fácil:</h3>
-
-  <div class="steps-list">
-    <div class="step-item">
-      <span class="step-number">1</span>
-      <p>Regista-te na plataforma</p>
     </div>
-    <div class="step-item">
-      <span class="step-number">2</span>
-      <p>Cria ou junta-te a um grupo</p>
-    </div>
-    <div class="step-item">
-      <span class="step-number">3</span>
-      <p>Partilha materiais e interage com o assistente IA</p>
-    </div>
-    <div class="step-item">
-      <span class="step-number">4</span>
-      <p>Acompanha o progresso e evolui em conjunto</p>
-    </div>
-  </div>
-</section>
-
-
+</div>
 
 {% endblock %}

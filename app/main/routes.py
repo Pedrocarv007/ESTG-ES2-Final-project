@@ -14,11 +14,10 @@ def dashboard():
     """Dashboard route."""
     return render_template('dashboard.html', active_page='dashboard')
 
-@bp.route('/study')
-def study():
-    """Study page route."""
-    return render_template('study.html', active_page='study')
-
+@bp.route('/groups')
+def groups():
+    """Groups route."""
+    return render_template('groups.html', active_page='groups')
 
 @bp.route('/about')
 def about():
