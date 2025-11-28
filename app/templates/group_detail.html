@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}{{ group.name }} - StudyHub AI{% endblock %}
+
+{% block content %}
+<div class="group-detail-container">
+    
+    <div class="group-detail-header">
+        <div class="header-left">
+            <a href="{{ url_for('main.groups') }}" class="back-link">← Voltar</a>
+            <div class="group-identity">
+                {% if group.img %}
+                    <img src="{{ url_for('static', filename='img/' + group.img) }}" class="group-avatar">
+                {% else %}
+                    <div class="group-avatar placeholder">📚</div>
+                {% endif %}
+                
+                <div>
+                    <h1 class="group-title">{{ group.name }}</h1>
+                    <div class="badges-row">
+                        {% if group.type == 'public' %}
+                            <span class="badge badge-public">PÚBLICO</span>
+                        {% else %}
+                            <span class="badge badge-private">PRIVADO</span>
+                        {% endif %}
+                        <span class="meta">• {{ group.members }} Membros</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="header-right">
+            {% if group.type == 'public' %}
+                <button class="btn-join">Entrar no Grupo</button>
+            {% else %}
+                <button class="btn-request">🔒 Pedir Acesso</button>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="group-body">
+        
+        <div class="group-section about">
+            <h3>Sobre</h3>
+            <p>{{ group.desc }}</p>
+            
+            {% if group.type == 'private' %}
+                <div class="private-warning">
+                    <p>⚠️ Este grupo é privado. O conteúdo (chat, materiais) está oculto para não-membros.</p>
+                </div>
+            {% endif %}
+        </div>
+
+        {% if group.type == 'public' %}
+        <div class="group-section materials">
+            <h3>📂 Materiais Recentes</h3>
+            <ul class="resource-list">
+                <li>📄 Resumo da Matéria.pdf</li>
+                <li>🔗 Link para Aula Zoom</li>
+                <li>📝 Exercícios.docx</li>
+            </ul>
+            
+            <h3 style="margin-top: 2rem;">👥 Membros</h3>
+            <div class="members-preview">
+                <span class="member-circle">👤</span>
+                <span class="member-circle">👤</span>
+                <span class="member-circle">+20</span>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

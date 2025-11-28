@@ -1,72 +1,118 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %}Login - StudyHub AI{% endblock %} {%
+block content %}
 
-{% block title %}Login - StudyHub AI{% endblock %}
+<style>
+  .main-header,
+  .main-footer,
+  .custom-scrollbar-track {
+    display: none !important;
+  }
+  .main-container {
+    padding: 0 !important; /* Remove espaçamento extra */
+    height: 100vh !important;
+  }
+</style>
 
-{% block content %}
-<div class="auth-container">
-    <div class="auth-box login-box">
-
-        <div class="auth-welcome-column login-welcome">
-            <div class="welcome-content">
-                <h1>Bem Vindo<br>De volta!</h1>
-                <div class="circle circle-1"></div>
-                <div class="circle circle-2"></div>
-            </div>
-        </div>
-
-        <div class="auth-form-column login-form">
-            <h2 class="auth-title login-title">Entrar</h2>
-            <p class="login-subtitle">Por favor, entre com sua conta!.</p>
-
-            <form method="POST" action="{{ url_for('auth.login') }}" novalidate>
-                {{ form.hidden_tag() }}
-
-                <div class="form-group">
-                    {{ form.email(class="auth-input login-input", placeholder="Email") }}
-                    {% if form.email.errors %}
-                        <div class="auth-error">
-                            {% for error in form.email.errors %}<span>{{ error }}</span>{% endfor %}
-                        </div>
-                    {% endif %}
-                </div>
-
-                <div class="form-group">
-                    {{ form.password(class="auth-input login-input", placeholder="Palavra-Passe") }}
-                    {% if form.password.errors %}
-                        <div class="auth-error">
-                            {% for error in form.password.errors %}<span>{{ error }}</span>{% endfor %}
-                        </div>
-                    {% endif %}
-                </div>
-
-                <div class="login-options">
-                    <div class="form-group remember-check">
-                        {{ form.remember_me(class="auth-checkbox") }}
-                        {{ form.remember_me.label(class="auth-checkbox-label") }}
-                    </div>
-                    <a href="#" class="forgot-password">Esqueceu a Palavra-passe?</a> </div>
-
-                <hr class="login-separator">
-                <p class="login-separator-text">Ou</p>
-
-                <div class="social-login login-social">
-                    <a href="#" class="social-icon google" aria-label="Login com Google"></a>
-                    <a href="#" class="social-icon facebook" aria-label="Login com Facebook"></a>
-                    <a href="#" class="social-icon microsoft" aria-label="Login com Microsoft"></a>
-                    <a href="#" class="social-icon x" aria-label="Login com X"></a>
-                </div>
-
-                <div class="auth-buttons">
-                    {{ form.submit(class="btn btn-auth btn-secondary login-submit", value="Login") }}
-                </div>
-
-                <div class="register-link">
-                    <p>Não tem uma conta? <a href="{{ url_for('auth.register') }}">Registar-se</a></p>
-                </div>
-
-            </form>
-        </div>
-
+<div class="standalone-auth-container">
+  <div class="auth-card-wide">
+    <div class="auth-brand-panel">
+      <div class="brand-content">
+        <div class="brand-logo-mini">StudyHubAi</div>
+        <h1 class="brand-heading">Bem-vindo<br />de volta!</h1>
+        <p class="brand-tagline">
+          O teu hub pessoal para clareza e produtividade nos estudos.
+        </p>
+      </div>
     </div>
+
+    <div class="auth-form-panel">
+      <a href="{{ url_for('main.index') }}" class="back-to-home"
+        >← Voltar à Home</a
+      >
+
+      <div class="form-header">
+        <h2 class="form-title">Entrar na conta</h2>
+        <p class="form-subtitle">
+          Acede aos teus grupos, materiais e à Mimi AI.
+        </p>
+      </div>
+
+      <form method="POST" action="{{ url_for('auth.login') }}" novalidate>
+        {{ form.hidden_tag() }}
+
+        <div class="form-group-clean">
+          {{ form.email.label(class="form-label") }} {{
+          form.email(class="input-clean", id="email-field") }} {% if
+          form.email.errors %}
+          <div class="auth-error">
+            {% for error in form.email.errors %}<span>{{ error }}</span>{%
+            endfor %}
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="form-group-clean">
+          {{ form.password.label(class="form-label") }}
+          <div class="password-wrapper-clean">
+            {{ form.password(class="input-clean", id="password-field") }}
+            <button
+              type="button"
+              class="btn-toggle-password-clean"
+              onclick="togglePassword('password-field', this)"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+                ></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>
+            </button>
+          </div>
+
+          {% if form.password.errors %}
+          <div class="auth-error">
+            {% for error in form.password.errors %}<span>{{ error }}</span>{%
+            endfor %}
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="login-options" style="margin-bottom: 1.5rem">
+          <div class="terms-check">
+            {{ form.remember_me(class="auth-checkbox") }} {{
+            form.remember_me.label(class="auth-checkbox-label") }}
+          </div>
+          <a href="#" class="forgot-password">Esqueceu a password?</a>
+        </div>
+
+        {{ form.submit(class="btn-submit-clean", value="Entrar") }}
+
+        <div class="divider-clean">ou continue com</div>
+
+        <div class="social-mini-row">
+          <a href="#" class="social-btn-mini google" aria-label="Google">G</a>
+          <a href="#" class="social-btn-mini apple" aria-label="Apple">A</a>
+          <a href="#" class="social-btn-mini facebook" aria-label="Facebook"
+            >F</a
+          >
+        </div>
+
+        <p class="auth-footer-link">
+          Ainda não tem conta?
+          <a href="{{ url_for('auth.register') }}">Registar</a>
+        </p>
+      </form>
+    </div>
+  </div>
 </div>
 {% endblock %}

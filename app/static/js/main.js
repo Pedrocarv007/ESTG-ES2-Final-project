@@ -1,187 +1,208 @@
 /* Espera o conteúdo da página carregar */
-document.addEventListener('DOMContentLoaded', () => {
-    
-    // Inicia a função da barra de scroll
-    initializeCustomScrollbar();
-    
-    // Inicia a função das estrelas
-    createStars();
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("✨ StudyHub AI: Iniciando scripts...");
 
-    // Inicia a função do carrossel
+  // 1. Iniciar Scrollbar
+  initializeCustomScrollbar();
+
+  // 2. Iniciar Estrelas
+  createStars();
+
+  // 3. Iniciar Carrossel (apenas se existir na página)
+  if (document.querySelector(".carousel-track")) {
     initializeCarousel();
-
-    console.log('✨ StudyHub AI (Novo Design) Inicializado!');
+  }
 });
 
-
-/**
- * Função 1: Animação das Estrelas
- * (Este é o código que estava no seu base.html)
- */
-function createStars() {
-    const starsContainer = document.getElementById('stars-container');
-    if (!starsContainer) return;
-
-    starsContainer.innerHTML = ''; // Limpa estrelas antigas
-    const numStars = 40;
-
-    for (let i = 0; i < numStars; i++) {
-        const star = document.createElement('div');
-        star.className = 'star';
-        
-        // Tamanhos aleatórios
-        const sizes = ['small', 'medium', 'large'];
-        const weights = [0.7, 0.25, 0.05];
-        let randomSize = 'small';
-        const rand = Math.random();
-        
-        if (rand < weights[2]) randomSize = 'large';
-        else if (rand < weights[1] + weights[2]) randomSize = 'medium';
-        
-        star.classList.add(randomSize);
-        star.style.left = Math.random() * 100 + '%';
-        star.style.top = Math.random() * 100 + '%';
-        star.style.animationDelay = Math.random() * 3 + 's';
-        starsContainer.appendChild(star);
-    }
-    
-    createShootingStars(starsContainer);
-
-    // Recria estrelas cadentes periodicamente
-    setInterval(() => {
-        const shootingStars = starsContainer.querySelectorAll('.shooting-star');
-        shootingStars.forEach(star => star.remove());
-        createShootingStars(starsContainer);
-    }, 30000); // A cada 30 segundos
-}
-
-function createShootingStars(starsContainer) {
-    if (!starsContainer) return;
-    const numShootingStars = 3;
-    
-    for (let i = 0; i < numShootingStars; i++) {
-        const shootingStar = document.createElement('div');
-        shootingStar.className = 'shooting-star';
-        shootingStar.style.left = Math.random() * 100 + '%';
-        shootingStar.style.top = Math.random() * 30 + '%';
-        shootingStar.style.animationDelay = (Math.random() * 20 + 10) + 's';
-        starsContainer.appendChild(shootingStar);
-    }
-}
-
-
-/**
- * Função 2: Barra de Scroll Laranja Customizada
- * (Esta função liga a scrollbar falsa à scrollbar real)
- */
+/* ==========================================
+   FUNÇÃO 1: BARRA DE SCROLL CUSTOMIZADA (ROBUSTA)
+   ========================================== */
 function initializeCustomScrollbar() {
-    const mainContent = document.querySelector('main'); 
-    const scrollThumb = document.querySelector('.custom-scrollbar-thumb');
-    const scrollTrack = document.querySelector('.custom-scrollbar-track');
+  const mainContent = document.querySelector("main");
+  const scrollThumb = document.querySelector(".custom-scrollbar-thumb");
+  const scrollTrack = document.querySelector(".custom-scrollbar-track");
 
-    if (!mainContent || !scrollThumb || !scrollTrack) {
-        return; // Não executa se os elementos não existirem
+  if (!mainContent || !scrollThumb || !scrollTrack) {
+    console.warn("⚠️ Elementos da scrollbar não encontrados.");
+    return;
+  }
+
+  function updateScrollbar() {
+    const totalHeight = mainContent.scrollHeight;
+    const visibleHeight = mainContent.clientHeight;
+    const scrollPosition = mainContent.scrollTop;
+
+  
+     if (totalHeight <= visibleHeight + 1) {
+      scrollTrack.style.display = "none";
+      return;
+    } else {
+      scrollTrack.style.display = "block";
     }
 
-    function updateScrollbar() {
-      mainContent.style.overflowY = "auto";
-        const totalHeight = mainContent.scrollHeight;
-        const visibleHeight = mainContent.clientHeight;
-
-        // Esconde a barra se não houver scroll
-        if (totalHeight <= visibleHeight) {
-            scrollTrack.style.display = 'none';
-            return;
-        } else {
-            scrollTrack.style.display = 'block';
-        }
-
-        // 1. Atualiza o tamanho do polegar
-        const trackHeight = scrollTrack.clientHeight;
-        const thumbHeight = (visibleHeight / totalHeight) * trackHeight;
-        scrollThumb.style.height = `${Math.max(thumbHeight, 20)}px`; // Mínimo de 20px
-
-        // 2. Atualiza a posição do polegar
-        const scrollPosition = mainContent.scrollTop;
-        const maxScroll = totalHeight - visibleHeight;
-        const scrollPercentage = scrollPosition / maxScroll;
-        const maxThumbPosition = trackHeight - scrollThumb.clientHeight;
-        const thumbPosition = scrollPercentage * maxThumbPosition;
-
-        scrollThumb.style.top = `${thumbPosition}px`;
-    }
-
-    // Ouve o evento de 'scroll' no <main>
-    mainContent.addEventListener('scroll', updateScrollbar);
+    // 1. Calcular altura do polegar (Thumb)
+    const trackHeight = scrollTrack.clientHeight;
+    // Relação entre o que vemos e o total
+    const ratio = visibleHeight / totalHeight;
+    // Altura proporcional
+    let thumbHeight = ratio * trackHeight;
+    // Define um tamanho mínimo (20px) para não desaparecer
+    thumbHeight = Math.max(thumbHeight, 30);
     
-    // Ouve mudanças no tamanho (ex: se o browser mudar de tamanho)
-    const resizeObserver = new ResizeObserver(updateScrollbar);
-    resizeObserver.observe(mainContent);
+    scrollThumb.style.height = `${thumbHeight}px`;
 
-    // Chama a função uma vez no início para acertar a posição
-    updateScrollbar();
+    // 2. Calcular posição do polegar (Top)
+    // Espaço disponível para o polegar se mover
+    const maxThumbMove = trackHeight - thumbHeight;
+    // Espaço disponível para rolar o conteúdo
+    const maxScrollContent = totalHeight - visibleHeight;
+    
+    // Percentagem atual do scroll
+    const scrollPercentage = scrollPosition / maxScrollContent;
+    
+    // Posição final
+    const thumbTop = scrollPercentage * maxThumbMove;
+
+    scrollThumb.style.top = `${thumbTop}px`;
+  }
+
+  // --- EVENT LISTENERS ---
+
+  // 1. Quando o utilizador rola
+  mainContent.addEventListener("scroll", updateScrollbar);
+
+  // 2. Quando a janela muda de tamanho
+  window.addEventListener("resize", updateScrollbar);
+
+  // 3. Quando as imagens terminam de carregar (Importante!)
+  window.addEventListener("load", updateScrollbar);
+
+  // 4. Verificação periódica (segurança para conteúdo dinâmico)
+  setInterval(updateScrollbar, 1000);
+
+  // Chamada inicial
+  updateScrollbar();
 }
-/**
- * Função 3: Carrossel de Grupos
- * (Esta função controla as setas e as classes 'active-card')
- */
+
+/* ==========================================
+   FUNÇÃO 2: ESTRELAS ANIMADAS
+   ========================================== */
+function createStars() {
+  const starsContainer = document.getElementById("stars-container");
+  if (!starsContainer) return;
+
+  starsContainer.innerHTML = "";
+  const numStars = 50; // Reduzi um pouco para performance
+
+  for (let i = 0; i < numStars; i++) {
+    const star = document.createElement("div");
+    star.className = "star";
+    
+    // Tamanho aleatório
+    const r = Math.random();
+    if (r < 0.7) star.classList.add("small");
+    else if (r < 0.9) star.classList.add("medium");
+    else star.classList.add("large");
+
+    star.style.left = Math.random() * 100 + "%";
+    star.style.top = Math.random() * 100 + "%";
+    star.style.animationDelay = Math.random() * 3 + "s";
+    starsContainer.appendChild(star);
+  }
+}
+
+/* ==========================================
+   FUNÇÃO 3: CARROSSEL INFINITO
+   ========================================== */
 function initializeCarousel() {
   const track = document.querySelector(".carousel-track");
   const leftArrow = document.querySelector(".left-arrow");
   const rightArrow = document.querySelector(".right-arrow");
 
-  // Verifica se estamos na página que tem o carrossel
-  if (!track || !leftArrow || !rightArrow) {
-    return;
-  }
+  if (!track || !leftArrow || !rightArrow) return;
 
-  // Obter todos os cartões como uma lista
   const cards = Array.from(track.children);
-  
-  // Encontrar o índice do cartão que está ativo
-  let currentIndex = cards.findIndex(card => 
-    card.classList.contains("active-card")
-  );
+  if (cards.length === 0) return;
 
-  // Função para atualizar as classes
-  function updateCarousel(newIndex) {
-    // Limita o índice para não sair dos limites da lista
-    if (newIndex < 0) {
-        newIndex = 0; // Ou newIndex = cards.length - 1; para dar a volta
-    } else if (newIndex >= cards.length) {
-        newIndex = cards.length - 1; // Ou newIndex = 0; para dar a volta
-    }
+  let currentIndex = cards.findIndex(c => c.classList.contains("active-card"));
+  if (currentIndex === -1) currentIndex = 0;
 
-    // Remove as classes de todos
+  function updateCarousel() {
+    // Resetar estilos
     cards.forEach(card => {
-      card.classList.remove("active-card");
-      card.classList.remove("side-card");
+      card.className = "group-card"; // Remove active/side
+      card.style.display = "none";
+      card.style.order = "0";
     });
 
-    // Adiciona a classe ativa ao cartão do centro
-    cards[newIndex].classList.add("active-card");
+    // Calcular índices (Circular)
+    const prev = (currentIndex - 1 + cards.length) % cards.length;
+    const next = (currentIndex + 1) % cards.length;
 
-    // Adiciona a classe lateral aos vizinhos (se existirem)
-    if (cards[newIndex - 1]) {
-      cards[newIndex - 1].classList.add("side-card");
-    }
-    if (cards[newIndex + 1]) {
-      cards[newIndex + 1].classList.add("side-card");
-    }
-    
-    // Atualiza o índice atual
-    currentIndex = newIndex;
+    // Configurar Cartão Anterior
+    cards[prev].style.display = "flex"; // "flex" para manter o CSS que corrigimos
+    cards[prev].classList.add("side-card");
+    cards[prev].style.order = "1";
+
+    // Configurar Cartão Ativo
+    cards[currentIndex].style.display = "flex";
+    cards[currentIndex].classList.add("active-card");
+    cards[currentIndex].style.order = "2";
+
+    // Configurar Cartão Próximo
+    cards[next].style.display = "flex";
+    cards[next].classList.add("side-card");
+    cards[next].style.order = "3";
   }
 
-  // Ouve os cliques nas setas
   leftArrow.addEventListener("click", () => {
-    updateCarousel(currentIndex - 1);
+    currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+    updateCarousel();
   });
 
   rightArrow.addEventListener("click", () => {
-    updateCarousel(currentIndex + 1);
+    currentIndex = (currentIndex + 1) % cards.length;
+    updateCarousel();
   });
-  
-  // Inicia o carrossel na posição correta (caso o HTML não esteja certo)
-  updateCarousel(currentIndex);
+
+  // Inicializar
+  updateCarousel();
+}
+
+
+/* ==========================================
+   FUNÇÃO 4: Possibilitar ver a palavra-passe
+   ========================================== */
+
+   /**
+
+ * Função para mostrar/esconder a senha
+ * @param {string} inputId - O ID do campo de input
+ * @param {HTMLElement} btn - O botão que foi clicado
+ */
+function togglePassword(inputId, btn) {
+    const input = document.getElementById(inputId);
+    const icon = btn.querySelector('svg');
+    
+    if (input.type === "password") {
+        // Mostrar Senha
+        input.type = "text";
+        
+        // Mudar Ícone para Olho Aberto
+        icon.innerHTML = `
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+        `;
+        btn.style.color = "var(--color-main-purple)"; // Destaque visual
+    } else {
+        // Esconder Senha
+        input.type = "password";
+        
+        // Mudar Ícone para Olho Fechado (Riscado)
+        icon.innerHTML = `
+            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+            <line x1="1" y1="1" x2="23" y2="23"></line>
+        `;
+        btn.style.color = "#999"; // Cor normal
+    }
 }

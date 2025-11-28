@@ -1,90 +1,128 @@
-{% extends "base.html" %}
-
-{% block title %}Registo - StudyHub AI{% endblock %}
-
+{% extends "base.html" %} {% block title %}Registo - StudyHub AI{% endblock %}
 {% block content %}
-<div class="auth-container">
-    <div class="auth-box register-box">
 
-        <div class="auth-form-column">
-            <h2 class="auth-title">Create Account</h2>
+<style>
+  .main-header,
+  .main-footer,
+  .custom-scrollbar-track {
+    display: none !important;
+  }
+  .main-container {
+    padding: 0 !important;
+    height: 100vh !important;
+  }
+</style>
 
-            <div class="social-login">
-                <a href="#" class="social-icon google" aria-label="Registar com Google"></a>
-                <a href="#" class="social-icon facebook" aria-label="Registar com Facebook"></a>
-                <a href="#" class="social-icon microsoft" aria-label="Registar com Microsoft"></a>
-                <a href="#" class="social-icon x" aria-label="Registar com X"></a>
-            </div>
-
-            <p class="auth-separator">ou use seu email para registar.</p>
-
-            <form method="POST" action="{{ url_for('auth.register') }}" novalidate>
-                {{ form.hidden_tag() }}
-
-                <div class="form-group">
-                    {{ form.name(class="auth-input", placeholder="Nome") }}
-                    {% if form.name.errors %}
-                        <div class="auth-error">
-                            {% for error in form.name.errors %}<span>{{ error }}</span>{% endfor %}
-                        </div>
-                    {% endif %}
-                </div>
-
-                <div class="form-group">
-                    {{ form.email(class="auth-input", placeholder="Email") }}
-                    {% if form.email.errors %}
-                        <div class="auth-error">
-                            {% for error in form.email.errors %}<span>{{ error }}</span>{% endfor %}
-                        </div>
-                    {% endif %}
-                </div>
-
-                <div class="form-group">
-                    {{ form.password(class="auth-input", placeholder="Palavra-Passe") }}
-                    {% if form.password.errors %}
-                        <div class="auth-error">
-                            {% for error in form.password.errors %}<span>{{ error }}</span>{% endfor %}
-                        </div>
-                    {% endif %}
-                </div>
-                
-              <div class="form-group">
-                     {{ form.password2(class="auth-input", placeholder="Confirmar Palavra-Passe") }}
-                     {% if form.password2.errors %}
-                         <div class="auth-error">
-                             {% for error in form.password2.errors %}<span>{{ error }}</span>{% endfor %}
-                         </div>
-                     {% endif %}
-                 </div>
-
-                <div class="form-group terms-check">
-                    {{ form.agree_terms(class="auth-checkbox") }}
-                    <label class="auth-checkbox-label" for="{{ form.agree_terms.id }}"> 
-                        <span>I agree to the <a href="#">Termos</a> e <a href="#">Políticas de Privacidade</a></span>
-                    </label>
-                    {% if form.agree_terms.errors %}
-                        <div class="auth-error">
-                            {% for error in form.agree_terms.errors %}<span>{{ error }}</span>{% endfor %}
-                        </div>
-                    {% endif %}
-                </div>
-
-                <div class="auth-buttons">
-                    {{ form.submit(class="btn btn-auth btn-primary", value="Sign Up") }}
-                    <a href="{{ url_for('auth.login') }}" class="btn btn-auth btn-secondary">Entrar</a>
-                </div>
-
-            </form>
-        </div>
-
-        <div class="auth-welcome-column">
-            <div class="welcome-content">
-                <h1>Bem Vindo!</h1>
-                <div class="circle circle-1"></div>
-                <div class="circle circle-2"></div>
-            </div>
-        </div>
-
+<div class="standalone-auth-container">
+  <div class="auth-card-wide">
+    <div class="auth-brand-panel">
+      <div class="brand-content">
+        <div class="brand-logo-mini">StudyHubAi</div>
+        <h1 class="brand-heading">Junta-te<br />à família!</h1>
+        <p class="brand-tagline">
+          Começa hoje a tua jornada de aprendizagem colaborativa.
+        </p>
+      </div>
     </div>
+
+    <div class="auth-form-panel">
+      <a href="{{ url_for('main.index') }}" class="back-to-home"
+        >← Voltar à Home</a
+      >
+
+      <div class="form-header">
+        <h2 class="form-title">Criar conta</h2>
+        <p class="form-subtitle">Preenche os dados abaixo para começar.</p>
+      </div>
+
+      <form method="POST" action="{{ url_for('auth.register') }}" novalidate>
+        {{ form.hidden_tag() }}
+
+        <div class="form-group-clean">
+          {{ form.name.label(class="form-label") }} {{
+          form.name(class="input-clean") }} {% if form.name.errors %}
+          <div class="auth-error">
+            {% for error in form.name.errors %}<span>{{ error }}</span>{% endfor
+            %}
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="form-group-clean">
+          {{ form.email.label(class="form-label") }} {{
+          form.email(class="input-clean") }} {% if form.email.errors %}
+          <div class="auth-error">
+            {% for error in form.email.errors %}<span>{{ error }}</span>{%
+            endfor %}
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="form-group-clean">
+          {{ form.password.label(class="form-label") }}
+          <div class="password-wrapper-clean">
+            {{ form.password(class="input-clean", id="reg-pass") }}
+            <button
+              type="button"
+              class="btn-toggle-password-clean"
+              onclick="togglePassword('reg-pass', this)"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+                ></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>
+            </button>
+          </div>
+          {% if form.password.errors %}
+          <div class="auth-error">
+            {% for error in form.password.errors %}<span>{{ error }}</span>{%
+            endfor %}
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="form-group-clean">
+          {{ form.password2.label(class="form-label") }}
+          <div class="password-wrapper-clean">
+            {{ form.password2(class="input-clean", id="reg-pass-2") }}
+          </div>
+          {% if form.password2.errors %}
+          <div class="auth-error">
+            {% for error in form.password2.errors %}<span>{{ error }}</span>{%
+            endfor %}
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="form-group-clean terms-check" style="margin-top: 1rem">
+          {{ form.agree_terms(class="auth-checkbox") }}
+          <label class="auth-checkbox-label" for="{{ form.agree_terms.id }}">
+            <span
+              >Concordo com os <a href="#">Termos</a> e
+              <a href="#">Privacidade</a></span
+            >
+          </label>
+        </div>
+
+        {{ form.submit(class="btn-submit-clean", value="Criar Conta") }}
+
+        <p class="auth-footer-link">
+          Já tens conta? <a href="{{ url_for('auth.login') }}">Entrar</a>
+        </p>
+      </form>
+    </div>
+  </div>
 </div>
 {% endblock %}

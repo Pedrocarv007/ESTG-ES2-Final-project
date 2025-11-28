@@ -16,8 +16,9 @@ if __name__ == '__main__':
     # Development server configuration
     host = os.environ.get('FLASK_HOST', '127.0.0.1')
     port = int(os.environ.get('FLASK_PORT', 6002))
-    debug = os.environ.get('FLASK_ENV') == 'development'
+    debug = os.environ.get('FLASK_DEBUG', 'true').lower() in ['true', 'on', '1']
     use_proxy = os.environ.get('USE_PROXY', 'true').lower() in ['true', 'on', '1']
+    
     
     print("🎓 StudyHub AI - Iniciando aplicação...")
     print(f"📍 Servidor disponível em: http://{host}:{port}")

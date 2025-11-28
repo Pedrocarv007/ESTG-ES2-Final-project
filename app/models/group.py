@@ -4,7 +4,7 @@ Group model for StudyHub AI
 from datetime import datetime
 from app.config.database import db
 
-# Association table for group members
+# Tabela  de associação (Muito-para-muitos) entre usuários e grupos
 group_members = db.Table('group_members',
     db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
     db.Column('group_id', db.Integer, db.ForeignKey('groups.id'), primary_key=True),
@@ -22,6 +22,10 @@ class Group(db.Model):
     subject = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text)
     goals = db.Column(db.Text)
+
+    type = db.Column(db.String(20), default='public') # 'public' ou 'private'
+    image = db.Column(db.String(100), default='default_group.jpg')
+    
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

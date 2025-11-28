@@ -1,15 +1,13 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %}Home - StudyHub AI{% endblock %} {%
+block content %}
 
-{% block title %}Home - StudyHub AI{% endblock %} 
-
-{% block content %}
-
-<section class= "hero-section">
-  <img
-    src="{{ url_for('static', filename='img/logo.png') }}"
-    alt="StudyHubAi"
-    class="hero-logo"
-  />
+<section class="hero-section">
+    <img
+      src="{{ url_for('static', filename='img/logo.png') }}"
+      alt="StudyHubAi"
+      class="hero-logo" 
+    />{#Preciso mudar o fundo da logo#}
+  </a>
 
   <h1>Conhecimento é melhor quando partilhado</h1>
   <p>
@@ -18,15 +16,16 @@
   </p>
 
   <div class="search-bar">
-    <input
-      type="text"
-      class="search-input"
-      placeholder="Procure por matérias, pessoas, salas de estudo..."
-    />
+    <form action="{{ url_for('main.groups') }}" method="GET">
+      <input
+        type="text"
+        name="q"
+        class="search-input"
+        placeholder="Procure por matérias, pessoas, salas de estudo..."
+      />
+    </form>
   </div>
 </section>
-
-<section class="hero-section"></section>
 
 <section class="group-carousel-section">
   <h2 class="section-title">Descubra mais</h2>
@@ -45,9 +44,13 @@
           />
         </div>
         <div class="card-content">
-          <h3>Name Group</h3>
-          <p>A little description about the study group.</p>
-          <div class="card-members"></div>
+          <h3>Design Gráfico</h3>
+          <p>Discussões sobre teoria das cores e layouts.</p>
+          <div class="card-members">
+            <span class="member-icon"></span>
+            <span class="member-icon"></span>
+            <span class="member-more">+</span>
+          </div>
         </div>
       </div>
 
@@ -59,8 +62,8 @@
           />
         </div>
         <div class="card-content">
-          <h3>Name Group</h3>
-          <p>A little description about the study group.</p>
+          <h3>Web Development</h3>
+          <p>Focado em Python, Flask e React.</p>
           <div class="card-members">
             <span class="member-icon"></span>
             <span class="member-icon"></span>
@@ -78,16 +81,56 @@
           />
         </div>
         <div class="card-content">
-          <h3>Name Group</h3>
-          <p>A little description about the study group.</p>
-          <div class="card-members"></div>
+          <h3>Matemática I</h3>
+          <p>Resolução de exercícios de cálculo.</p>
+          <div class="card-members">
+            <span class="member-icon"></span>
+            <span class="member-more">+</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="group-card side-card">
+        <div class="card-image-container">
+          <img
+            src="{{ url_for('static', filename='img/computer.png') }}"
+            alt="Grupo Preview"
+          />
+        </div>
+        <div class="card-content">
+          <h3>Data Science</h3>
+          <p>Análise de dados com Pandas e NumPy.</p>
+          <div class="card-members">
+            <span class="member-icon"></span>
+            <span class="member-icon"></span>
+            <span class="member-more">+</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="group-card side-card">
+        <div class="card-image-container">
+          <img
+            src="{{ url_for('static', filename='img/premio.png') }}"
+            alt="Grupo Preview"
+          />
+        </div>
+        <div class="card-content">
+          <h3>Marketing Digital</h3>
+          <p>Estratégias de SEO e redes sociais.</p>
+          <div class="card-members">
+            <span class="member-icon"></span>
+            <span class="member-more">+</span>
+          </div>
         </div>
       </div>
     </div>
+
     <button class="carousel-arrow right-arrow" aria-label="Próximo grupo">
       &gt;
     </button>
   </div>
+
   <p class="section-subtitle">
     Encontra o teu grupo ideal e aprende com quem partilha o mesmo objetivo.
   </p>
@@ -126,11 +169,14 @@
   </div>
 </section>
 
-<div class="features-tabs">
-  <div class="tab-item">Criação de grupos</div>
-  <div class="tab-item">Partilha de Recursos</div>
-  <div class="tab-item">Estatísticas e Progresso</div>
-  <div class="tab-item">Assistente de IA</div>
-</div>
+<section class="features-section">
+  <h2 class="features-section-title">Funcionalidades Principais</h2>
+  <div class="features-tabs">
+    <div class="tab-item">Criação de grupos</div>
+    <div class="tab-item">Partilha de Recursos</div>
+    <div class="tab-item">Estatísticas e Progresso</div>
+    <div class="tab-item">Assistente de IA</div>
+  </div>
+</section>
 
 {% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %} {% block title %}Em Construção - StudyHub AI{%
+endblock %} {% block content %}
+<div
+  style="
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80%;
+    text-align: center;
+    color: white;
+  "
+>
+  <h1
+    style="
+      font-family: 'Pixelify Sans', sans-serif;
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    "
+  >
+    🚧 Em Construção 🚧
+  </h1>
+  <p style="font-size: 1.5rem; color: #e1bee7">
+    A Mimi e a equipa estão a trabalhar nesta funcionalidade!
+  </p>
+  <br />
+  <a
+    href="{{ url_for('main.dashboard') }}"
+    class="btn-login"
+    style="display: inline-block"
+    >Voltar ao Dashboard</a
+  >
+</div>
+{% endblock %}

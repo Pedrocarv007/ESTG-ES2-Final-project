@@ -12,7 +12,7 @@ from app.config.database import db
 def login():
     """User login route."""
     if current_user.is_authenticated:
-        return redirect(url_for('main.dashboard'))
+        return redirect(url_for('main.dashboard')) 
     
     form = LoginForm()
     if form.validate_on_submit():
@@ -23,7 +23,8 @@ def login():
             flash('Login realizado com sucesso!', 'success')
             
             next_page = request.args.get('next')
-            return redirect(next_page) if next_page else redirect(url_for('main.index'))
+            #Ao inves de ir para a page inicial, ela vai direto para a dashboard
+            return redirect(next_page) if next_page else redirect(url_for('main.dashboard'))
         else:
             flash('Email ou palavra-passe inválidos.', 'danger')
     
