@@ -12,7 +12,7 @@ from app.config.database import db
 def login():
     """User login route."""
     if current_user.is_authenticated:
-        return redirect(url_for('main.dashboard'))
+        return redirect(url_for('main.index'))
     
     form = LoginForm()
     if form.validate_on_submit():
@@ -33,7 +33,7 @@ def login():
 def register():
     """User registration route."""
     if current_user.is_authenticated:
-        return redirect(url_for('main.dashboard'))
+        return redirect(url_for('main.index'))
     
     form = RegistrationForm()
     if form.validate_on_submit():
@@ -63,4 +63,4 @@ def logout():
 @login_required
 def profile():
     """User profile route."""
-    return render_template('auth/profile.html')
+    return render_template('dashboard/dashboard.html')

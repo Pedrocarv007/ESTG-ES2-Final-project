@@ -14,10 +14,10 @@ app = create_app()
 
 if __name__ == '__main__':
     # Development server configuration
-    host = os.environ.get('FLASK_HOST', '127.0.0.1')
-    port = int(os.environ.get('FLASK_PORT', 6002))
-    debug = os.environ.get('FLASK_ENV') == 'development'
-    use_proxy = os.environ.get('USE_PROXY', 'true').lower() in ['true', 'on', '1']
+    host = os.environ.get('FLASK_HOST')
+    port = int(os.environ.get('FLASK_PORT'))
+    debug = os.environ.get('FLASK_ENV') 
+    use_proxy = os.environ.get('USE_PROXY')
     
     print("🎓 StudyHub AI - Iniciando aplicação...")
     print(f"📍 Servidor disponível em: http://{host}:{port}")

@@ -2,23 +2,13 @@
 
 {% block title %}Dashboard - StudyHub AI{% endblock %}
 
-{% block content %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}"/>
+{% endblock %}
 
-<style>
-    .main-header, .main-footer, .footer-separator, .custom-scrollbar-track {
-        display: none !important;
-    }
-    /* Ajuste para o container ocupar 100% sem padding excessivo */
-    .main-container {
-        padding: 0 !important;
-        overflow: hidden;
-    }
-    main {
-        padding: 0 !important;
-        height: 100%;
-        overflow: hidden; /* O scroll será interno */
-    }
-</style>
+
+
+{% block content %}
 
 <div class="dashboard-wrapper">
 
@@ -31,7 +21,7 @@
             <a href="#" class="nav-item active">
                 <span class="icon">🎛️</span> Dashboard
             </a>
-            <a href="{{ url_for('main.study') }}" class="nav-item">
+            <a href="{{ url_for('main.groups') }}" class="nav-item">
                 <span class="icon">👥</span> Grupos
             </a>
             <a href="#" class="nav-item">
@@ -49,7 +39,7 @@
         </nav>
 
         <div class="sidebar-footer">
-            <a href="{{ url_for('auth.logout') }}" class="nav-item logout">
+            <a href="{{ url_for('main.index') }}" class="nav-item logout">
                 <span class="icon">↪️</span> Sair
             </a>
         </div>

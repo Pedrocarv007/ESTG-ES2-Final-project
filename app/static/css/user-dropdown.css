@@ -1,0 +1,58 @@
+/* user-dropdown.css - dropdown do usuário no header */
+.user-dropdown {
+    position: relative;
+    display: inline-block;
+}
+.user-dropdown-toggle {
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    background: var(--color-main-purple);
+    transition: background 0.2s;
+}
+.user-dropdown-toggle:hover {
+    background: var(--color-bright-pink);
+}
+.user-dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  background: var(--color-dark-purple);
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  min-width: 140px;
+  z-index: 100;
+  margin-top: 0.5rem;
+  padding: 0.3rem 0;
+  text-align: left;
+}
+.user-dropdown:hover .user-dropdown-menu,
+.user-dropdown:focus-within .user-dropdown-menu {
+    display: block;
+}
+.dropdown-link {
+  display: block;
+  padding: 0.7rem 1.2rem;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  font-family: var(--font-body);
+  border-radius: 8px;
+  transition: background 0.18s, color 0.18s;
+  text-align: left;
+  font-weight: 400;
+}
+.dropdown-link:hover {
+  background: var(--color-light-purple);
+  color: var(--color-dark-purple);
+}
+.btn-logout {
+  color: var(--color-bright-pink);
+  font-weight: 400;
+}
+.btn-logout:hover {
+  background: var(--color-orange-1);
+  color: #111 !important;
+  font-weight: 700;
+}

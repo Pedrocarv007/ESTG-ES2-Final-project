@@ -1,0 +1,130 @@
+/* carousel.css - carrossel de grupos */
+.group-carousel-section {
+  padding: 3rem 0;
+  text-align: center;
+  overflow: hidden;
+}
+.section-title {
+  font-family: var(--font-pixel);
+  font-size: 2.2rem;
+  color: var(--color-text-primary);
+  margin-bottom: 2rem;
+}
+.section-subtitle {
+  font-family: var(--font-pixel);
+  font-size: 1.2rem;
+  color: var(--color-text-secondary);
+  margin-top: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+.carousel-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.carousel-arrow {
+  background: transparent;
+  border: none;
+  color: var(--color-text-secondary);
+  font-size: 3rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 20;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.carousel-arrow:hover {
+  color: var(--color-text-primary);
+  transform: translateY(-50%) scale(1.2);
+}
+.left-arrow { left: 10%; }
+.right-arrow { right: 10%; }
+.carousel-track {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+.group-card {
+  background-color: var(--color-dark-purple);
+  border-radius: 20px;
+  overflow: hidden;
+  width: 290px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border: 3px solid transparent;
+}
+.group-card .card-image-container {
+  width: 100%;
+  background-color: var(--color-dark-purple);
+}
+.group-card .card-image-container img {
+  width: 100%;
+  display: block;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+.group-card .card-content {
+  padding: 1.5rem;
+  text-align: left;
+}
+.group-card h3 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+}
+.group-card p {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
+}
+.card-members {
+  display: flex;
+  align-items: center;
+}
+.card-members .member-icon {
+  display: block;
+  width: 28px;
+  height: 28px;
+  background-color: var(--color-light-purple);
+  border-radius: 50%;
+  border: 2px solid var(--color-main-purple);
+  margin-left: -8px;
+}
+.card-members .member-icon:first-child { margin-left: 0; }
+.card-members .member-icon::before {
+  content: "👤";
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-dark-purple);
+  padding-top: 2px;
+}
+.card-members .member-more {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-light-purple);
+  margin-left: 0.75rem;
+}
+.side-card {
+  opacity: 0.4;
+  transform: scale(0.9);
+  z-index: 1;
+}
+.active-card {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 10;
+  border: 3px solid var(--color-light-purple);
+  box-shadow: 0 0 25px rgba(225, 190, 231, 0.4);
+}

@@ -1,0 +1,15 @@
+/* extensions.css - centraliza todos os imports de CSS do projeto */
+@import url('variables.css');
+@import url('config.css');
+@import url('stars.css');
+@import url('header.css');
+@import url('user-dropdown.css');
+@import url('hero.css');
+@import url('searchbar.css');
+@import url('flash.css');
+@import url('scrollbar.css');
+@import url('carousel.css');
+@import url('whatwedo.css');
+@import url('footer.css');
+@import url('login.css');
+/* Adicione outros arquivos CSS aqui conforme necessário */

@@ -1,0 +1,66 @@
+/* whatwedo.css - seção 'O que fazemos?' da homepage */
+.what-we-do-section {
+  padding: 4rem 2rem;
+  text-align: center;
+}
+.section-title-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+.section-title-glass {
+  background-color: rgba(225, 190, 231, 0.15);
+  border: 2px solid rgba(225, 190, 231, 0.4);
+  border-radius: 50px;
+  padding: 1rem 3rem;
+  color: var(--color-text-primary);
+  font-family: var(--font-pixel);
+  font-size: 2rem;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+.section-description {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  max-width: 650px;
+  margin: 0 auto 3.5rem auto;
+  line-height: 1.6;
+}
+.steps-title {
+  font-family: var(--font-pixel);
+  font-size: 1.8rem;
+  color: var(--color-text-primary);
+  margin-bottom: 2rem;
+}
+.steps-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 600px;
+  margin: 0 auto;
+  gap: 1.5rem;
+}
+.step-item {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  text-align: left;
+}
+.step-item .step-number {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 35px;
+  height: 35px;
+  background-color: var(--color-bright-pink);
+  border-radius: 50%;
+  color: var(--color-text-primary);
+  font-weight: 700;
+  font-size: 1.1rem;
+  box-shadow: 0 0 10px var(--color-bright-pink);
+}
+.step-item p {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}

@@ -212,38 +212,43 @@ function initializeCarousel() {
 
   // Obter todos os cartões como uma lista
   const cards = Array.from(track.children);
-  
-  // Encontrar o índice do cartão que está ativo
-  let currentIndex = cards.findIndex(card => 
-    card.classList.contains("active-card")
-  );
+
+  // Encontrar o índice do cartão que está ativo, se não houver, começa do meio
+  let currentIndex = cards.findIndex(card => card.classList.contains("active-card"));
+  if (currentIndex === -1) {
+    currentIndex = Math.floor(cards.length / 2);
+  }
 
   // Função para atualizar as classes
   function updateCarousel(newIndex) {
-    // Limita o índice para não sair dos limites da lista
+    // Torna o carrossel circular
     if (newIndex < 0) {
-        newIndex = 0; // Ou newIndex = cards.length - 1; para dar a volta
+      newIndex = cards.length - 1;
     } else if (newIndex >= cards.length) {
-        newIndex = cards.length - 1; // Ou newIndex = 0; para dar a volta
+      newIndex = 0;
     }
 
     // Remove as classes de todos
     cards.forEach(card => {
-      card.classList.remove("active-card");
-      card.classList.remove("side-card");
+      card.classList.remove("active-card", "side-card");
     });
 
     // Adiciona a classe ativa ao cartão do centro
     cards[newIndex].classList.add("active-card");
 
     // Adiciona a classe lateral aos vizinhos (se existirem)
-    if (cards[newIndex - 1]) {
-      cards[newIndex - 1].classList.add("side-card");
-    }
-    if (cards[newIndex + 1]) {
-      cards[newIndex + 1].classList.add("side-card");
-    }
-    
+    const leftIdx = (newIndex - 1 + cards.length) % cards.length;
+    const rightIdx = (newIndex + 1) % cards.length;
+    if (cards.length > 1) cards[leftIdx].classList.add("side-card");
+    if (cards.length > 2) cards[rightIdx].classList.add("side-card");
+
+    // Debug: log do estado atual
+    console.log("Carrossel:", cards.map((c, i) => ({
+      idx: i,
+      active: c.classList.contains("active-card"),
+      side: c.classList.contains("side-card")
+    })));
+
     // Atualiza o índice atual
     currentIndex = newIndex;
   }
@@ -260,3 +265,18 @@ function initializeCarousel() {
   // Inicia o carrossel na posição correta (caso o HTML não esteja certo)
   updateCarousel(currentIndex);
 }
+
+// Dropdown de usuário: fecha ao clicar fora
+(function() {
+  document.addEventListener('click', function(e) {
+    const dropdown = document.querySelector('.user-dropdown');
+    if (!dropdown) return;
+    const menu = dropdown.querySelector('.user-dropdown-menu');
+    if (!menu) return;
+    if (!dropdown.contains(e.target)) {
+      menu.style.display = 'none';
+    } else {
+      menu.style.display = 'block';
+    }
+  });
+})();

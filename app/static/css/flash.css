@@ -1,0 +1,26 @@
+/* flash.css - mensagens flash do sistema */
+.flash-messages-container {
+  padding: 0 2.5rem;
+  margin-top: -1rem;
+  position: relative;
+  z-index: 10;
+}
+.flash-message {
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  color: var(--color-text-primary);
+  font-weight: 700;
+}
+.flash-message.flash-error {
+  background-color: var(--color-bright-pink);
+  border: 1px solid var(--color-light-pink);
+}
+.flash-message.flash-success {
+  background-color: #4caf50;
+  border: 1px solid #81c784;
+}
+.flash-message.flash-info {
+  background-color: var(--color-main-purple);
+  border: 1px solid var(--color-light-purple);
+}

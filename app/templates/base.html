@@ -8,8 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&family=Pixelify+Sans:wght@400;700&display=swap" rel="stylesheet"/>
-    
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/extensions.css') }}"/>
+    {% block head %}{% endblock %}
 </head>
 
 <body>
@@ -41,8 +41,11 @@
             <div class="user-area">
                 {% if current_user.is_authenticated %}
                 <div class="user-dropdown">
-                    <span>Olá, {{ current_user.name.split()[0] }}</span>
-                    <a href="{{ url_for('auth.logout') }}" class="btn-logout">Sair</a>
+                    <span class="user-dropdown-toggle">Olá, {{ current_user.name.split()[0] }} &#x25BC;</span>
+                    <div class="user-dropdown-menu">
+                        <a href="{{ url_for('auth.profile') }}" class="dropdown-link btn-logout">Perfil</a>
+                        <a href="{{ url_for('auth.logout') }}" class="dropdown-link btn-logout">Sair</a>
+                    </div>
                 </div>
                 {% else %}
                 <a href="{{ url_for('auth.login') }}" class="btn-login">Login</a>

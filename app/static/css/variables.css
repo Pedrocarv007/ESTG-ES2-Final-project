@@ -1,0 +1,28 @@
+/* variables.css - variáveis globais e reset */
+:root {
+  --color-dark-purple: #2d1b69;
+  --color-main-purple: #55268e;
+  --color-light-purple: #e1bee7;
+  --color-light-pink: #f8bbd0;
+  --color-bright-pink: #fc5077;
+  --color-orange-1: #ff7101;
+  --color-orange-2: #faa672;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #e1bee7;
+  --font-pixel: "Pixelify Sans", sans-serif;
+  --font-body: "Nunito Sans", sans-serif;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: var(--font-body);
+  color: var(--color-text-primary);
+  background-color: #1a1444;
+  min-height: 100vh;
+  overflow-x: hidden; 
+  display: flex;
+  justify-content: center;
+}
