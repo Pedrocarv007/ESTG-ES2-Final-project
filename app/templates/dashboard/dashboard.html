@@ -24,10 +24,10 @@
             <a href="{{ url_for('main.groups') }}" class="nav-item">
                 <span class="icon">👥</span> Grupos
             </a>
-            <a href="#" class="nav-item">
+            <a href="{{ url_for('materials_api.explorer_full') }}" class="nav-item">
                 <span class="icon">📂</span> Materiais
             </a>
-            <a href="#" class="nav-item">
+            <a href="{{ url_for('mimi.hello') }}" class="nav-item">
                 <span class="icon">💡</span> MIMI AI
             </a>
             <a href="#" class="nav-item">
@@ -51,10 +51,6 @@
             <h1 class="dash-title">Dashboard</h1>
             
             <div class="dash-actions">
-                <div class="search-mini white-bg">
-                    <span class="search-icon">🔍</span>
-                    <input type="text" placeholder="Search for materials, grupos...">
-                </div>
                 <div class="user-profile-pic">
                     <div class="avatar-circle">👤</div>
                 </div>
@@ -66,18 +62,15 @@
             <div class="stats-grid">
                 <div class="stat-card purple-card">
                     <h3>Grupos Ativos</h3>
-                    <p class="big-number">5</p>
+                    <p class="big-number">{{ active_groups|length }}</p>
                 </div>
                 <div class="stat-card orange-card">
-                    <h3>Novas Mensagens</h3>
-                    <p class="big-number">13</p>
+                    <h3>Novos Materiais</h3>
+                    <p class="big-number">{{ user_materials|length }}</p>
                 </div>
                 <div class="stat-card pink-card">
                     <h3>Próxima Sessão</h3>
-                    <p class="big-text">Hoje 18h</p>
-                </div>
-                <div class="stat-card light-card add-btn">
-                    <span class="plus-sign">+</span>
+                    <p class="big-text">Em breve</p>
                 </div>
             </div>
 
@@ -86,39 +79,35 @@
                 <div class="dash-widget widget-groups">
                     <div class="widget-header">
                         <h3>Meus Grupos</h3>
-                        <button class="btn-mini">Criar +</button>
+                        <a href="{{ url_for('main.create_group') }}" class="btn-mini">Criar +</a>
                     </div>
                     
-                    <div class="widget-filters">
-                        <span class="filter-pill active">All</span>
-                        <span class="filter-pill orange">Gestor</span>
-                        <span class="filter-pill purple">Partici</span>
-                        <span class="filter-pill dark">Add +</span>
+                    <div class="widget-filters" style="text-decoration: none;">
+                    <a href="{{ url_for('main.dashboard', group_type='all') }}" class="filter-pill filter-btn{% if group_type == 'all' %} active{% endif %}">All</a>
+                    <a href="{{ url_for('main.dashboard', group_type='manager') }}" class="filter-pill filter-btn{% if group_type == 'manager' %} active{% endif %}">Gestor</a>
+                    <a href="{{ url_for('main.dashboard', group_type='participant') }}" class="filter-pill filter-btn{% if group_type == 'participant' %} active{% endif %}">Participante</a>
                     </div>
 
                     <div class="group-list-vertical">
+                        {% for group in user_groups %}
                         <div class="group-list-item">
-                            <div class="group-icon"></div>
+                            <div class="group-icon">{{ group.subject[0]|upper }}</div>
                             <div class="group-info">
-                                <span>Nome do Grupo</span>
-                                <div class="progress-bar"><div class="fill" style="width: 20%"></div></div>
+                                <span>{{ group.name }}</span>
+                                {% if group.max_members is not none %}
+                                    <div class="progress-bar">
+                                        <div class="fill"></div>
+                                        {{ (group.member_count() / group.max_members * 100)|round(0) }}%
+                                    </div>
+                                {% else %}
+                                    <div class="progress-bar ilimitado">Ilimitado</div>
+                                {% endif %}
                             </div>
-                            <span class="badge-mini">Partici</span>
+                            <span class="badge-mini">{{ 'Gestor' if group.created_by == current_user.id else 'Participante' }}</span>
                         </div>
-                        <div class="group-list-item">
-                            <div class="group-icon"></div>
-                            <div class="group-info">
-                                <span>Nome do Grupo</span>
-                                <div class="progress-bar"><div class="fill orange" style="width: 50%"></div></div>
-                            </div>
-                        </div>
-                        <div class="group-list-item">
-                            <div class="group-icon"></div>
-                            <div class="group-info">
-                                <span>Nome do Grupo</span>
-                                <div class="progress-bar"><div class="fill purple" style="width: 80%"></div></div>
-                            </div>
-                        </div>
+                        {% else %}
+                        <div style="color:#fff; text-align:center; width:100%; padding:1rem;">Você ainda não participa de nenhum grupo.</div>
+                        {% endfor %}
                     </div>
                 </div>
 
@@ -138,47 +127,11 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="dash-widget widget-files">
-                    <h3>Seus ficheiros</h3>
-                    <div class="files-list">
-                        <div class="file-item">
-                            <span class="folder-icon purple">📁</span>
-                            <span>Estudos</span>
-                        </div>
-                        <div class="file-item">
-                            <span class="folder-icon orange">📁</span>
-                            <span>Anotações</span>
-                        </div>
-                        <div class="file-item">
-                            <span class="folder-icon pink">📁</span>
-                            <span>PDFs</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="dash-widget widget-mimi">
-                    <h3>Fale com MIMI</h3>
-                    <div class="mimi-chat-area">
-                        <img src="{{ url_for('static', filename='img/mimi.png') }}" alt="Mimi" class="mimi-avatar">
-                    </div>
-                    <div class="mimi-input-wrapper">
-                        <input type="text" placeholder="Pergunte algo">
-                        <button class="send-btn">➤</button>
-                    </div>
-                </div>
-
-                <div class="dash-widget widget-recent">
-                    <h3>Atividades Recentes</h3>
-                    <div class="notification-center">
-                        <div class="bell-icon">
-                            🔔
-                            <span class="notif-badge">1</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div> </div> </div>
+            </div> 
+        </div>
+    </div>
 </div>
+
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 
 {% endblock %}

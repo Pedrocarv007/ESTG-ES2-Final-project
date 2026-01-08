@@ -13,3 +13,7 @@
 @import url('footer.css');
 @import url('login.css');
 /* Adicione outros arquivos CSS aqui conforme necessário */
+
+@import url('groups.css');
+@import url('about.css');
+@import url('contacts.css');

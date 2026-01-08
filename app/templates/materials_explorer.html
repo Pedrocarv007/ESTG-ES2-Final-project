@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Materiais - Explorer{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/materials_explorer.css') }}"/>
+{% endblock %}
+{% block content %}
+<div class="explorer-wrapper">
+  <div class="explorer-header">
+    <h2>Materiais</h2>
+    <nav class="explorer-breadcrumbs">
+      {% for folder in breadcrumbs %}
+        <a href="{{ url_for('materials_api.explorer', folder_id=folder.id) }}">{{ folder.name }}</a>
+        {% if not loop.last %}<span>/</span>{% endif %}
+      {% endfor %}
+    </nav>
+  </div>
+  <div class="explorer-main">
+    {% if breadcrumbs and breadcrumbs[-1].id %}
+    <form method="POST" action="{{ url_for('materials_api.new_folder', folder_id=breadcrumbs[-1].id) }}" style="display:inline-block;margin-bottom:1.2rem;">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="text" name="name" placeholder="Nova pasta" required style="padding:0.4rem 1rem;border-radius:6px;border:1px solid #444;background:#23272e;color:#fff;">
+      <button type="submit" class="btn btn-primary" style="padding:0.4rem 1.2rem;border-radius:6px;">Criar pasta</button>
+    </form>
+    <form method="POST" action="{{ url_for('materials_api.upload_to_folder', folder_id=breadcrumbs[-1].id) }}" enctype="multipart/form-data" style="display:inline-block;margin-left:1.5rem;margin-bottom:1.2rem;">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="file" name="file" required style="color:#fff;">
+      <input type="text" name="title" placeholder="Ttulo do arquivo" required style="padding:0.4rem 1rem;border-radius:6px;border:1px solid #444;background:#23272e;color:#fff;">
+      <button type="submit" class="btn btn-primary" style="padding:0.4rem 1.2rem;border-radius:6px;">Upload</button>
+    </form>
+    {% endif %}
+    <table class="explorer-table">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Modificado</th>
+          <th>Tipo</th>
+          <th>Tamanho</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for subfolder in subfolders %}
+        <tr>
+          <td>
+            <span class="icon">📁</span>
+            <a class="name-link" href="{{ url_for('materials_api.explorer', folder_id=subfolder.id) }}">{{ subfolder.name }}</a>
+          </td>
+          <td>{{ subfolder.updated_at.strftime('%d/%m/%Y %H:%M') if subfolder.updated_at else '' }}</td>
+          <td>Pasta</td>
+          <td>-</td>
+        </tr>
+        {% endfor %}
+        {% for mat in materials %}
+        <tr>
+          <td>
+            <span class="icon">📄</span>
+            <a class="name-link" href="{{ mat.get_file_url() }}" target="_blank">{{ mat.title }}</a>
+          </td>
+          <td>{{ mat.updated_at.strftime('%d/%m/%Y %H:%M') if mat.updated_at else '' }}</td>
+          <td>{{ mat.file_type or 'Arquivo' }}</td>
+          <td>{{ mat.format_file_size() }}</td>
+        </tr>
+        {% endfor %}
+        {% if not subfolders and not materials %}
+        <tr><td colspan="4" class="explorer-empty">Esta pasta está vazia.</td></tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

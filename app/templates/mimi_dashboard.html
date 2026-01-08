@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Mimi AI - Chat{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mimi.css') }}"/>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-wrapper">
+    <aside class="dash-sidebar">
+        <div class="sidebar-header">
+            <h2>Olá, {{ current_user.name.split()[0] }}!</h2>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="{{ url_for('main.dashboard') }}" class="nav-item">
+                <span class="icon">🎛️</span> Dashboard
+            </a>
+            <a href="{{ url_for('main.groups') }}" class="nav-item">
+                <span class="icon">👥</span> Grupos
+            </a>
+            <a href="{{ url_for('materials_api.explorer_full') }}" class="nav-item">
+                <span class="icon">📂</span> Materiais
+            </a>
+            <a href="{{ url_for('mimi.hello') }}" class="nav-item active">
+                <span class="icon">💡</span> MIMI AI
+            </a>
+            <a href="#" class="nav-item">
+                <span class="icon">📊</span> Progressos
+            </a>
+            <a href="#" class="nav-item">
+                <span class="icon">⚙️</span> Definições
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="{{ url_for('main.index') }}" class="nav-item logout">
+                <span class="icon">↪️</span> Sair
+            </a>
+        </div>
+    </aside>
+    <div class="dash-main-area">
+        <header class="dash-topbar">
+            <h1 class="dash-title">Mimi AI - Chat</h1>
+            <div class="dash-actions">
+                <div class="user-profile-pic">
+                    <div class="avatar-circle">👤</div>
+                </div>
+            </div>
+        </header>
+        <div class="dash-scroll-content" style="display:flex;gap:2.5rem;align-items:flex-start; overflow: hidden;">
+            <aside class="mimi-sidebar">
+                <h2>Minhas Conversas</h2>
+                <button class="btn btn-new-conv">+ Nova conversa</button>
+                <ul class="mimi-conv-list">
+                    <!-- Conversas do usuário serão carregadas aqui via JS -->
+                </ul>
+            </aside>
+            <div class="mimi-chat-main">
+                <h2 style="margin-bottom:1.2rem;">Fale com a Mimi 🤖</h2>
+                <div class="mimi-chat-box" style="overflow: auto; max-height: 400px;">
+                    <!-- Mensagens do chat aparecem aqui -->
+                </div>
+                <form class="mimi-chat-form">
+                    <input type="text" placeholder="Digite sua mensagem..." />
+                    <button type="submit">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/mimi.js') }}"></script>
+{% endblock %}

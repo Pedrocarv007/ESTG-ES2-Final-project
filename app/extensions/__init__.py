@@ -24,12 +24,12 @@ def init_extensions(app):
     
     # CORS
     cors.init_app(app, resources={
-        r"/api/*": {
-            "origins": ["http://localhost:3000", "http://127.0.0.1:3000"],
+        r"/mimi/api/*": {
+            "origins": ["http://192.168.0.2"],
             "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
             "allow_headers": ["Content-Type", "Authorization"]
         }
-    })
+    }, supports_credentials=True)
     
     @login_manager.user_loader
     def load_user(user_id):

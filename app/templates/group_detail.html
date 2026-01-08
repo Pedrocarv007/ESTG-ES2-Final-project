@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Detalhes do Grupo - StudyHub AI{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/group_detail.css') }}"/>
+{% endblock %}
+{% block content %}
+<div class="group-detail-container">
+    <div class="group-header-flex" style="display:flex;align-items:center;gap:2rem;flex-wrap:wrap;">
+        <div class="group-photo" style="width:110px;height:110px;border-radius:50%;overflow:hidden;background:#222;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px #0006;">
+            {% if group.photo_url %}
+                <img src="{{ group.photo_url }}" alt="Foto do grupo" style="width:100%;height:100%;object-fit:cover;">
+            {% else %}
+                <span style="font-size:3.5rem;color:#fff;">{{ group.subject[0]|upper }}</span>
+            {% endif %}
+        </div>
+        <div>
+            <h1 style="margin-bottom:0.5rem;">{{ group.name }}</h1>
+            <div><strong>Assunto:</strong> {{ group.subject }}</div>
+            <div><strong>Status:</strong> <span>{{ 'Ativo' if group.is_active else 'Inativo' }}</span></div>
+            <div><strong>Membros:</strong> {{ group.member_count() }} / {{ 'Ilimitado' if group.max_members is none else group.max_members }}</div>
+            <div><strong>Criado em:</strong> {{ group.created_at.strftime('%d/%m/%Y') }}</div>
+        </div>
+    </div>
+    <div style="margin:1.2rem 0;"><strong>Descrição:</strong> {{ group.description or 'Sem descrição.' }}</div>
+    <div style="margin-bottom:1.2rem;"><strong>Objetivos:</strong> {{ group.goals or 'Sem objetivos.' }}</div>
+    <div style="display:flex;gap:1rem;justify-content:center;margin-bottom:1.5rem;flex-wrap:wrap;">
+        {% if current_user.is_authenticated %}
+            {% if is_member %}
+                <form method="POST" action="{{ url_for('main.leave_group', group_id=group.id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="btn btn-danger" type="submit">Sair do grupo</button>
+                </form>
+            {% else %}
+                <form method="POST" action="{{ url_for('main.join_group', group_id=group.id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="btn btn-success" type="submit">Entrar no grupo</button>
+                </form>
+            {% endif %}
+            {% if is_admin %}
+                <a href="{{ url_for('main.edit_group', group_id=group.id) }}" class="btn btn-warning">Editar Grupo</a>
+            {% endif %}
+        {% endif %}
+    </div>
+    <hr>
+    <h3>Membros</h3>
+    <ul>
+        {% for member in group.members %}
+            <li>{{ member.name or member.username or member.email }}</li>
+        {% else %}
+            <li>Nenhum membro ainda.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

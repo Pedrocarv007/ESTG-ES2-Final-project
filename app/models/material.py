@@ -21,6 +21,7 @@ class Material(db.Model):
     # Foreign keys
     uploaded_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     group_id = db.Column(db.Integer, db.ForeignKey('groups.id'), nullable=False)
+    folder_id = db.Column(db.Integer, db.ForeignKey('folders.id'), nullable=True)
     
     # Timestamps
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
@@ -34,8 +35,20 @@ class Material(db.Model):
     
     def get_file_url(self):
         """Get the URL for accessing the file."""
+        from flask import has_request_context, current_app, url_for, g
+        # Tenta usar helper do template se disponível
+        prefix = ''
+        try:
+            if has_request_context() and hasattr(g, 'get_url_prefix'):
+                prefix = g.get_url_prefix()
+            elif has_request_context() and 'get_url_prefix' in current_app.jinja_env.globals:
+                prefix = current_app.jinja_env.globals['get_url_prefix']()
+            elif has_request_context() and current_app.config.get('USE_PROXY', False):
+                prefix = '/studyhubai'
+        except Exception:
+            prefix = ''
         if self.file_path:
-            return f'/static/uploads/{os.path.basename(self.file_path)}'
+            return f'{prefix}/static/uploads/{os.path.basename(self.file_path)}'
         return None
     
     def get_file_extension(self):
@@ -70,6 +83,8 @@ class Material(db.Model):
             self.file_size /= 1024.0
         return f"{self.file_size:.1f} TB"
     
+    
+    
     def to_dict(self):
         """Convert material to dictionary."""
         return {
@@ -87,6 +102,8 @@ class Material(db.Model):
             'is_document': self.is_document(),
             'is_presentation': self.is_presentation()
         }
+    
+
 
 class AIConversation(db.Model):
     """AI conversation history model."""
@@ -95,6 +112,7 @@ class AIConversation(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    conversation_id = db.Column(db.Integer, nullable=True, index=True)  # Thread/conversa
     question = db.Column(db.Text, nullable=False)
     answer = db.Column(db.Text, nullable=False)
     context = db.Column(db.Text)  # Additional context if needed
@@ -107,7 +125,36 @@ class AIConversation(db.Model):
         """Convert conversation to dictionary."""
         return {
             'id': self.id,
+            'conversation_id': self.conversation_id,
             'question': self.question,
             'answer': self.answer,
             'created_at': self.created_at.isoformat()
+        }
+    
+
+class Folder(db.Model):
+    """Folder for organizing materials."""
+    __tablename__ = 'folders'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), nullable=False)
+    parent_id = db.Column(db.Integer, db.ForeignKey('folders.id'), nullable=True)
+    group_id = db.Column(db.Integer, db.ForeignKey('groups.id'), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    # Relationships
+    parent = db.relationship('Folder', remote_side=[id], backref='subfolders')
+    materials = db.relationship('Material', backref='folder', lazy='dynamic')
+
+    def __repr__(self):
+        return f'<Folder {self.name}>'
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'parent_id': self.parent_id,
+            'group_id': self.group_id,
+            'created_at': self.created_at.isoformat(),
+            'subfolders': [sf.to_dict() for sf in self.subfolders],
+            'materials': [m.to_dict() for m in self.materials]
         }

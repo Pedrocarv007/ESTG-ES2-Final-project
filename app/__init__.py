@@ -6,6 +6,9 @@ import logging
 from logging.handlers import RotatingFileHandler
 from flask import Flask
 from app.config.database import db
+from datetime import datetime
+
+from app.main.routes import mimi
 
 def create_app(config_name=None):
     """Create and configure Flask application."""
@@ -13,6 +16,7 @@ def create_app(config_name=None):
     # Create Flask app
     app = Flask(__name__, static_url_path="/studyhubai/static", static_folder="static")
     
+
     # Load configuration
     config_name = config_name or os.environ.get('FLASK_ENV', 'development')
     from app.config import config
@@ -27,7 +31,8 @@ def create_app(config_name=None):
     # Initialize extensions
     from app.extensions import init_extensions
     init_extensions(app)
-    
+
+
     # Initialize database
     from app.config.database import init_db
     init_db(app)
@@ -53,6 +58,10 @@ def create_app(config_name=None):
     def health_check_root():
         return {'status': 'healthy', 'service': 'StudyHub AI'}, 200
     
+    @app.context_processor
+    def inject_current_year():
+        return {"year": datetime.now().year}
+    
     return app
 
 
@@ -72,8 +81,14 @@ def register_blueprints(app):
     app.register_blueprint(auth_bp, url_prefix=f'{prefix}/auth')
     
     # API routes
-    from app.api import api_bp
-    app.register_blueprint(api_bp, url_prefix=f'{prefix}/api')
+    from app.api.ai import mimi
+    app.register_blueprint(mimi , url_prefix=f'{prefix}/mimi')
+
+    from app.api.materials import materials_api
+    app.register_blueprint(materials_api, url_prefix=f'{prefix}/materials')
+
+    from app.api.dashboard import bp_dashboard
+    app.register_blueprint(bp_dashboard, url_prefix=f'{prefix}/dashboard')
     
     # Health check endpoint with prefix
     @app.route(f'{prefix}/health')

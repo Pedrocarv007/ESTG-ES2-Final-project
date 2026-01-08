@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Materiais - Explorer</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/materials_explorer_full.css') }}"/>
+</head>
+<body>
+<div class="stars-container" id="stars-container"></div>
+<div class="explorer-full-wrapper">
+  <aside class="explorer-sidebar">
+    <div class="sidebar-title" style="display:flex;align-items:center;justify-content:space-between;gap:0.5rem;">
+      <span>Pastas</span>
+      <form method="POST" action="{{ url_for('materials_api.new_folder', folder_id=current_folder_id or 0) }}" style="display:inline-block;">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="name" value="Nova Pasta">
+        <button type="submit" title="Criar pasta na raiz" style="background:#7c3aed;color:#fff;border:none;border-radius:6px;padding:0.2rem 0.7rem;font-size:1.1rem;cursor:pointer;">+</button>
+      </form>
+    </div>
+    <ul class="sidebar-tree">
+      {% for folder in sidebar_folders %}
+        <li class="sidebar-folder {% if folder.id == current_folder_id %}active{% endif %}">
+          <a href="{{ url_for('materials_api.explorer_full', folder_id=folder.id) }}">📁 {{ folder.name }}</a>
+          <button class="rename-folder-btn" data-folder-id="{{ folder.id }}" title="Renomear pasta" style="background:none;border:none;cursor:pointer;padding:0 0.2rem;vertical-align:middle;"><span style="font-size:1.1em;">✏️</span></button>
+          {% if folder.subfolders %}
+            <ul>
+              {% for sub in folder.subfolders %}
+                <li class="sidebar-folder {% if sub.id == current_folder_id %}active{% endif %}">
+                  <a href="{{ url_for('materials_api.explorer_full', folder_id=sub.id) }}">📁 {{ sub.name }}</a>
+                  <button class="rename-folder-btn" data-folder-id="{{ sub.id }}" title="Renomear pasta" style="background:none;border:none;cursor:pointer;padding:0 0.2rem;vertical-align:middle;"><span style="font-size:1.1em;">✏️</span></button>
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </aside>
+  <main class="explorer-main-panel">
+    <div class="explorer-header">
+      <div class="breadcrumbs">
+        {% for folder in breadcrumbs %}
+          <a href="{{ url_for('materials_api.explorer_full', folder_id=folder.id) }}">{{ folder.name }}</a>
+          {% if not loop.last %}<span>/</span>{% endif %}
+        {% endfor %}
+      </div>
+      <h2>Materiais</h2>
+      <div class="explorer-actions">
+        <form method="POST" action="{{ url_for('materials_api.new_folder', folder_id=current_folder_id or 0) }}" style="display:inline-block;">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        </form>
+        {% if current_folder_id %}
+        <form method="POST" action="{{ url_for('materials_api.upload_to_folder', folder_id=current_folder_id) }}" enctype="multipart/form-data" style="display:inline-block;margin-left:1rem;">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <input type="file" name="file" required style="color:#fff;">
+          <input type="text" name="title" placeholder="Título do arquivo" required style="padding:0.3rem 0.7rem;border-radius:6px;border:1px solid #444;background:#23272e;color:#fff;">
+          <input type="hidden" name="description" value="">
+          <input type="hidden" name="group_id" value="{{ sidebar_folders[0].group_id if sidebar_folders and sidebar_folders[0] else '' }}">
+          <button type="submit" class="btn btn-primary" style="padding:0.3rem 1rem;border-radius:6px;background:#7c3aed;color:#fff;">+ Material</button>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+    <div class="explorer-main">
+      <table class="explorer-table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Modificado</th>
+            <th>Tipo</th>
+            <th>Tamanho</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for subfolder in subfolders %}
+          <tr>
+            <td><span class="icon">📁</span> <a class="name-link" href="{{ url_for('materials_api.explorer_full', folder_id=subfolder.id) }}">{{ subfolder.name }}</a></td>
+            <td>{{ subfolder.updated_at.strftime('%d/%m/%Y %H:%M') if subfolder.updated_at else '' }}</td>
+            <td>Pasta</td>
+            <td>-</td>
+          </tr>
+          {% endfor %}
+          {% for mat in materials %}
+          <tr>
+            <td><span class="icon">📄</span> <a class="name-link" href="{{ mat.get_file_url() }}" target="_blank">{{ mat.title }}</a>
+              <button class="rename-material-btn" data-material-id="{{ mat.id }}" title="Renomear arquivo" style="background:none;border:none;cursor:pointer;padding:0 0.2rem;vertical-align:middle;"><span style="font-size:1.1em;">✏️</span></button>
+            <td>{{ mat.updated_at.strftime('%d/%m/%Y %H:%M') if mat.updated_at else '' }}</td>
+            <td>{{ mat.file_type or 'Arquivo' }}</td>
+            <td>{{ mat.format_file_size() }}</td>
+          </tr>
+          {% endfor %}
+          {% if not subfolders and not materials %}
+          <tr><td colspan="4" class="explorer-empty">Esta pasta está vazia.</td></tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
+</body>
+</script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/materials_rename.js') }}"></script>
+</html>

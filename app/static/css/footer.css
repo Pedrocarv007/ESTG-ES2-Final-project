@@ -3,6 +3,11 @@
   background-color: var(--color-dark-purple);
   flex-shrink: 0;
   border-top: 2px solid rgba(225, 190, 231, 0.3);
+  width: 100vw;
+  max-width: 100vw;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 20;
 }
 .features-tabs {
   display: flex;

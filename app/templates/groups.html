@@ -10,113 +10,58 @@
         <h1 class="page-title">Study Groups</h1>
     </div>
 
-    <div class="groups-toolbar">
-        
+    <form class="groups-toolbar" method="get" action="{{ url_for('main.groups') }}">
         <div class="toolbar-tabs">
-            <a href="#" class="tab-link active">All Groups <span class="counter">31</span></a>
-            <a href="#" class="tab-link">My Groups <span class="counter">10</span></a>
-            <a href="#" class="tab-link">Public Groups <span class="counter">23</span></a>
-            <a href="#" class="tab-link">Private Groups <span class="counter">8</span></a>
+            <button type="submit" name="type" value="all" class="tab-link filter-btn{% if group_type == 'all' %} active{% endif %}">Todos</button>
+            <button type="submit" name="type" value="public" class="tab-link filter-btn{% if group_type == 'public' %} active{% endif %}">Públicos</button>
+            <button type="submit" name="type" value="private" class="tab-link filter-btn{% if group_type == 'private' %} active{% endif %}">Privados</button>
         </div>
-
         <div class="toolbar-actions">
             <div class="search-mini">
-                <input type="text" placeholder="Search groups...">
-            </div>
-            <div class="sort-dropdown">
-                <span>Most Members</span>
-                <span class="dropdown-arrow">▼</span>
+                <input type="text" name="q" value="{{ q }}" placeholder="Buscar grupos...">
+                <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
             </div>
         </div>
-    </div>
+    </form>
 
     <div class="groups-grid-layout">
-
+        {% for group in groups %}
         <div class="grid-card">
             <div class="card-top-row">
-                <span class="badge badge-public">PUBLIC GROUP</span>
+                <span class="badge {{ 'badge-public' if group.is_active else 'badge-private' }}">
+                    {{ 'PUBLIC GROUP' if group.is_active else 'PRIVATE GROUP' }}
+                </span>
                 <button class="card-menu-btn">⋮</button>
             </div>
-            
-            <h3 class="grid-card-title">Graphic Design</h3>
-            <p class="grid-card-meta">Active 7 days ago • 293 Members</p>
-            
-            <div class="grid-card-image">
-                <img src="{{ url_for('static', filename='img/gato.jpg') }}" alt="Group Image">
-            </div>
-        </div>
-
-        <div class="grid-card">
-            <div class="card-top-row">
-                <span class="badge badge-private">PRIVATE GROUP</span>
-                <button class="card-menu-btn">⋮</button>
-            </div>
-            
-            <h3 class="grid-card-title">Art Group</h3>
-            <p class="grid-card-meta">Active 2 days ago • 120 Members</p>
-            
-            <div class="grid-card-image">
-                <img src="{{ url_for('static', filename='img/gatinho.jpg') }}" alt="Group Image">
-            </div>
-        </div>
-
-        <div class="grid-card">
-            <div class="card-top-row">
-                <span class="badge badge-public">PUBLIC GROUP</span>
-                <button class="card-menu-btn">⋮</button>
-            </div>
-            
-            <h3 class="grid-card-title">UX/UI Design</h3>
-            <p class="grid-card-meta">Active 1 hour ago • 500 Members</p>
-            
-            <div class="grid-card-image">
-                <img src="{{ url_for('static', filename='img/pombo.jpg') }}" alt="Group Image">
-            </div>
-        </div>
-
-        <div class="grid-card">
-            <div class="card-top-row">
-                <span class="badge badge-public">PUBLIC GROUP</span>
-                <button class="card-menu-btn">⋮</button>
-            </div>
-            
-            <h3 class="grid-card-title">Typography</h3>
-            <p class="grid-card-meta">Active 5 mins ago • 89 Members</p>
-            
+            <h3 class="grid-card-title">
+                <a href="{{ url_for('main.group_detail', group_id=group.id) }}" style="color:inherit; text-decoration:underline;">{{ group.name }}</a>
+            </h3>
+            <p class="grid-card-meta">Criado em {{ group.created_at.strftime('%d/%m/%Y') }} • {{ group.member_count() }} Members</p>
             <div class="grid-card-image placeholder-image">
-                <span>Aa</span>
+                <span>{{ group.subject[0]|upper }}</span>
             </div>
+            {% if current_user.is_authenticated and group.created_by == current_user.id %}
+                <div class="group-actions">
+                    <a href="{{ url_for('main.edit_group', group_id=group.id) }}" class="btn btn-warning">Editar</a>
+                    <form method="POST" action="{{ url_for('main.delete_group', group_id=group.id) }}" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja excluir este grupo?');">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button type="submit" class="btn btn-danger">Excluir</button>
+                    </form>
+                </div>
+            {% elif current_user.is_authenticated %}
+                <form method="POST" action="{{ url_for('main.join_group', group_id=group.id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="btn btn-join-group" style="background: linear-gradient(90deg, #7b2ff2 0%, #f357a8 100%); color: #fff; border: none; border-radius: 8px; padding: 0.7rem 2.2rem; font-size: 1.1rem; font-weight: 600; box-shadow: 0 2px 8px #0002; transition: background 0.2s, transform 0.2s; cursor: pointer; letter-spacing: 0.5px;">
+                        <span style="display:inline-block;vertical-align:middle;margin-right:0.5rem;font-size:1.2em;">➕</span>Entrar
+                    </button>
+                </form>
+            {% endif %}
         </div>
-
-         <div class="grid-card">
-            <div class="card-top-row">
-                <span class="badge badge-public">PUBLIC GROUP</span>
-                <button class="card-menu-btn">⋮</button>
-            </div>
-            
-            <h3 class="grid-card-title">Python Devs</h3>
-            <p class="grid-card-meta">Active today • 1.2k Members</p>
-            
-            <div class="grid-card-image placeholder-image">
-                <span>🐍</span>
-            </div>
-        </div>
-
-         <div class="grid-card">
-            <div class="card-top-row">
-                <span class="badge badge-private">PRIVATE GROUP</span>
-                <button class="card-menu-btn">⋮</button>
-            </div>
-            
-            <h3 class="grid-card-title">Calculus II</h3>
-            <p class="grid-card-meta">Active 3 days ago • 45 Members</p>
-            
-            <div class="grid-card-image placeholder-image">
-                <span>∫</span>
-            </div>
-        </div>
-
-    </div> <div class="groups-pagination">
+        {% else %}
+        <div style="color:#fff; text-align:center; width:100%; padding:2rem;">Nenhum grupo encontrado.</div>
+        {% endfor %}
+    </div>
+    <div class="groups-pagination">
         <button class="page-btn">&lt;</button>
         <button class="page-btn active">1</button>
         <button class="page-btn">2</button>

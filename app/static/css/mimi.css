@@ -1,0 +1,236 @@
+.mimi-chat-main {
+  flex: 1;
+  padding: 2.5rem 2rem 2rem 2rem;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* Remover overflow do painel principal, deixar só na box de mensagens */
+  overflow: visible;
+}
+/* Sidebar lateral fixa para histórico de conversas (ChatGPT style) */
+.mimi-page-container {
+  display: flex;
+  align-items: stretch;
+  min-height: 80vh;
+  gap: 0;
+}
+
+.mimi-sidebar {
+  width: 270px;
+  min-width: 200px;
+  background: #181828;
+  border-radius: 0 18px 18px 0;
+  padding: 2rem 1rem 2rem 1.5rem;
+  box-shadow: 2px 0 16px #0002;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  overflow-y: auto;
+}
+
+.mimi-conv-list {
+  flex: 1;
+  overflow-y: auto;
+  margin-top: 1rem;
+}
+
+.mimi-conv-item {
+  background: none;
+  color: #fff;
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 0.3rem;
+  cursor: pointer;
+  transition: background 0.15s;
+  font-size: 1rem;
+}
+.mimi-conv-item:hover, .mimi-conv-item.active {
+  background: linear-gradient(90deg, #7b2ff2 0%, #f357a8 100%);
+  color: #fff;
+}
+
+.btn-new-conv {
+  background: var(--color-main-purple);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #0002;
+  transition: background 0.2s, transform 0.2s;
+}
+.btn-new-conv:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px) scale(1.03);
+}
+
+/* Conteúdo do chat ocupa o resto */
+.mimi-page-container > div {
+  flex: 1;
+  padding: 2.5rem 2rem 2rem 2rem;
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  .mimi-page-container {
+    flex-direction: column;
+  }
+  .mimi-sidebar {
+    width: 100%;
+    min-width: 0;
+    border-radius: 18px 18px 0 0;
+    height: auto;
+    position: static;
+    box-shadow: 0 2px 16px #0002;
+  }
+  .mimi-page-container > div {
+    padding: 1.5rem 0.7rem;
+  }
+}
+/* Responsividade para mobile */
+@media (max-width: 600px) {
+  .mimi-page-container {
+    min-height: 100vh;
+    padding: 0 0.5rem;
+  }
+  .mimi-chat-box {
+    max-width: 100vw;
+    min-height: 300px;
+    padding: 1rem 0.5rem 0.5rem 0.5rem;
+    margin: 1rem 0 0.5rem 0;
+    border-radius: 12px;
+    font-size: 0.98rem;
+  }
+  .mimi-message-content {
+    font-size: 0.98rem;
+    padding: 0.7rem 1rem;
+    border-radius: 12px;
+    max-width: 90vw;
+  }
+  .mimi-avatar {
+    width: 32px;
+    height: 32px;
+  }
+  .mimi-chat-form {
+    max-width: 100vw;
+    gap: 0.5rem;
+    padding: 0.7rem 0 1.2rem 0;
+  }
+  .mimi-chat-form input[type="text"] {
+    font-size: 1rem;
+    padding: 0.7rem 1rem;
+    border-radius: 10px;
+  }
+  .mimi-chat-form button {
+    font-size: 1rem;
+    padding: 0.7rem 1.2rem;
+    border-radius: 10px;
+  }
+}
+/* mimi.css - estilo inspirado no ChatGPT */
+
+.mimi-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: 90vh;
+  padding: 0;
+}
+
+.mimi-chat-box {
+  width: 100%;
+  max-width: 900px;
+  border-radius: 18px;
+  margin: 2rem 0 1rem 0;
+  padding: 2rem 1.5rem 1rem 1.5rem;
+  overflow-y: auto;
+  min-height: 400px;
+  max-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.mimi-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.mimi-message.user {
+  flex-direction: row-reverse;
+}
+.mimi-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.mimi-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+.mimi-message-content  {
+  background: linear-gradient(120deg, rgba(85,38,142,0.45) 60%, rgba(255,255,255,0.18) 100%);
+  backdrop-filter: blur(32px) saturate(180%);
+  -webkit-backdrop-filter: blur(32px) saturate(180%);
+  border-radius: 16px;
+  border: 1.5px solid rgba(255,255,255,0.25);
+  padding: 1.1rem 1.5rem;
+  font-size: 1.08rem;
+  max-width: 70%;
+  box-shadow: 0 8px 32px rgba(44,19,105,0.18), 0 2px 8px rgba(0,0,0,0.04);
+}
+.mimi-message.user .mimi-message-content {
+  background: var(--color-main-purple);
+  color: #fff;
+}
+
+.mimi-chat-form {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem 0 2.5rem 0;
+}
+.mimi-chat-form input[type="text"] {
+  flex: 1;
+  padding: 1rem 1.2rem;
+  border-radius: 12px;
+  border: none;
+  font-size: 1.1rem;
+  background: #fff;
+  color: #2d1b69;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.mimi-chat-form button {
+  background: var(--color-main-purple, #55268e);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 1rem 2.2rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.mimi-chat-form button:hover {
+  background: #2d1b69;
+}

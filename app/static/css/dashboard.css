@@ -1,3 +1,22 @@
+/* Custom scrollbar for dashboard */
+.dash-main-area::-webkit-scrollbar {
+    width: 5px;
+}
+.dash-main-area::-webkit-scrollbar-thumb {
+    background: var(--color-main-purple);
+    border-radius: 8px;
+    border: 2px solid var(--color-light-purple);
+}
+.dash-main-area::-webkit-scrollbar-track {
+    background: rgba(225, 190, 231, 0.2);
+    border-radius: 8px;
+}
+
+/* Firefox */
+.dash-main-area {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-main-purple) rgba(225, 190, 231, 0.2);
+}
 /* dashboard.css - estilos exclusivos para a dashboard */
 
 .main-header, .main-footer, .footer-separator, .custom-scrollbar-track {
@@ -16,7 +35,10 @@ main {
 .dashboard-wrapper {
     display: flex;
     min-height: 100vh;
-    background: var(--color-bg);
+    width: 90vw;
+    max-width: 1400px;
+    margin: 0 auto;
+    background: transparent;
     position: relative;
     z-index: 2;
 }
@@ -24,12 +46,15 @@ main {
     background: var(--color-dark-purple);
     min-width: 240px;
     max-width: 260px;
+    height: 95vh;
+    margin-top: auto;
     padding: 2rem 1.2rem 1.2rem 1.2rem;
     border-radius: 0 22px 22px 0;
     box-shadow: 0 4px 18px rgba(0,0,0,0.10);
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
+    margin-bottom: 2rem;
 }
 .sidebar-header h2 {
     color: var(--color-light-purple);
@@ -57,15 +82,49 @@ main {
     color: var(--color-bright-pink);
     margin-top: 1.5rem;
 }
+    .sidebar-footer {
+        margin-top: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .sidebar-footer .logout {
+        color: #fff;
+        background: var(--color-light-purple);
+        border: none;
+        border-radius: 10px;
+        margin-top: 1.5rem;
+        width: 100%;
+        padding: 0.7rem 0;
+        font-weight: 700;
+        font-size: 1.1rem;
+        text-align: center;
+        box-shadow: 0 2px 8px rgba(252,80,119,0.10);
+        cursor: pointer;
+        transition: background 0.2s, box-shadow 0.2s;
+        letter-spacing: 0.5px;
+        text-decoration: none;
+        display: block;
+        opacity: 0.2;
+    }
+    .sidebar-footer .logout:hover {
+        background: linear-gradient(90deg, var(--color-orange-1) 60%, var(--color-bright-pink) 100%);
+        box-shadow: 0 4px 16px rgba(252,80,119,0.18);
+        color: #fff;
+        opacity: 1;
+    }
 .dash-main-area {
     flex: 1;
     padding: 2.2rem 2.2rem 1.5rem 2.2rem;
-    background: var(--color-surface);
+    background: rgba(137, 49, 236, 0.1);
+    backdrop-filter: blur(25px);
     border-radius: 22px;
     margin: 2rem 2rem 2rem 0;
     min-width: 0;
     display: flex;
     flex-direction: column;
+        overflow-y: auto;
+        max-height: calc(100vh - 4rem);
 }
 .dash-topbar {
     display: flex;
@@ -149,8 +208,11 @@ main {
 }
 .main-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2.5rem;
+    width:90%;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 .dash-widget {
     background: var(--color-dark-purple);
@@ -178,6 +240,7 @@ main {
     font-weight: 700;
     cursor: pointer;
     font-size: 1rem;
+    text-decoration: none;
 }
 .widget-filters {
     display: flex;

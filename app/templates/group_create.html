@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Criar Grupo - StudyHub AI{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/group_create.css') }}"/>
+{% endblock %}
+{% block content %}
+<div class="form-page-container" >
+    <h1>Criar Novo Grupo</h1>
+    <form method="POST" class="group-form" >
+        {{ form.hidden_tag() }}
+        <div class="form-row">
+            <div class="form-group">{{ form.name.label }}<br>{{ form.name(class_="form-control") }}</div>
+            <div class="form-group">{{ form.subject.label }}<br>{{ form.subject(class_="form-control") }}</div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">{{ form.description.label }}<br>{{ form.description(class_="form-control") }}</div>
+            <div class="form-group">{{ form.goals.label }}<br>{{ form.goals(class_="form-control") }}</div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">{{ form.max_members.label }}<br>{{ form.max_members(class_="form-control") }}</div>
+            <div class="form-group">{{ form.privacy.label }}<br>{{ form.privacy(class_="form-control") }}</div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary" >Criar Grupo</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

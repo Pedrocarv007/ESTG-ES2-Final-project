@@ -1,0 +1,26 @@
+/* group_detail.css - estilos específicos para página de detalhes do grupo */
+.group-detail-container {
+  max-width: 520px;
+  margin: 2rem auto;
+  padding: 2rem 2.5rem;
+  background: rgba(255,255,255,0.04);
+  border-radius: 18px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+.group-detail-container h1 {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 1.2rem;
+}
+.group-detail-container .group-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+.group-detail-container .btn {
+  padding: 0.6rem 2rem;
+  border-radius: 10px;
+  font-size: 1rem;
+}

@@ -8,10 +8,12 @@ from flask_migrate import Migrate
 db = SQLAlchemy()
 migrate = Migrate()
 
+
 def init_database(app):
     """Initialize database with Flask app."""
     db.init_app(app)
     migrate.init_app(app, db, directory='migrations')
+
     
     # Create tables in development
     if app.config.get('DEVELOPMENT'):

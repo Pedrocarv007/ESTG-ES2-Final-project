@@ -7,6 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from app.config.database import db
 
 class User(UserMixin, db.Model):
+        
     """User model."""
     
     __tablename__ = 'users'
@@ -38,6 +39,9 @@ class User(UserMixin, db.Model):
     def get_id(self):
         """Return user id as string for Flask-Login."""
         return str(self.id)
+    def get_groups(self):
+            """Retorna todos os grupos que o usuário participa."""
+            return self.groups if hasattr(self, 'groups') else []
     
     def to_dict(self):
         """Convert user to dictionary."""

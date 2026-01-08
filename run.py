@@ -4,10 +4,11 @@ StudyHub AI - Entry point for the Flask application
 """
 import os
 from dotenv import load_dotenv
-from app import create_app
+
 
 # Load environment variables
 load_dotenv()
+from app import create_app
 
 # Create Flask app
 app = create_app()
@@ -18,7 +19,6 @@ if __name__ == '__main__':
     port = int(os.environ.get('FLASK_PORT'))
     debug = os.environ.get('FLASK_ENV') 
     use_proxy = os.environ.get('USE_PROXY')
-    
     print("🎓 StudyHub AI - Iniciando aplicação...")
     print(f"📍 Servidor disponível em: http://{host}:{port}")
     print(f"🔧 Modo de desenvolvimento: {debug}")
@@ -31,5 +31,6 @@ if __name__ == '__main__':
     app.run(
         host=host,
         port=port,
-        debug=debug
+        debug=debug,
+        threaded=True
     )

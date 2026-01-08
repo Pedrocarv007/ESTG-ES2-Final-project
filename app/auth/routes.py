@@ -59,8 +59,9 @@ def logout():
     flash('Logout realizado com sucesso!', 'info')
     return redirect(url_for('main.index'))
 
-@bp.route('/profile')
-@login_required
-def profile():
-    """User profile route."""
-    return render_template('dashboard/dashboard.html')
+
+
+@bp.route('/contacts')
+def contacts():
+    """Contact page route."""
+    return render_template('contacts.html', active_page='contacts')

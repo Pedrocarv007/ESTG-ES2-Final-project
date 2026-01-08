@@ -2,7 +2,6 @@
 .group-carousel-section {
   padding: 3rem 0;
   text-align: center;
-  overflow: hidden;
 }
 .section-title {
   font-family: var(--font-pixel);
@@ -20,31 +19,34 @@
   margin-right: auto;
   line-height: 1.6;
 }
+
 .carousel-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px; 
+    margin: 0 auto;
+    padding: 0 80px;   
 }
+
+
 .carousel-arrow {
-  background: transparent;
-  border: none;
-  color: var(--color-text-secondary);
-  font-size: 3rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 20;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.3) !important; /* Um fundinho para dar contraste */
+    border-radius: 50%;
+    width: 50px !important;
+    height: 50px !important;
 }
-.carousel-arrow:hover {
-  color: var(--color-text-primary);
-  transform: translateY(-50%) scale(1.2);
+
+.left-arrow { left: 20px; }
+.right-arrow { right: 20px; }
+
+/* Se a tela for grande, jogue as setas para fora dos cards */
+@media (min-width: 1300px) {
+    .left-arrow { left: 20px; }
+    .right-arrow { right: 20px; }
 }
-.left-arrow { left: 10%; }
-.right-arrow { right: 10%; }
 .carousel-track {
   display: flex;
   justify-content: center;

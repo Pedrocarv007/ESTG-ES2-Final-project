@@ -25,12 +25,14 @@ class Group(db.Model):
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    privacy = db.Column(db.String(20), default='public')  # 'public' or 'private'
     is_active = db.Column(db.Boolean, default=True)
-    max_members = db.Column(db.Integer, default=50)
+    max_members = db.Column(db.Integer, default=None, nullable=True)  # None means unlimited
     
     # Relationships
     members = db.relationship('User', secondary=group_members, backref='groups')
     materials = db.relationship('Material', backref='group', lazy='dynamic')
+    folders = db.relationship('Folder', backref='group', cascade='all, delete-orphan', lazy='dynamic')
     
     def __repr__(self):
         return f'<Group {self.name}>'
@@ -46,6 +48,7 @@ class Group(db.Model):
                 joined_at=datetime.utcnow()
             )
             db.session.execute(stmt)
+            print(f"[DEBUG] Usuário {user.id} adicionado ao grupo {self.id} como {role}")
     
     def remove_member(self, user):
         """Remove a user from the group."""

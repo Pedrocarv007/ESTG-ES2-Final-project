@@ -15,7 +15,7 @@ class Config:
     USE_PROXY = os.environ.get('USE_PROXY', 'true').lower() in ['true', 'on', '1']
     
     # Database configuration
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///studyhub.db'
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_RECORD_QUERIES = True
     
@@ -55,7 +55,7 @@ class DevelopmentConfig(Config):
     DEVELOPMENT = True
     
     # Database
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or 'sqlite:///studyhub_dev.db'
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') 
     
     # Logging
     LOG_LEVEL = 'DEBUG'
@@ -72,8 +72,8 @@ class ProductionConfig(Config):
     SESSION_COOKIE_SAMESITE = 'Lax'
     
     # Database
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-        'postgresql://studyhub:password@localhost/studyhub_db'
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') 
+       
 
 
 class TestingConfig(Config):

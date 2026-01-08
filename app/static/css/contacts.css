@@ -1,0 +1,173 @@
+/* Migrated legacy styles for contacts page */
+.contact-page-container {
+  padding: 2rem 1rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.contact-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.contact-header p {
+  color: var(--color-text-secondary);
+}
+
+.contact-box-wrapper {
+  display: flex;
+  background-color: var(--color-dark-purple);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  min-height: 500px;
+}
+
+.contact-info-side {
+  flex: 1;
+  background-color: var(--color-main-purple);
+  padding: 3rem;
+  color: var(--color-text-primary);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.contact-info-side h3 {
+  font-family: var(--font-pixel);
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+.contact-info-side p {
+  color: var(--color-text-secondary);
+  margin-bottom: 2rem;
+}
+
+.info-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-weight: 600;
+}
+.info-item .icon {
+  font-size: 1.5rem;
+}
+
+.contact-socials {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.social-link {
+  color: var(--color-orange-1);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+.social-link:hover {
+  text-decoration: underline;
+}
+
+.contact-form-side {
+  flex: 1.5;
+  padding: 3rem;
+  background-color: #fff;
+}
+
+.contact-form label {
+  color: var(--color-dark-purple);
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.contact-form textarea.auth-input {
+  resize: none;
+  font-family: var(--font-body);
+}
+/* contacts.css - styles for the contacts page */
+
+.main-contacts-container {
+  margin: 2rem auto;
+  padding: 2.5rem 2rem;
+  background: var(--background-secondary, #fff);
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  width: 90vw;
+  max-width: 700px;
+  text-align: center;
+}
+
+.contacts-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary, #2a2a2a);
+  margin-bottom: 1.5rem;
+}
+
+.contacts-description {
+  color: var(--text-secondary, #555);
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.contacts-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto 2rem auto;
+  max-width: 400px;
+}
+
+.contacts-list li {
+  background: var(--background-tertiary, #f9f9f9);
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  margin-bottom: 1rem;
+  padding: 1rem 1.5rem;
+  font-size: 1.05rem;
+  color: var(--primary, #2a2a2a);
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.contacts-list li i {
+  color: var(--accent, #0077ff);
+  font-size: 1.2rem;
+}
+
+.contacts-form {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.contacts-form input, .contacts-form textarea {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.7rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+}
+
+.contacts-form button {
+  background: var(--primary, #2a2a2a);
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.6rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.contacts-form button:hover {
+  background: var(--accent, #0077ff);
+}
