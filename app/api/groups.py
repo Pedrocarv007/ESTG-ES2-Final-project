@@ -38,6 +38,32 @@ def create_group():
 		db.session.commit()
 		group.add_member(current_user, role='admin')
 		db.session.commit()
+		# Forçar refresh do objeto current_user para garantir associação
+		try:
+			db.session.refresh(current_user)
+		except Exception:
+			pass
+		# Criar pasta do grupo no explorer
+		from app.models.material import Folder, Material
+		from app.config.database import db as _db
+		folder = Folder(name=group.name, parent_id=None, group_id=group.id)
+		_db.session.add(folder)
+		_db.session.commit()
+		# Criar arquivo de boas-vindas
+		welcome_text = f"Bem-vindo ao grupo {group.name}! Aqui você pode compartilhar materiais e colaborar."
+		material = Material(
+			title="Boas-vindas",
+			description=welcome_text,
+			file_path=None,
+			file_name=None,
+			file_type="text/plain",
+			file_size=len(welcome_text.encode()),
+			uploaded_by=current_user.id,
+			group_id=group.id,
+			folder_id=folder.id
+		)
+		_db.session.add(material)
+		_db.session.commit()
 		flash('Grupo criado com sucesso!', 'success')
 		return redirect(url_for('groups_api.groups'))
 	return render_template('group_create.html', form=form, active_page='groups')
